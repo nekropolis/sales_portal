@@ -1,0 +1,95 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Прайс-листы</h1>
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success">
+                <strong>{{ $message }}</strong>
+            </div>
+        @endif
+        @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <form action="{{route('fileUpload')}}" method="post" enctype="multipart/form-data">
+                @csrf
+                <button type="button" class="custom-file-upload" data-toggle="modal" data-target="#addPrice">
+                    Добавить новый прайс
+                </button>
+
+                <div class="modal fade" id="addPrice" tabindex="-1" role="dialog" aria-labelledby="addPrice"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addPrice">Загрузка прйс-листа в систему</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body-upload">
+                                <select name="seller_name" class="form-select mb-3" aria-label="Default select example">
+                                    <option selected>Выбирете поставщика</option>
+                                    @foreach($sellers as $seller)
+                                        <option data-val={{ $seller['id'] }} value="{{ $seller['id'] }}">{{ $seller['name'] }} </option>
+                                    @endforeach
+                                </select>
+                                <label for="name" class="col-form-label">Название прайс-листа:</label>
+                                <input type="text" id="name" name="name" class="form-control name mb-3"
+                                       placeholder="Введите название">
+                                <input type="file" name="file" id="file-upload" hidden/>
+                                <label class="file-upload" for="file-upload"> <span>  <i class="bi bi-filetype-xls"></i> Выбрать файл</span></label>
+                                <div id="file-upload-filename"></div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" value="submit" class="btn btn-primary">Загрузить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Поставщик</th>
+                <th scope="col">Прайс</th>
+                <th scope="col">Названия прайса в системе</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Дата загрузки</th>
+                <th scope="col">Действие</th>
+            </tr>
+            </thead>
+            @foreach($prices as $key=>$price)
+                <tbody>
+                <tr>
+                    <th scope="row">{{$key+1}}</th>
+                    <td>{{$price['seller_name']}}</td>
+                    <td>{{$price['orig_name']}}</td>
+                    <td onclick="window.location='{{ route('getPrice', $price['id']) }}'">{{$price['name']}}</td>
+                    <td>{{$price['status']}}</td>
+                    <td>{{date('d-m-Y H:i', strtotime($price['updated_at']))}}</td>
+                    <td>
+                        <button type="button" id="delete_price" data-id="{{$price['id']}}"
+                                onclick="return confirm('Подтвердить удаление?')"
+                                class="btn btn-outline-danger delete_price">Удалить
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            @endforeach
+        </table>
+    </div>
+@endsection
+
