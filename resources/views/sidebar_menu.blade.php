@@ -48,7 +48,7 @@
             <div class="accordion-body">
                 @auth
                     <li class="nav-item">
-                        <a href="{{ route('prices') }}"> Прайс лист </a>
+                        <a href="{{ route('uploadedPrices') }}"> Прайс лист </a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('sellers') }}"> Поставщики</a>

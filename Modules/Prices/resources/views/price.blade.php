@@ -198,4 +198,7 @@
             </tbody>
         @endforeach
     </table>
+    <div class="d-felx justify-content-center">
+        {{ $price->links() }}
+    </div>
 @endsection
