@@ -11,7 +11,6 @@ function showFileName(event) {
     infoArea.textContent = 'Имя файла: ' + fileName;
 }
 
-
 $(document).ready(function () {
     $(".delete_price").on('click', function () {
         const price_id = $(this).data('id');

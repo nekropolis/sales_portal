@@ -1,7 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Modules\Prices\app\Http\Controllers\PricesController;
+use Modules\Prices\Http\Controllers\PricesController;
 
 
 /*
@@ -14,6 +15,7 @@ use Modules\Prices\app\Http\Controllers\PricesController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/price/{price_id}', [PricesController::class, 'getPrice'])->name('getPrice');

@@ -7,3 +7,8 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons.css';
+
+// Tailwind
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

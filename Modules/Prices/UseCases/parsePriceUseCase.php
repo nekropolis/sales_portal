@@ -4,8 +4,8 @@ namespace Modules\Prices\UseCases;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Modules\Prices\Models\Prices;
-use Modules\Prices\Models\PricesUploaded;
+use Modules\Prices\Entities\Prices;
+use Modules\Prices\Entities\PricesUploaded;
 use Shuchkin\SimpleXLSX;
 
 class parsePriceUseCase

@@ -3,7 +3,7 @@
 namespace Modules\Prices\UseCases;
 
 use Illuminate\Http\Request;
-use Modules\Prices\Models\PricesUploaded;
+use Modules\Prices\Entities\PricesUploaded;
 
 class updateUploadedPriceUseCase
 {
@@ -28,7 +28,7 @@ class updateUploadedPriceUseCase
             $price->additional         = $data['additional'];
             $price->save();
 
-            return redirect()->back();
+            return redirect()->back()->with('success', 'Настройки обновлены!');
         } else {
             $price->get()->toArray();
 

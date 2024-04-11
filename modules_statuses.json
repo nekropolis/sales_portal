@@ -1,3 +1,5 @@
 {
-    "Prices": true
+    "Prices": true,
+    "Products": true,
+    "Catalog": true
 }

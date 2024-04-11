@@ -3,7 +3,7 @@
 namespace Modules\Prices\UseCases;
 
 use App\Models\Sellers;
-use Modules\Prices\Models\PricesUploaded;
+use Modules\Prices\Entities\PricesUploaded;
 
 class getUploadedPricesUseCase
 {

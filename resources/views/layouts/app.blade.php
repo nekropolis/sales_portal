@@ -1,11 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-{{--@push('head')
-    <!-- Scripts -->
-    <script src="{{ asset('js/components/price.js')}}"></script>
-@endpush--}}
-
 <head>
     <title></title>
     @include('includes.head')
@@ -22,9 +17,6 @@
             @endauth
         </div>
         <main class="col-10">
-            {{--@if(request()->routeIs('prices'))
-                @include('prices')
-            @endif--}}
             @yield('content')
         </main>
     </div>

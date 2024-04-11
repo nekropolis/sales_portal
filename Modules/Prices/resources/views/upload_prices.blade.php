@@ -59,7 +59,7 @@
     </div>
 
     <div>
-        <table class="table table-hover table-bordered">
+        <table class="table table-sm table-hover table-bordered sp-table">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -82,8 +82,9 @@
                     <td>{{date('d-m-Y H:i', strtotime($price['updated_at']))}}</td>
                     <td>
                         <button type="button" id="delete_price" data-id="{{$price['id']}}"
-                                onclick="return confirm('Подтвердить удаление?')"
-                                class="btn btn-outline-danger delete_price">Удалить
+                                class="btn btn-sm btn-lg btn-outline-danger delete_price"
+                                onclick="return confirm('Подтвердить удаление?')">
+                            <i class="bi bi-trash3"></i>
                         </button>
                     </td>
                 </tr>
@@ -91,5 +92,7 @@
             @endforeach
         </table>
     </div>
+
+    <script src="/js/components/uploadPrices.js"></script>
 @endsection
 

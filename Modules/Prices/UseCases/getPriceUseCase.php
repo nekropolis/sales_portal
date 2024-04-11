@@ -2,8 +2,8 @@
 
 namespace Modules\Prices\UseCases;
 
-use Modules\Prices\Models\Prices;
-use Modules\Prices\Models\PricesUploaded;
+use Modules\Prices\Entities\Prices;
+use Modules\Prices\Entities\PricesUploaded;
 
 class getPriceUseCase
 {

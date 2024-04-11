@@ -172,7 +172,7 @@
         </div>
     </form>
 
-    <table class="table table-hover table-bordered">
+    <table class="table table-sm table-hover table-bordered sp-table">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -201,4 +201,6 @@
     <div class="d-felx justify-content-center">
         {{ $price->links() }}
     </div>
+
+    <script src="/js/components/price.js"></script>
 @endsection
