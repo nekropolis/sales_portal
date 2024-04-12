@@ -5,7 +5,7 @@ namespace Modules\Catalog\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class DeleteBrandsRequest extends FormRequest
+class DeleteCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

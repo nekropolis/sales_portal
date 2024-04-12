@@ -18,7 +18,7 @@
                         <a href="{{ route('brands') }}"> Бренды </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('sellers') }}"> Категории </a>
+                        <a href="{{ route('categories') }}"> Категории </a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('sellers') }}"> Наценка </a>

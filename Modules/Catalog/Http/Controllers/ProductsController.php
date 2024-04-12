@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use Modules\Catalog\Entities\Brands;
 use Modules\Catalog\Entities\Categories;
 use Modules\Catalog\Entities\Products;
-use Modules\Catalog\Http\Requests\CreateProductsRequest;
-use Modules\Catalog\Http\Requests\UpdateProductsRequest;
+use Modules\Catalog\Http\Requests\CreateProductRequest;
+use Modules\Catalog\Http\Requests\UpdateProductRequest;
 
 class ProductsController extends Controller
 {
@@ -27,7 +27,7 @@ class ProductsController extends Controller
         ]);
     }
 
-    public function create(CreateProductsRequest $request)
+    public function create(CreateProductRequest $request)
     {
         $data = $request->all();
         //dd($data);
@@ -50,7 +50,7 @@ class ProductsController extends Controller
         //
     }
 
-    public function update(UpdateProductsRequest $request, Products $products)
+    public function update(UpdateProductRequest $request, Products $products)
     {
         //
     }

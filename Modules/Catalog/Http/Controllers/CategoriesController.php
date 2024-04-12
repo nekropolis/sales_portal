@@ -3,68 +3,67 @@
 namespace Modules\Catalog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use http\Env\Request;
-use Modules\Catalog\Entities\Brands;
-use Modules\Catalog\Http\Requests\CreateBrandsRequest;
-use Modules\Catalog\Http\Requests\DeleteBrandsRequest;
-use Modules\Catalog\Http\Requests\UpdateBrandsRequest;
+use Modules\Catalog\Entities\Categories;
+use Modules\Catalog\Http\Requests\CreateCategoryRequest;
+use Modules\Catalog\Http\Requests\DeleteCategoryRequest;
+use Modules\Catalog\Http\Requests\UpdateCategoryRequest;
 
-class BrandsController extends Controller
+class CategoriesController extends Controller
 {
     public function list()
     {
-        $brands = Brands::paginate(15);
+        $categories = Categories::paginate(15);
 
-        //dd($products);
+        //dd($categories);
 
-        return view('catalog::brands', ['brands' => $brands,]);
+        return view('catalog::categories', ['categories' => $categories,]);
     }
 
-    public function create(CreateBrandsRequest $request)
+    public function create(CreateCategoryRequest $request)
     {
         $data = $request->all();
         //dd($data);
 
-        $brands       = new Brands();
-        $brands->name = $data['name'];
-        $brands->save();
+        $categories       = new Categories();
+        $categories->name = $data['name'];
+        $categories->save();
 
-        return redirect()->back()->with('success', 'Бренд добавлен!');
+        return redirect()->back()->with('success', 'Категоря добавлена!');
     }
 
-    public function show(Brands $brands)
+    public function show(Categories $categories)
     {
         //
     }
 
-    public function update(UpdateBrandsRequest $request)
+    public function update(UpdateCategoryRequest $request)
     {
         $data = $request->all();
 
         //dd($data);
-        $brand = Brands::findOrFail($data['brand_id']);
-        if (!$brand) {
+        $categories = Categories::findOrFail($data['category_id']);
+        if (!$categories) {
             throw new \Exception('Not found');
         }
 
         if (isset($data['name'])) {
-            $brand->name = $data['name'];
-            $brand->update();
+            $categories->name = $data['name'];
+            $categories->update();
 
-        return redirect()->back()->with('success', 'Бренд обновлен!');
+        return redirect()->back()->with('success', 'Категория обновлена!');
         } else {
-            $brand->get()->toArray();
+            $categories->get()->toArray();
 
-            return $brand;
+            return $categories;
         }
     }
 
-    public function delete(DeleteBrandsRequest $request)
+    public function delete(DeleteCategoryRequest $request)
     {
         $data = $request->all();
 
-        $brand = Brands::findOrFail($data['brand_id']);
-        $brand->delete();
+        $category = Categories::findOrFail($data['category_id']);
+        $category->delete();
 
         //return redirect()->back()->with('success', 'Бренд удален!');
     }

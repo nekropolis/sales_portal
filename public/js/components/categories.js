@@ -1,8 +1,8 @@
 $(document).ready(function () {
-    $(".delete_brand").on('click', function () {
-        const brand_id = $(this).data('id');
+    $(".deleteCategory").on('click', function () {
+        const category_id = $(this).data('id');
 
-        axios.post("/delete-brand", {brand_id},
+        axios.post("/delete-category", {category_id},
             {'content-type': 'application/x-www-form-urlencoded'}).then(({}) => {
             location.reload();
         }).catch((error) => {
@@ -10,14 +10,14 @@ $(document).ready(function () {
         });
     });
 
-    $(".updateBrand").on('click', function () {
-        $('#updateBrand').modal('show');
-        const brand_id = $(this).data('id');
-        $(".modal-body #brand_id").val(brand_id);
-        const updateBrandModal = document.getElementById('updateBrand');
-        const name = updateBrandModal.querySelector('.modal-body .name');
+    $(".updateCategory").on('click', function () {
+        $('#updateCategory').modal('show');
+        const category_id = $(this).data('id');
+        $(".modal-body #category_id").val(category_id);
+        const updateCategoryModal = document.getElementById('updateCategory');
+        const name = updateCategoryModal.querySelector('.modal-body .name');
 
-        axios.post("/update-brand", {brand_id},
+        axios.post("/update-category", {category_id},
             {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
             name.value = data.name
         }).catch((error) => {

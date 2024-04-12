@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Modules\Catalog\Http\Controllers\BrandsController;
+use Modules\Catalog\Http\Controllers\CategoriesController;
 use Modules\Catalog\Http\Controllers\ProductsController;
 
 /*
@@ -27,4 +28,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/create-brand', [BrandsController::class, 'create'])->name('createBrand');
     Route::post('/update-brand', [BrandsController::class, 'update'])->name('updateBrand');
     Route::post('/delete-brand', [BrandsController::class, 'delete'])->name('deleteBrand');
+
+    Route::get('/categories', [CategoriesController::class, 'list'])->name('categories');
+    Route::post('/create-category', [CategoriesController::class, 'create'])->name('createCategory');
+    Route::post('/update-category', [CategoriesController::class, 'update'])->name('updateCategory');
+    Route::post('/delete-category', [CategoriesController::class, 'delete'])->name('deleteCategory');
 });
