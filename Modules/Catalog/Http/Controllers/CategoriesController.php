@@ -3,10 +3,11 @@
 namespace Modules\Catalog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use http\Env\Request;
 use Modules\Catalog\Entities\Brands;
-use Modules\Catalog\Http\Requests\CreateBrandRequest;
-use Modules\Catalog\Http\Requests\DeleteBrandRequest;
-use Modules\Catalog\Http\Requests\UpdateBrandRequest;
+use Modules\Catalog\Http\Requests\CreateBrandsRequest;
+use Modules\Catalog\Http\Requests\DeleteBrandsRequest;
+use Modules\Catalog\Http\Requests\UpdateBrandsRequest;
 
 class BrandsController extends Controller
 {
@@ -19,7 +20,7 @@ class BrandsController extends Controller
         return view('catalog::brands', ['brands' => $brands,]);
     }
 
-    public function create(CreateBrandRequest $request)
+    public function create(CreateBrandsRequest $request)
     {
         $data = $request->all();
         //dd($data);
@@ -36,7 +37,7 @@ class BrandsController extends Controller
         //
     }
 
-    public function update(UpdateBrandRequest $request)
+    public function update(UpdateBrandsRequest $request)
     {
         $data = $request->all();
 
@@ -58,7 +59,7 @@ class BrandsController extends Controller
         }
     }
 
-    public function delete(DeleteBrandRequest $request)
+    public function delete(DeleteBrandsRequest $request)
     {
         $data = $request->all();
 
