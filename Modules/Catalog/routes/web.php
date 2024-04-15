@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Modules\Catalog\Http\Controllers\BrandsController;
 use Modules\Catalog\Http\Controllers\CategoriesController;
+use Modules\Catalog\Http\Controllers\CurrencyController;
 use Modules\Catalog\Http\Controllers\ProductsController;
 
 /*
@@ -33,4 +34,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/create-category', [CategoriesController::class, 'create'])->name('createCategory');
     Route::post('/update-category', [CategoriesController::class, 'update'])->name('updateCategory');
     Route::post('/delete-category', [CategoriesController::class, 'delete'])->name('deleteCategory');
+
+    Route::get('/currency', [CurrencyController::class, 'list'])->name('currency');
+    Route::post('/create-currency', [CurrencyController::class, 'create'])->name('createCurrency');
+    Route::post('/update-currency', [CurrencyController::class, 'update'])->name('updateCurrency');
+    Route::post('/delete-currency', [CurrencyController::class, 'delete'])->name('deleteCurrency');
+
+    Route::get('/margin', [MarginController::class, 'list'])->name('margin');
+    Route::post('/create-margin', [MarginController::class, 'create'])->name('createMargin');
+    Route::post('/update-margin', [CategoriesController::class, 'update'])->name('updateMargin');
+    Route::post('/delete-margin', [CategoriesController::class, 'delete'])->name('deleteMargin');
 });

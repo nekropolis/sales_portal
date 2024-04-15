@@ -21,10 +21,10 @@
                         <a href="{{ route('categories') }}"> Категории </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('sellers') }}"> Наценка </a>
+                        <a href="{{ route('margin') }}"> Наценка </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('sellers') }}"> Валюты </a>
+                        <a href="{{ route('currency') }}"> Валюты </a>
                     </li>
                 @endauth
             </div>
