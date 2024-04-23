@@ -2,6 +2,9 @@
 
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <button type="button" id="back-upload-prices" class="btn btn-outline-secondary"
+                onclick="window.location='{{ URL::route('uploadedPrices') }}'"><i class="bi bi-arrow-left-square"></i> Назад
+        </button>
         <h1 class="h2">Прайс-лист {{$price_uploaded['price_name']}}</h1>
         @if ($message = Session::get('success'))
             <div class="alert alert-success">
@@ -17,28 +20,11 @@
                 </ul>
             </div>
         @endif
-        <button type="button" id="find_product" class="btn btn-outline-secondary find_product"
-                onclick="return addProduct()"
-        >Распознать
-        </button>
-        <button type="button" id="add_product" class="btn btn-outline-secondary add_product"
-                onclick="return addProduct()"
-        >Добавить позицию
-        </button>
-        <button type="button" id="update_file" class="btn btn-outline-secondary update_file"
-                onclick="return updateFile({{$price_uploaded['id']}})"
-        >Обновить файл
-        </button>
-        <button type="button" id="parse_price" class="btn btn-outline-info parse_price"
-                onclick="return parsePrice({{$price_uploaded['id']}})">
-            Распарсить
-        </button>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <button type="button" id="settings_price" class="btn btn-outline-secondary settings_price"
-                    onclick="return settingsPrice({{$price_uploaded['id']}})"
-            >Настройки
+{{--        <div class="btn-toolbar mb-2 mb-md-0">
+            <button type="button" id="update_file" class="btn btn-outline-secondary update_file"
+                    onclick="return updateFile({{$price_uploaded['id']}})">Обновить файл
             </button>
-        </div>
+        </div>--}}
     </div>
 
     <!-- Settings Modal -->
@@ -172,7 +158,76 @@
         </div>
     </form>
 
-    <table class="table table-sm table-hover table-bordered sp-table">
+    <!-- Buttons -->
+    <div class="d-flex justify-content-between mb-2 form-group">
+        <div class="btn-group btn-group-sm p-2 bd-highlight" role="group">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#">Прайс-Лист</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Связать Позиции</a>
+                </li>
+            </ul>
+        </div>
+        <div class="btn-group btn-group-sm p-2 bd-highlight" role="group">
+            <button type="button" id="add_product" class="btn btn-outline-secondary add_product"
+                    onclick="return addProduct()">Добавить позицию
+            </button>
+            <button type="button" id="update_file" class="btn btn-outline-secondary update_file"
+                    onclick="return updateFile({{$price_uploaded['id']}})">Обновить файл
+            </button>
+        </div>
+        <div class="btn-group btn-group-sm p-2 bd-highlight" role="group">
+            <button type="button" id="parse_price" class="btn btn-outline-info parse_price"
+                    onclick="return parsePrice({{$price_uploaded['id']}})">Распарсить
+            </button>
+            <button type="button" id="settings_price" class="btn btn-outline-secondary settings_price"
+                    onclick="return settingsPrice({{$price_uploaded['id']}})">Настройки
+            </button>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="linkProductCanvas" aria-labelledby="linkProduct">
+        <div class="offcanvas-header">
+            <h5 id="productName">Выбрать продукт для связи</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column justify-content-center">
+            <div class="fs-4 text-center mb-4" id="priceModel"></div>
+            <table class="table table-sm table-hover table-bordered" id="linkProductTable">
+                <thead>
+                <td>Похожие модели</td>
+                </thead>
+                <tbody id="linkProductName"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Search -->
+    <div class="w-100 mb-3 bd-highlight">
+        <form action="/price/{{$price_uploaded['id']}}" method="get">
+            <div class="input-group">
+                <input
+                        type="text"
+                        id="search"
+                        data-id="{{$price_uploaded['id']}}"
+                        name="q"
+                        class="form-control"
+                        placeholder="Поиск..."
+                        value="{{ request('q') }}"
+                        aria-label="Example input"
+                        aria-describedby="button-addon1"
+                />
+                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-sm btn-lg btn-outline-primary"
+                        type="submit" id="button-addon1" data-mdb-ripple-color="dark">
+                    <i class="bi bi-search"></i> GO
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <table class="table table-sm table-hover table-bordered sp-table align-middle">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -185,21 +240,35 @@
         </tr>
         </thead>
         @foreach($price as $key=>$item)
-            <tbody onclick="alert('123')">
-            <tr>
+{{--            @php
+            dd($item);
+            @endphp--}}
+            <tbody>
+            <tr class="{{$item->is_link == 1 ? 'table-success' : ''}}">
                 <th scope="row">{{$key+1}}</th>
-                <td></td>
-                <td>{{$item['model']}}</td>
-                <td></td>
-                <td>{{$item['additional']}}</td>
-                <td>{{$item['quantity']}}</td>
-                <td>{{$item['price']}}</td>
+                <td class="cursor-table">
+                    <input class="check-input" type="checkbox" id="is_link" data-id="{{ $item->price_id }}"
+                           value="{{ $item->is_link }}" {{$item->is_link == 1 ? 'checked' : ''}}>
+                    </td>
+                <td>{{$item->price->model}}</td>
+                <td class="cursor-table" onClick="linkListProduct('{{ $item->price->id }}', '{{ $item->price->model}}')">
+                    @if ($item->product !== null)
+                        {{$item->product->brand->name}} {{$item->product->model}}
+                    @else
+                        Не нашлось совпадения
+                    @endif
+                </td>
+                <td>{{$item->price->additional}}</td>
+                <td>{{$item->price->quantity}}</td>
+                <td>{{$item->price->price}}</td>
             </tr>
             </tbody>
         @endforeach
     </table>
     <div class="d-felx justify-content-center">
-        {{ $price->links() }}
+        @if($showPagination)
+            {{ $price->links() }}
+        @endif
     </div>
 
     <script src="/js/components/price.js"></script>

@@ -3,34 +3,57 @@
 namespace Modules\Catalog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Modules\Catalog\Entities\Brands;
-use Modules\Catalog\Entities\Categories;
-use Modules\Catalog\Entities\Products;
+use App\Traits\ResponseTrait;
+use Illuminate\Http\Request;
 use Modules\Catalog\Http\Requests\CreateProductRequest;
 use Modules\Catalog\Http\Requests\UpdateProductRequest;
+use Modules\Catalog\Models\Brands;
+use Modules\Catalog\Models\Categories;
+use Modules\Catalog\Models\Products;
+use Elasticsearch;
 
 class ProductsController extends Controller
 {
-    public function list()
-    {
-        $products = Products::paginate(15);
+    use ResponseTrait;
 
-        //dd($products);
+    public function list(Request $request)
+    {
+        $q = $request->get('q');
+
+        if ($q) {
+            $response = Elasticsearch::search([
+                'index' => 'products',
+                "size"  => 20,
+                'body'  => [
+                    'query' => [
+                        'multi_match' => [
+                            'query'  => $q,
+                            'fields' => ['brand', 'model'],
+                        ],
+                    ],
+                ],
+            ]);
+
+            $productIds = array_column($response['hits']['hits'], '_id');
+            $products   = Products::query()->findMany($productIds);
+        } else {
+            $products = Products::paginate(20);
+        }
 
         $brands     = Brands::all();
         $categories = Categories::all();
 
         return view('catalog::products', [
-            'products'   => $products,
-            'brands'     => $brands,
-            'categories' => $categories,
+            'products'       => $products,
+            'brands'         => $brands,
+            'categories'     => $categories,
+            'showPagination' => is_null($q),
         ]);
     }
 
     public function create(CreateProductRequest $request)
     {
         $data = $request->all();
-        //dd($data);
 
         $products               = new Products();
         $products->sku          = $data['sku'];

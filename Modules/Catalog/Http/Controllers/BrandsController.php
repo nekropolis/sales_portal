@@ -3,10 +3,10 @@
 namespace Modules\Catalog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Modules\Catalog\Entities\Brands;
 use Modules\Catalog\Http\Requests\CreateBrandRequest;
 use Modules\Catalog\Http\Requests\DeleteBrandRequest;
 use Modules\Catalog\Http\Requests\UpdateBrandRequest;
+use Modules\Catalog\Models\Brands;
 
 class BrandsController extends Controller
 {

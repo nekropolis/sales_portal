@@ -1,17 +1,16 @@
 <?php
 
-namespace Modules\Catalog\Entities;
+namespace Modules\Catalog\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Brands extends Model
+class Categories extends Model
 {
     use HasFactory;
 
-    protected $table = 'brands';
-
+    protected $table   = 'categories';
 
     public function products(): HasMany
     {

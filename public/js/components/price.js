@@ -53,3 +53,89 @@ function updateFile(price_id) {
 function addProduct() {
     $('#addProduct').modal('show');
 }
+
+let timeout = null;
+$('#search').on('keyup', function () {
+    clearTimeout(timeout);
+    let q = $('#search').val();
+    let id = $(this).data('id');
+    let count = q.trim().length;
+
+    if (count > 2) {
+        timeout = setTimeout(function () {
+            axios({
+                method: "get",
+                url: "/price/" + id,
+                params: {q: q},
+                headers: {'content-type': 'application/x-www-form-urlencoded'}
+            }).then(function (response) {
+                console.log(response.data);
+                //location.reload();
+            });
+        }, 1500);
+    }
+});
+
+function linkListProduct(id, model) {
+    $('#linkProductCanvas').offcanvas('show');
+    document.getElementById('priceModel').innerHTML = model;
+
+    axios({
+        method: "get",
+        url: "/search-product-price",
+        params: {q: model},
+        headers: {'content-type': 'application/x-www-form-urlencoded'}
+    }).then(function (response) {
+        let searchProduct = response.data;
+        let linkProductName = document.getElementById("linkProductName");
+        searchProduct.forEach((e) => {
+            linkProductName.innerHTML +=
+                `<td class="cursor-table" onclick="return addProductToLink('${id}', '${e.id}')"> ${e.brand ? e.brand.name : ''} ${e.model} <input type="text" id="searchProductId" value="${e.id}" hidden></td>`;
+        });
+    });
+}
+
+let linkProductCanvas = document.getElementById('linkProductCanvas')
+linkProductCanvas.addEventListener('hidden.bs.offcanvas', function () {
+    let table = document.getElementById("linkProductTable");
+    for (let i = 1; i < table.rows.length;) {
+        table.deleteRow(i);
+    }
+})
+
+$(function () {
+    $('td.cursor-table input[type="checkbox"]').on('click', function () {
+        let param = {
+            price_id: $(this).data("id"),
+            checkbox: $(this).is(":checked") ? 1 : 0,
+        }
+
+        if (this.checked)
+            $(this).closest("tr").addClass("table-success");
+        else
+            $(this).closest("tr").removeClass("table-success");
+
+        axios.post("/is-link", {param},
+            {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
+            console.log(data)
+        }).catch((error) => {
+            console.log(error)
+        });
+    });
+});
+
+function addProductToLink(price_id, product_id) {
+    let param = {
+        price_id: parseInt(price_id),
+        product_id: parseInt(product_id),
+    }
+
+    axios.post("/is-link", {param},
+        {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
+        console.log(data)
+        $('#linkProductCanvas').offcanvas('hide');
+        location.reload();
+    }).catch((error) => {
+        console.log(error)
+    });
+}

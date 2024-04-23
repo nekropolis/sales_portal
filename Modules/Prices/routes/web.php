@@ -25,4 +25,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/parse-price', [PricesController::class, 'parsePrice'])->name('parsePrice');
     Route::post('/upload-file', [PricesController::class, 'fileUpload'])->name('fileUpload');
     Route::post('/update-file', [PricesController::class, 'fileUpdateUpload'])->name('updateFile');
+
+    Route::post('/is-link', [PricesController::class, 'isLink'])->name('isLink');
+
+    Route::get('/search-product-price', [PricesController::class, 'searchProductPrice'])->name('searchProductPrice');
 });

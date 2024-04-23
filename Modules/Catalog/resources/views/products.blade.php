@@ -20,7 +20,38 @@
         <button type="button" class="custom-file-upload" data-bs-toggle="modal" data-bs-target="#createProduct">
             Создать
         </button>
+        <form action="{{ route('products.import') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+
+            <input type="file" name="file" class="form-control">
+
+            <br>
+            <button class="btn btn-success"><i class="fa fa-file"></i> Import User Data</button>
+        </form>
     </div>
+
+    <div>
+
+        <!-- Search -->
+        <div class="d-flex flex-row-reverse justify-content">
+            <form action="/products" method="get">
+                <div class="input-group w-auto form-group">
+                    <input
+                            type="text"
+                            name="q"
+                            class="form-control"
+                            placeholder="Поиск..."
+                            value="{{ request('q') }}"
+                            aria-label="Example input"
+                            aria-describedby="button-addon1"
+                    />
+                    <button data-mdb-button-init data-mdb-ripple-init class="btn btn-sm btn-lg btn-outline-primary"
+                            type="submit" id="button-addon1" data-mdb-ripple-color="dark">
+                        <i class="bi bi-search"></i> GO
+                    </button>
+                </div>
+            </form>
+        </div>
 
     <!-- Create Product -->
     <form action="{{route('createProduct')}}" method="post" enctype="multipart/form-data">
@@ -100,8 +131,8 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">SKU</th>
-            <th scope="col">Бренд</th>
             <th scope="col">Категория</th>
+            <th scope="col">Бренд</th>
             <th scope="col">Модель</th>
             <th scope="col">Локализация</th>
             <th scope="col">Комплектация</th>
@@ -110,12 +141,12 @@
         </tr>
         </thead>
         @foreach($products as $key=>$product)
-            <tbody onclick="alert('123')">
+            <tbody>
             <tr>
                 <th scope="row">{{$key+1}}</th>
                 <td>{{$product['sku']}}</td>
-                <td>{{$product['brand']['name']}}</td>
                 <td>{{$product['category']['name']}}</td>
+                <td>{{$product['brand']['name']}}</td>
                 <td>{{$product['model']}}</td>
                 <td>{{$product['localization']}}</td>
                 <td>{{$product['package']}}</td>
@@ -135,6 +166,8 @@
         @endforeach
     </table>
     <div class="d-felx justify-content-center">
+        @if($showPagination)
         {{ $products->links() }}
+        @endif
     </div>
 @endsection

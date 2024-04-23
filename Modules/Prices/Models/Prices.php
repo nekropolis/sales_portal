@@ -1,9 +1,10 @@
 <?php
 
-namespace Modules\Prices\Entities;
+namespace Modules\Prices\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Prices extends Model
 {
@@ -17,7 +18,12 @@ class Prices extends Model
         'additional',
     ];
 
-    protected $primaryKey = 'model';
+    //protected $primaryKey = 'model';
     protected $keyType = 'string';
     public $incrementing = false;
+
+    public function link(): hasOne
+    {
+        return $this->hasOne(LinkPrices::class, 'price_id', 'id');
+    }
 }

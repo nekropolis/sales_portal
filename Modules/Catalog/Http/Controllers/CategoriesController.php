@@ -3,10 +3,10 @@
 namespace Modules\Catalog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Modules\Catalog\Entities\Categories;
 use Modules\Catalog\Http\Requests\CreateCategoryRequest;
 use Modules\Catalog\Http\Requests\DeleteCategoryRequest;
 use Modules\Catalog\Http\Requests\UpdateCategoryRequest;
+use Modules\Catalog\Models\Categories;
 
 class CategoriesController extends Controller
 {

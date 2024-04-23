@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Catalog\Http\Controllers\BrandsController;
 use Modules\Catalog\Http\Controllers\CategoriesController;
 use Modules\Catalog\Http\Controllers\CurrencyController;
+use Modules\Catalog\Http\Controllers\MarginController;
 use Modules\Catalog\Http\Controllers\ProductsController;
 
 /*
@@ -42,6 +43,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/margin', [MarginController::class, 'list'])->name('margin');
     Route::post('/create-margin', [MarginController::class, 'create'])->name('createMargin');
-    Route::post('/update-margin', [CategoriesController::class, 'update'])->name('updateMargin');
-    Route::post('/delete-margin', [CategoriesController::class, 'delete'])->name('deleteMargin');
+    Route::post('/update-margin', [MarginController::class, 'update'])->name('updateMargin');
+    Route::post('/delete-margin', [MarginController::class, 'delete'])->name('deleteMargin');
 });

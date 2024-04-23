@@ -5,10 +5,13 @@ namespace Modules\Prices\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
-use Modules\Prices\Entities\PricesUploaded;
+use Modules\Prices\Models\PricesUploaded;
 use Modules\Prices\UseCases\getPriceUseCase;
 use Modules\Prices\UseCases\getUploadedPricesUseCase;
+use Modules\Prices\UseCases\IsLinkUseCase;
+use Modules\Prices\UseCases\LinkPriceUseCase;
 use Modules\Prices\UseCases\parsePriceUseCase;
+use Modules\Prices\UseCases\searchProductForPriceUseCase;
 use Modules\Prices\UseCases\updateUploadedPriceUseCase;
 
 class PricesController extends Controller
@@ -97,10 +100,28 @@ class PricesController extends Controller
         }
     }
 
-    public function getPrice($id, getPriceUseCase $useCase)
+    public function getPrice(Request $request, $id, getPriceUseCase $useCase)
     {
         try {
-            return $useCase->execute($id);
+            return $useCase->execute($request, $id);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
+    }
+
+    public function searchProductPrice(Request $request, searchProductForPriceUseCase $useCase)
+    {
+        try {
+            return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
+    }
+
+    function isLink(Request $request, IsLinkUseCase $useCase)
+    {
+        try {
+            return $useCase->execute($request);
         } catch (\Exception $e) {
             return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
         }

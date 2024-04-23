@@ -1,0 +1,11 @@
+{
+    "name": "ImportExelProducts",
+    "alias": "importexelproducts",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ImportExelProducts\\Providers\\ImportExelProductsServiceProvider"
+    ],
+    "files": []
+}

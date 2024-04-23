@@ -3,10 +3,10 @@
 namespace Modules\Catalog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Modules\Catalog\Entities\Currency;
 use Modules\Catalog\Http\Requests\CreateCurrencyRequest;
 use Modules\Catalog\Http\Requests\DeleteCurrencyRequest;
 use Modules\Catalog\Http\Requests\UpdateCurrencyRequest;
+use Modules\Catalog\Models\Currency;
 
 class CurrencyController extends Controller
 {
@@ -26,6 +26,7 @@ class CurrencyController extends Controller
 
         $currency       = new Currency();
         $currency->name = $data['name'];
+        $currency->code = $data['code'];
         $currency->save();
 
         return redirect()->back()->with('success', 'Валюта добавлена!');
@@ -48,6 +49,7 @@ class CurrencyController extends Controller
 
         if (isset($data['name'])) {
             $currency->name = $data['name'];
+            $currency->code = $data['code'];
             $currency->update();
 
         return redirect()->back()->with('success', 'Валюта обновлена!');

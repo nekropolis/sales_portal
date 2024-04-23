@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Prices\Entities;
+namespace Modules\Prices\Models;
 
 use App\Models\Sellers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

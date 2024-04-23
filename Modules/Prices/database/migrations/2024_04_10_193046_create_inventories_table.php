@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->integer('price_id');
             $table->integer('product_id');
-            $table->string('price')->default(0);
-            $table->string('margin_id')->default(0);
-            $table->string('currency_id')->nullable();
-            $table->string('qty')->default(0);
-            $table->string('import_status')->nullable();
+            $table->integer('price')->default(0);
+            $table->integer('margin_id')->default(0);
+            $table->integer('currency_id')->default(0);;
+            $table->integer('qty')->default(0);
+            $table->integer('import_status')->default(0);
             $table->timestamps();
         });
     }

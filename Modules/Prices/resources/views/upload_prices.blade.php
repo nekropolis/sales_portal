@@ -77,7 +77,7 @@
                     <th scope="row">{{$key+1}}</th>
                     <td>{{$price['seller_name']}}</td>
                     <td>{{$price['orig_name']}}</td>
-                    <td onclick="window.location='{{ route('getPrice', $price['id']) }}'">{{$price['name']}}</td>
+                    <td class="cursor-table" onclick="window.location='{{ route('getPrice', $price['id']) }}'">{{$price['name']}}</td>
                     <td>{{$price['status']}}</td>
                     <td>{{date('d-m-Y H:i', strtotime($price['updated_at']))}}</td>
                     <td>

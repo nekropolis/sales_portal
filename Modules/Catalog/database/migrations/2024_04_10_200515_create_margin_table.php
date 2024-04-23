@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('margin', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('percent');
+            $table->integer('percent')->default(0);
             $table->timestamps();
         });
     }

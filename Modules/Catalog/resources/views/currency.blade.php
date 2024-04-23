@@ -35,9 +35,14 @@
                             </div>
                             <div class="modal-body">
                                 <div>
-                                    <label>
-                                        <input type="text" id="name" name="name" placeholder="Валюта"/>
-                                    </label>
+                                    <div>
+                                        <label for="name" class="col-form-label">Валюта</label>
+                                        <input type="text" class="form-control name" id="name" name="name">
+                                    </div>
+                                    <div>
+                                        <label for="code" class="col-form-label">Код Валюты</label>
+                                        <input type="text" class="form-control code" id="code" name="code">
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -67,6 +72,10 @@
                                     <label for="name" class="col-form-label">Валюта</label>
                                     <input type="text" class="form-control name" id="name" name="name">
                                 </div>
+                                <div>
+                                    <label for="code" class="col-form-label">Код Валюты</label>
+                                    <input type="text" class="form-control code" id="code" name="code">
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -85,6 +94,7 @@
             <tr>
                 <th scope="col" class="col-1">#</th>
                 <th scope="col">Валюта</th>
+                <th scope="col">Код Валюты</th>
                 <th scope="col" class="col-2">Дата создания</th>
                 <th scope="col" class="col-2">Действия</th>
             </tr>
@@ -94,6 +104,7 @@
                 <tr>
                     <th scope="row">{{$key+1}}</th>
                     <td>{{$item['name']}}</td>
+                    <td>{{$item['code']}}</td>
                     <td>{{date('d-m-Y', strtotime($item['created_at']))}}</td>
                     <td>
                         <button type="button" id="updateCurrency" data-id="{{$item['id']}}"
