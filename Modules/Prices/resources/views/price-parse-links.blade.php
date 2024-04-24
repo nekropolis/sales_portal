@@ -20,6 +20,20 @@
                 </ul>
             </div>
         @endif
+        <div class="btn-group btn-group-sm p-2 bd-highlight" role="group">
+            <button type="button" id="add_product" class="btn btn-outline-secondary add_product"
+                    onclick="return addProduct()">Добавить позицию
+            </button>
+            <button type="button" id="update_file" class="btn btn-outline-secondary update_file"
+                    onclick="return updateFile({{$price_uploaded['id']}})">Обновить файл
+            </button>
+            <button type="button" id="parse_price" class="btn btn-outline-info parse_price"
+                    onclick="return parsePrice({{$price_uploaded['id']}})">Распарсить
+            </button>
+            <button type="button" id="settings_price" class="btn btn-outline-secondary settings_price"
+                    onclick="return settingsPrice({{$price_uploaded['id']}})"><i class="bi bi-gear"></i>
+            </button>
+        </div>
 {{--        <div class="btn-toolbar mb-2 mb-md-0">
             <button type="button" id="update_file" class="btn btn-outline-secondary update_file"
                     onclick="return updateFile({{$price_uploaded['id']}})">Обновить файл
@@ -170,22 +184,28 @@
                 </li>
             </ul>
         </div>
-        <div class="btn-group btn-group-sm p-2 bd-highlight" role="group">
-            <button type="button" id="add_product" class="btn btn-outline-secondary add_product"
-                    onclick="return addProduct()">Добавить позицию
-            </button>
-            <button type="button" id="update_file" class="btn btn-outline-secondary update_file"
-                    onclick="return updateFile({{$price_uploaded['id']}})">Обновить файл
-            </button>
-        </div>
-        <div class="btn-group btn-group-sm p-2 bd-highlight" role="group">
-            <button type="button" id="parse_price" class="btn btn-outline-info parse_price"
-                    onclick="return parsePrice({{$price_uploaded['id']}})">Распарсить
-            </button>
-            <button type="button" id="settings_price" class="btn btn-outline-secondary settings_price"
-                    onclick="return settingsPrice({{$price_uploaded['id']}})">Настройки
-            </button>
-        </div>
+        <!-- Search -->
+
+            <form action="/price/{{$price_uploaded['id']}}" method="get">
+                <div class="input-group">
+                    <input
+                            type="text"
+                            id="search"
+                            data-id="{{$price_uploaded['id']}}"
+                            name="q"
+                            class="form-control"
+                            placeholder="Поиск..."
+                            value="{{ request('q') }}"
+                            aria-label="Example input"
+                            aria-describedby="button-addon1"
+                    />
+                    <button data-mdb-button-init data-mdb-ripple-init class="btn btn-sm btn-lg btn-outline-primary"
+                            type="submit" id="button-addon1" data-mdb-ripple-color="dark">
+                        <i class="bi bi-search"></i> GO
+                    </button>
+                </div>
+            </form>
+
     </div>
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="linkProductCanvas" aria-labelledby="linkProduct">
@@ -204,33 +224,10 @@
         </div>
     </div>
 
-    <!-- Search -->
-    <div class="w-100 mb-3 bd-highlight">
-        <form action="/price/{{$price_uploaded['id']}}" method="get">
-            <div class="input-group">
-                <input
-                        type="text"
-                        id="search"
-                        data-id="{{$price_uploaded['id']}}"
-                        name="q"
-                        class="form-control"
-                        placeholder="Поиск..."
-                        value="{{ request('q') }}"
-                        aria-label="Example input"
-                        aria-describedby="button-addon1"
-                />
-                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-sm btn-lg btn-outline-primary"
-                        type="submit" id="button-addon1" data-mdb-ripple-color="dark">
-                    <i class="bi bi-search"></i> GO
-                </button>
-            </div>
-        </form>
-    </div>
-
     <table class="table table-sm table-hover table-bordered sp-table align-middle">
         <thead>
         <tr>
-            <th scope="col">#</th>
+            <th scope="col">ID</th>
             <th scope="col">Связь</th>
             <th scope="col">Наименование</th>
             <th scope="col">Связка Каталог</th>
@@ -245,22 +242,22 @@
             @endphp--}}
             <tbody>
             <tr class="{{$item->is_link == 1 ? 'table-success' : ''}}">
-                <th scope="row">{{$key+1}}</th>
+                <th scope="row">{{$item->id}}</th>
                 <td class="cursor-table">
                     <input class="check-input" type="checkbox" id="is_link" data-id="{{ $item->price_id }}"
                            value="{{ $item->is_link }}" {{$item->is_link == 1 ? 'checked' : ''}}>
                     </td>
-                <td>{{$item->price->model}}</td>
-                <td class="cursor-table" onClick="linkListProduct('{{ $item->price->id }}', '{{ $item->price->model}}')">
+                <td>{{$item->priceParse->model}}</td>
+                <td class="cursor-table" onClick="linkListProduct('{{ $item->priceParse->id }}', '{{ $item->priceParse->model}}')">
                     @if ($item->product !== null)
                         {{$item->product->brand->name}} {{$item->product->model}}
                     @else
                         Не нашлось совпадения
                     @endif
                 </td>
-                <td>{{$item->price->additional}}</td>
-                <td>{{$item->price->quantity}}</td>
-                <td>{{$item->price->price}}</td>
+                <td>{{$item->priceParse->additional}}</td>
+                <td>{{$item->priceParse->quantity}}</td>
+                <td>{{$item->priceParse->price}}</td>
             </tr>
             </tbody>
         @endforeach

@@ -6,10 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use Modules\Prices\Models\PricesUploaded;
-use Modules\Prices\UseCases\getPriceUseCase;
+use Modules\Prices\UseCases\getPriceParseUseCase;
 use Modules\Prices\UseCases\getUploadedPricesUseCase;
 use Modules\Prices\UseCases\IsLinkUseCase;
-use Modules\Prices\UseCases\LinkPriceUseCase;
 use Modules\Prices\UseCases\parsePriceUseCase;
 use Modules\Prices\UseCases\searchProductForPriceUseCase;
 use Modules\Prices\UseCases\updateUploadedPriceUseCase;
@@ -100,7 +99,7 @@ class PricesController extends Controller
         }
     }
 
-    public function getPrice(Request $request, $id, getPriceUseCase $useCase)
+    public function getPriceParse(Request $request, $id, getPriceParseUseCase $useCase)
     {
         try {
             return $useCase->execute($request, $id);

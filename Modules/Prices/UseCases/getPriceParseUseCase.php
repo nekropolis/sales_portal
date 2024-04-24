@@ -5,11 +5,10 @@ namespace Modules\Prices\UseCases;
 
 use Illuminate\Http\Request;
 use Modules\Prices\Models\LinkPrices;
-use Modules\Prices\Models\Prices;
 use Modules\Prices\Models\PricesUploaded;
 use Elasticsearch;
 
-class getPriceUseCase
+class getPriceParseUseCase
 {
     public function execute(Request $request, $id)
     {
@@ -45,11 +44,11 @@ class getPriceUseCase
                 ->get();
         } else {
             $price = LinkPrices::query()
-                ->whereHas('price', function ($query) use ($id) {
+                ->whereHas('priceParse', function ($query) use ($id) {
                     $query->where('price_uploaded_id', $id);
                 })
                 ->where('is_exist', 1)
-                ->with('price')
+                ->with('priceParse')
                 ->with('product')
                 ->with('product.brand')
                 ->paginate(20);
@@ -69,7 +68,7 @@ class getPriceUseCase
             return $data;
         });
 
-        return view('prices::price', [
+        return view('prices::price-parse-links', [
             'price'          => $price,
             'price_uploaded' => $price_uploaded[0],
             'showPagination' => is_null($q),

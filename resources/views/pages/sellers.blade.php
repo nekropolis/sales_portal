@@ -39,7 +39,7 @@
         <table class="table table-hover table-bordered">
             <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">ID</th>
                 <th scope="col">Поставщик</th>
                 <th scope="col">Дата создания</th>
             </tr>
@@ -47,7 +47,7 @@
             @foreach($sellers as $key=>$seller)
                 <tbody>
                 <tr>
-                    <th scope="row">{{$key+1}}</th>
+                    <th scope="row">{{$seller['id']}}</th>
                     <td>{{$seller['name']}}</td>
                     <td>{{date('d-m-Y H:i', strtotime($seller['updated_at']))}}</td>
                 </tr>

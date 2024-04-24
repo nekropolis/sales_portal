@@ -22,7 +22,7 @@ class getUploadedPricesUseCase
 
         $sellers = Sellers::all();
 
-        return view('prices::upload_prices', [
+        return view('prices::upload-prices', [
             'prices'  => $result,
             'sellers' => $sellers,
         ]);

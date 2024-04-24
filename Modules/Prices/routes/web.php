@@ -18,7 +18,7 @@ use Modules\Prices\Http\Controllers\PricesController;
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/price/{price_id}', [PricesController::class, 'getPrice'])->name('getPrice');
+    Route::get('/price-parse/{price_id}', [PricesController::class, 'getPriceParse'])->name('getPriceParse');
     Route::get('/prices', [PricesController::class, 'listUploadedPrices'])->name('uploadedPrices');
     Route::post('/update-upload-price', [PricesController::class, 'updateUploadPrice'])->name('updateUploadPrice');
     Route::post('/delete-upload-price', [PricesController::class, 'deleteUploadPrice'])->name('deleteUploadPrice');

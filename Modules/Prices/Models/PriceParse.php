@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Prices extends Model
+class PriceParse extends Model
 {
     use HasFactory;
 
+    protected $table   = 'price_parse';
     protected $fillable = [
         'price_uploaded_id',
         'model',
@@ -24,6 +25,6 @@ class Prices extends Model
 
     public function link(): hasOne
     {
-        return $this->hasOne(LinkPrices::class, 'price_id', 'id');
+        return $this->hasOne(LinkPrices::class, 'price_model_id', 'id');
     }
 }

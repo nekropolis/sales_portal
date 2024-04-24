@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Modules\Catalog\Models\Brands;
-use Modules\Catalog\Models\Categories;
 use Modules\Catalog\Models\Products;
 
 class LinkPrices extends Model
@@ -18,7 +16,7 @@ class LinkPrices extends Model
     protected $table   = 'links';
     protected $fillable = [
         'product_id',
-        'price_id',
+        'price_model_id',
         'price_model_name_md5',
         'price_model_name',
         'is_link',
@@ -29,9 +27,9 @@ class LinkPrices extends Model
     protected $keyType = 'string';
     public $incrementing = false;
 
-    public function price(): belongsTo
+    public function priceParse(): belongsTo
     {
-        return $this->belongsTo(Prices::class);
+        return $this->belongsTo(PriceParse::class, 'price_model_id', 'id');
     }
 
     public function product(): belongsTo

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('links', function (Blueprint $table) {
             $table->id();
             $table->integer('product_id')->default(0);
-            $table->integer('price_id');
+            $table->integer('price_model_id');
             $table->string('price_model_name_md5');
             $table->string('price_model_name');
             $table->integer('is_link')->default(0);

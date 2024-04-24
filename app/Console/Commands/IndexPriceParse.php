@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 
 use Elasticsearch;
-use Modules\Prices\Models\Prices;
+use Modules\Prices\Models\PriceParse;
 
 class IndexPriceParse extends Command
 {
@@ -28,7 +28,7 @@ class IndexPriceParse extends Command
      */
     public function handle()
     {
-        $prices = Prices::all();
+        $prices = PriceParse::all();
 
         foreach ($prices as $price) {
             try {

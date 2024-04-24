@@ -83,7 +83,7 @@
         <table class="table table-sm table-hover table-bordered sp-table">
             <thead>
             <tr>
-                <th scope="col" class="col-1">#</th>
+                <th scope="col" class="col-1">ID</th>
                 <th scope="col">Категория</th>
                 <th scope="col" class="col-2">Дата создания</th>
                 <th scope="col" class="col-2">Действия</th>
@@ -92,7 +92,7 @@
             @foreach($categories as $key=>$category)
                 <tbody>
                 <tr>
-                    <th scope="row">{{$key+1}}</th>
+                    <th scope="row">{{$category['id']}}</th>
                     <td>{{$category['name']}}</td>
                     <td>{{date('d-m-Y', strtotime($category['created_at']))}}</td>
                     <td>

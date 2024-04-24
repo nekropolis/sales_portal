@@ -143,7 +143,7 @@
         @foreach($products as $key=>$product)
             <tbody>
             <tr>
-                <th scope="row">{{$key+1}}</th>
+                <th scope="row">{{$product['id']}}</th>
                 <td>{{$product['sku']}}</td>
                 <td>{{$product['category']['name']}}</td>
                 <td>{{$product['brand']['name']}}</td>

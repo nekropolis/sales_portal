@@ -92,7 +92,7 @@
         <table class="table table-sm table-hover table-bordered sp-table">
             <thead>
             <tr>
-                <th scope="col" class="col-1">#</th>
+                <th scope="col" class="col-1">ID</th>
                 <th scope="col">Группа наценки</th>
                 <th scope="col">Процент наценки %</th>
                 <th scope="col" class="col-2">Дата создания</th>
@@ -102,7 +102,7 @@
             @foreach($margin as $key=>$item)
                 <tbody>
                 <tr>
-                    <th scope="row">{{$key+1}}</th>
+                    <th scope="row">{{$item['id']}}</th>
                     <td>{{$item['name']}}</td>
                     <td>{{$item['percent']}}</td>
                     <td>{{date('d-m-Y', strtotime($item['created_at']))}}</td>

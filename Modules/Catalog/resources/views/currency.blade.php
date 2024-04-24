@@ -92,7 +92,7 @@
         <table class="table table-sm table-hover table-bordered sp-table">
             <thead>
             <tr>
-                <th scope="col" class="col-1">#</th>
+                <th scope="col" class="col-1">ID</th>
                 <th scope="col">Валюта</th>
                 <th scope="col">Код Валюты</th>
                 <th scope="col" class="col-2">Дата создания</th>
@@ -102,7 +102,7 @@
             @foreach($currency as $key=>$item)
                 <tbody>
                 <tr>
-                    <th scope="row">{{$key+1}}</th>
+                    <th scope="row">{{$item['id']}}</th>
                     <td>{{$item['name']}}</td>
                     <td>{{$item['code']}}</td>
                     <td>{{date('d-m-Y', strtotime($item['created_at']))}}</td>

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Modules\Catalog\Models\Products;
 use Modules\Prices\Models\LinkPrices;
-use Modules\Prices\Models\Prices;
+use Modules\Prices\Models\PriceParse;
 use Modules\Prices\Models\PricesUploaded;
 use Shuchkin\SimpleXLSX;
 use Elasticsearch;
@@ -68,7 +68,7 @@ class parsePriceUseCase
         foreach ($rows as $item) {
             //dd($rows, $item);
             $existingNamesRows[] = $item[$model_name];
-            Prices::query()->updateOrCreate([
+            PriceParse::query()->updateOrCreate([
                 'model'             => $item[$model_name],
                 'price_uploaded_id' => $id,
             ],
@@ -79,9 +79,9 @@ class parsePriceUseCase
                 ]);
         }
 
-        Prices::where(['price_uploaded_id' => $id])->whereNotIn('model', $existingNamesRows)->update(['quantity' => 0]);
+        PriceParse::where(['price_uploaded_id' => $id])->whereNotIn('model', $existingNamesRows)->update(['quantity' => 0]);
 
-        $prices = Prices::with('link')->where(['price_uploaded_id' => $id])->whereNotIn('quantity', [0])->get();
+        $prices = PriceParse::with('link')->where(['price_uploaded_id' => $id])->whereNotIn('quantity', [0])->get();
 
         $existingNames = [];
         foreach ($prices as $price) {
@@ -130,18 +130,20 @@ class parsePriceUseCase
 
             $existingNames[] = $price->model;
             LinkPrices::query()->updateOrCreate([
-                'price_id'             => $price->id,
+                'price_model_id'             => $price->id,
                 'price_model_name_md5' => md5($price->model),
                 'price_model_name'     => $price->model,
             ], $dataToUpdate);
         }
 
-        LinkPrices::with('price')
-            ->whereHas('price', function ($query) use ($id) {
+        LinkPrices::with('priceParse')
+            ->whereHas('priceParse', function ($query) use ($id) {
                 $query->where('price_uploaded_id', $id);
             })
             ->whereNotIn('price_model_name', $existingNames)
             ->update(['is_exist' => 0]);
+
+        dd(LinkPrices::all());
 
         return back()->with('success', 'Price parsed successfully.');
     }

@@ -83,7 +83,7 @@
         <table class="table table-sm table-hover table-bordered sp-table">
             <thead>
             <tr>
-                <th scope="col" class="col-1">#</th>
+                <th scope="col" class="col-1">ID</th>
                 <th scope="col">Бренд</th>
                 <th scope="col" class="col-2">Дата создания</th>
                 <th scope="col" class="col-2">Действия</th>
@@ -92,7 +92,7 @@
             @foreach($brands as $key=>$brand)
                 <tbody>
                 <tr>
-                    <th scope="row">{{$key+1}}</th>
+                    <th scope="row">{{$brand['id']}}</th>
                     <td>{{$brand['name']}}</td>
                     <td>{{date('d-m-Y', strtotime($brand['created_at']))}}</td>
                     <td>

@@ -14,7 +14,7 @@ class IsLinkUseCase
         //dd($data, isset($data['checkbox']), isset($data['product_id']), !empty($data['checkbox']), !empty($data['product_id']));
 
         if (isset($data['checkbox'])) {
-            return LinkPrices::where('price_id', $data['price_id'])->update([
+            return LinkPrices::where('price_model_id', $data['price_id'])->update([
                 'is_link' => $data['checkbox'],
             ]);
         }

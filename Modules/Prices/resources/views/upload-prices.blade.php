@@ -62,7 +62,7 @@
         <table class="table table-sm table-hover table-bordered sp-table">
             <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">ID</th>
                 <th scope="col">Поставщик</th>
                 <th scope="col">Прайс</th>
                 <th scope="col">Названия прайса в системе</th>
@@ -74,10 +74,10 @@
             @foreach($prices as $key=>$price)
                 <tbody>
                 <tr>
-                    <th scope="row">{{$key+1}}</th>
+                    <th scope="row">{{$price['id']}}</th>
                     <td>{{$price['seller_name']}}</td>
                     <td>{{$price['orig_name']}}</td>
-                    <td class="cursor-table" onclick="window.location='{{ route('getPrice', $price['id']) }}'">{{$price['name']}}</td>
+                    <td class="cursor-table" onclick="window.location='{{ route('getPriceParse', $price['id']) }}'">{{$price['name']}}</td>
                     <td>{{$price['status']}}</td>
                     <td>{{date('d-m-Y H:i', strtotime($price['updated_at']))}}</td>
                     <td>
