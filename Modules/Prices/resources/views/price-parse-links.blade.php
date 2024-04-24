@@ -186,7 +186,7 @@
         </div>
         <!-- Search -->
 
-            <form action="/price/{{$price_uploaded['id']}}" method="get">
+            <form action="/price-parse/{{$price_uploaded['id']}}" method="get">
                 <div class="input-group">
                     <input
                             type="text"
@@ -228,7 +228,7 @@
         <thead>
         <tr>
             <th scope="col">ID</th>
-            <th scope="col">Связь</th>
+            <th scope="col" onClick="return sortIsLink({{$price_uploaded['id']}})">Связь</th>
             <th scope="col">Наименование</th>
             <th scope="col">Связка Каталог</th>
             <th scope="col">Дополнительная информация</th>
@@ -244,7 +244,7 @@
             <tr class="{{$item->is_link == 1 ? 'table-success' : ''}}">
                 <th scope="row">{{$item->id}}</th>
                 <td class="cursor-table">
-                    <input class="check-input" type="checkbox" id="is_link" data-id="{{ $item->price_id }}"
+                    <input class="check-input" type="checkbox" id="is_link" data-id="{{ $item->price_model_id }}"
                            value="{{ $item->is_link }}" {{$item->is_link == 1 ? 'checked' : ''}}>
                     </td>
                 <td>{{$item->priceParse->model}}</td>
@@ -267,6 +267,8 @@
             {{ $price->links() }}
         @endif
     </div>
+
+    @yield('price-parse-table')
 
     <script src="/js/components/price.js"></script>
 @endsection

@@ -139,3 +139,22 @@ function addProductToLink(price_id, product_id) {
         console.log(error)
     });
 }
+
+let is_sort_click = false;
+function sortIsLink(price_upload_id) {
+    is_sort_click = !is_sort_click;
+
+    let param = {
+        price_upload_id: price_upload_id,
+        is_link_sort: is_sort_click ? 1 : 0,
+    }
+    axios({
+        method: "get",
+        url: "/price-parse/" + price_upload_id,
+        params: param,
+        headers: {'content-type': 'application/x-www-form-urlencoded'}
+    }).then(function (response) {
+        console.log(response.data);
+        //location.reload();
+    });
+}

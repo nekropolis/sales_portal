@@ -19,7 +19,7 @@ class IsLinkUseCase
             ]);
         }
         if (isset($data['product_id'])) {
-            return LinkPrices::where('price_id', $data['price_id'])->update([
+            return LinkPrices::where('price_model_id', $data['price_id'])->update([
                 'product_id' => $data['product_id'],
             ]);
         }

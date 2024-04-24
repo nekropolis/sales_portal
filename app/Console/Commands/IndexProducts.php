@@ -29,10 +29,8 @@ class IndexProducts extends Command
     public function handle()
     {
         $products = Products::with('brand:id,name')->get();
-        //dd($products->brand->name);
 
         foreach ($products as $product) {
-            //dd($product);
             try {
                 Elasticsearch::index([
                     'id'    => $product->id,

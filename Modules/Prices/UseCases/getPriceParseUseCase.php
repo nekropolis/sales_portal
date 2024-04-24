@@ -3,55 +3,24 @@
 namespace Modules\Prices\UseCases;
 
 
+use App\Traits\Makeable;
 use Illuminate\Http\Request;
-use Modules\Prices\Models\LinkPrices;
 use Modules\Prices\Models\PricesUploaded;
-use Elasticsearch;
 
 class getPriceParseUseCase
 {
+    use Makeable;
+
     public function execute(Request $request, $id)
     {
-        $q = $request->get('q');
+        $sort_link = $request->get('is_link_sort');
 
-        if ($q) {
-            $response = Elasticsearch::search([
-                'index' => 'price-links',
-                "size"  => 20,
-                'body'  => [
-                    'query' => [
-                        'function_score' => [
-                            'query'     => [
-                                'multi_match' => [
-                                    'query'  => $q,
-                                    'fields' => ['price_model_name', 'price_model_name_md5'],
-                                ],
-                            ],
-                            "min_score" => 0.7,
-                        ],
-                    ],
-                ],
-            ]);
-
-            $priceIds = array_column($response['hits']['hits'], '_id');
-            $price    = LinkPrices::with('price')
-                ->whereHas('price', function ($query) use ($id) {
-                    $query->where('price_uploaded_id', $id);
-                })
-                ->whereNotIn('is_exist', [0])
-                ->whereIn('id', $priceIds)
-                ->orderBy(\DB::raw('FIELD(id,'.implode(',', $priceIds).')'))
-                ->get();
+        if ($request->get('q')) {
+            $price = searchInPriceParseLinksUseCase::make()->execute($request, [$id]);
+        } elseif ($sort_link == 1) {
+            $price = sortIsLinksUseCase::make()->execute($request, [$id]);
         } else {
-            $price = LinkPrices::query()
-                ->whereHas('priceParse', function ($query) use ($id) {
-                    $query->where('price_uploaded_id', $id);
-                })
-                ->where('is_exist', 1)
-                ->with('priceParse')
-                ->with('product')
-                ->with('product.brand')
-                ->paginate(20);
+            $price = listLinksUseCase::make()->execute($request, [$id]);
         }
 
         $collection = PricesUploaded::where('id', $id)
@@ -71,7 +40,7 @@ class getPriceParseUseCase
         return view('prices::price-parse-links', [
             'price'          => $price,
             'price_uploaded' => $price_uploaded[0],
-            'showPagination' => is_null($q),
+            'showPagination' => is_null($request->get('q')),
         ]);
     }
 }
