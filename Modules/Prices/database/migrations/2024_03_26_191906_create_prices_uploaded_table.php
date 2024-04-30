@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('prices_uploaded', function (Blueprint $table) {
             $table->id();
+            $table->integer('is_active')->default(1);
             $table->integer('seller_id')->nullable();
             $table->string('orig_name')->nullable();
             $table->string('name');

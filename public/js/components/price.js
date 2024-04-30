@@ -61,7 +61,7 @@ function updateFile(price_id) {
     $(".modal-body #price_id").val(price_id);
 }
 
-let timeout = null;
+/*let timeout = null;
 $('#search').on('keyup', function () {
     clearTimeout(timeout);
     let q = $('#search').val();
@@ -81,7 +81,7 @@ $('#search').on('keyup', function () {
             });
         }, 1500);
     }
-});
+});*/
 
 function linkListProduct(id, model) {
     $('#linkProductCanvas').offcanvas('show');
@@ -112,7 +112,7 @@ linkProductCanvas.addEventListener('hidden.bs.offcanvas', function () {
 })
 
 $(function () {
-    $('td.cursor-table input[type="checkbox"]').on('click', function () {
+    $('td.is-link input[type="checkbox"]').on('click', function () {
         let param = {
             price_id: $(this).data("id"),
             checkbox: $(this).is(":checked") ? 1 : 0,
@@ -156,6 +156,7 @@ function sortIsLink(price_upload_id) {
         price_upload_id: price_upload_id,
         is_link_sort: is_sort_click ? 1 : 0,
     }
+    //alert(is_sort_click ? 1 : 0);
     axios({
         method: "get",
         url: "/price-parse/" + price_upload_id,

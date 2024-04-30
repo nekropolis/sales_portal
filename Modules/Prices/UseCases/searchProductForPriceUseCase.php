@@ -34,6 +34,8 @@ class searchProductForPriceUseCase
 
         $productIds = array_column($response['hits']['hits'], '_id');
 
+        //dd($response, $productIds);
+
         if (!empty($productIds)) {
             return Products::with('brand')->whereIn('id', $productIds)
                 ->orderBy(\DB::raw('FIELD(id,'.implode(',', $productIds).')'))->get();

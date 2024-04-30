@@ -10,13 +10,14 @@ class sortIsLinksUseCase
 {
     use Makeable;
 
-    public function execute(Request $request, $id)
+    public function execute(Request $request)
     {
-        $price_uploaded_id = $id[0];
+        $sort_link = $request->get('is_link_sort');
+        $id = $request->get('price_upload_id');
 
         return LinkPrices::query()
-            ->whereHas('priceParse', function ($query) use ($price_uploaded_id) {
-                $query->where('price_uploaded_id', $price_uploaded_id);
+            ->whereHas('priceParse', function ($query) use ($id) {
+                $query->where('price_uploaded_id', $id);
             })
             ->where('is_exist', 1)
             ->with('priceParse')

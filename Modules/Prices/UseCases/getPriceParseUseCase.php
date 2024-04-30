@@ -19,8 +19,9 @@ class getPriceParseUseCase
 
         if ($request->get('q')) {
             $price = searchInPriceParseLinksUseCase::make()->execute($request, [$id]);
-        } elseif ($sort_link == 1) {
-            $price = sortIsLinksUseCase::make()->execute($request, [$id]);
+        } elseif ($sort_link === '1' || $sort_link === '0') {
+            // not work else
+            $price = sortIsLinksUseCase::make()->execute($request);
         } else {
             $price = listLinksUseCase::make()->execute($id);
         }
@@ -36,7 +37,7 @@ class getPriceParseUseCase
             $data['orig_price_name'] = $price_upload['orig_name'];
             $data['status']          = $price_upload['status'];
             $data['seller_name']     = $price_upload->seller->name;
-            $data['currency']        = $price_upload->currency->code;
+            $data['currency']        = $price_upload->currency ? $price_upload->currency->code : '';
 
             return $data;
         });

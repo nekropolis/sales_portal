@@ -35,10 +35,10 @@
         </li>
         </div>
     </ul>
-{{--    <a href="/prices" class="nav-link px-2 align-middle {{( str_contains(request()->path(), 'price')) ? "active" : null}}">
-        <i class="fs-4 bi-file-text"></i><span class="ms-1 d-none d-sm-inline">Прайс-листы</span></a>
-    <a href="/sellers" class="nav-link px-2 align-middle {{(request()->path()=="sellers") ? "active" : null}}">
-        <i class="fs-4 bi-truck"></i><span class="ms-1 d-none d-sm-inline">Поставщики</span></a>--}}
+    <a href="#" class="nav-link px-2 align-middle {{( (request()->path()=="home")=="price") ? "active" : null}}">
+        <i class="fs-4 bi-clipboard-data"></i><span class="ms-1 d-none d-sm-inline">Трейд Зона</span></a>
+    {{--    <a href="/sellers" class="nav-link px-2 align-middle {{(request()->path()=="sellers") ? "active" : null}}">
+            <i class="fs-4 bi-truck"></i><span class="ms-1 d-none d-sm-inline">Поставщики</span></a>--}}
 
 
     <a href="#sellersMenu" data-bs-toggle="collapse" class="nav-link px-2 align-middle">

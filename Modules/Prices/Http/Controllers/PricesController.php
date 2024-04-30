@@ -10,6 +10,7 @@ use Modules\Prices\UseCases\addModelToPriceParseUseCase;
 use Modules\Prices\UseCases\getPriceParseUseCase;
 use Modules\Prices\UseCases\getPriceUseCase;
 use Modules\Prices\UseCases\getUploadedPricesUseCase;
+use Modules\Prices\UseCases\IsActiveUseCase;
 use Modules\Prices\UseCases\IsLinkUseCase;
 use Modules\Prices\UseCases\parsePriceUseCase;
 use Modules\Prices\UseCases\searchProductForPriceUseCase;
@@ -128,10 +129,10 @@ class PricesController extends Controller
         }
     }
 
-    function getPrice(Request $request, $id, getPriceUseCase $useCase)
+    function isActive(Request $request, IsActiveUseCase $useCase)
     {
         try {
-            return $useCase->execute($request, $id);
+            return $useCase->execute($request);
         } catch (\Exception $e) {
             return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
         }

@@ -135,48 +135,6 @@
         </div>
     </form>
 
-    <!-- Add Model -->
-    <form action="{{route('addModelToPriceParse')}}" method="post" enctype="multipart/form-data">
-        @csrf
-        <div class="modal fade" id="addModelToPriceParse" tabindex="-1" role="dialog"
-             aria-labelledby="addModelToPriceParse"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addModelToPriceParse">Добавить модель к прайс-листу</h5>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body row">
-                        <input type="text" class="form-control price_uploaded_id" id="price_uploaded_id"
-                               name="price_uploaded_id" value="price_uploaded_id" hidden>
-                        <div class="col">
-                            <label for="model" class="col-form-label">Модель</label>
-                            <input type="text" class="form-control model" id="model"
-                                   name="model" aria-label=".form-control-sm example">
-                            <label for="price" class="col-form-label">Цена</label>
-                            <input type="number" class="form-control price" id="price"
-                                   name="price" aria-label=".form-control-sm example">
-                        </div>
-                        <div class="col">
-                            <label for="quantity" class="col-form-label">Колличество</label>
-                            <input type="number" class="form-control quantity" id="quantity"
-                                   name="quantity" aria-label=".form-control-sm example">
-                            <label for="additional" class="col-form-label">Дополнительная информация</label>
-                            <input type="text" class="form-control additional" id="additional"
-                                   name="additional" aria-label=".form-control-sm example">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" value="submit" class="btn btn-primary">Добавить</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-
     <!-- Canvas -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="linkProductCanvas" aria-labelledby="linkProduct">
         <input type="text" class="offcanvas price_model_id" id="price_model_id"
@@ -294,7 +252,7 @@
                     <tbody>
                     <tr class="{{$item->is_link == 1 ? 'table-success' : ''}}">
                         <th scope="row">{{$item->id}}</th>
-                        <td class="cursor-table">
+                        <td class="is-link">
                             <input class="check-input" type="checkbox" id="is_link"
                                    data-id="{{ $item->price_model_id }}"
                                    value="{{ $item->is_link }}" {{$item->is_link == 1 ? 'checked' : ''}}>

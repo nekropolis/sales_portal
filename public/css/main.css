@@ -54,11 +54,16 @@
 }
 
 .check-input {
-    height: 20px; /* not needed */
-    width: 20px; /* not needed */
-    margin-top: 13px;
+    height: 15px; /* not needed */
+    width: 15px; /* not needed */
+    margin-top: 5px;
+    cursor: pointer;
 }
 
 .side-menu {
     padding-top: 30px;
+}
+
+*:focus {
+    box-shadow: none !important;
 }

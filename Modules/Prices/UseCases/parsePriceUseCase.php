@@ -37,30 +37,32 @@ class parsePriceUseCase
             $validate_qty_name   = false;
             $validate_additional = false;
 
-            foreach (array_slice($xlsx->rows(), $numeration_started - 1) as $r) {
-                if (in_array($model_name, $r)) {
-                    $validate_model_name = true;
-                }
-                if (in_array($price_name, $r)) {
-                    $validate_price_name = true;
-                }
-                if (in_array($qty_name, $r)) {
-                    $validate_qty_name = true;
-                }
-                if (in_array($additional, $r)) {
-                    $validate_additional = true;
+            foreach (array_slice($xlsx->rows(), $numeration_started - 1) as $k => $r) {
+                if ($k === 0) {
+                    if ($model_name && in_array($model_name, $r)) {
+                        $validate_model_name = true;
+                    }
+                    if ($price_name && in_array($price_name, $r)) {
+                        $validate_price_name = true;
+                    }
+                    if ($qty_name && in_array($qty_name, $r)) {
+                        $validate_qty_name = true;
+                    }
+                    if ($additional && in_array($additional, $r)) {
+                        $validate_additional = true;
+                    }
                 }
             }
 
-            $nameValid = !$validate_model_name ? 'Название колонки с наименованием'
+            $valid = !$validate_model_name ? 'Название колонки с наименованием'
                 : (!$validate_price_name ? 'Название колонки с ценой'
                     : (!$validate_qty_name ? 'Название колонки с колличеством'
                         : (!$validate_additional ? 'Любое название колонки из прайса'
-                            : 'Нумерация')));
+                            : 'ok')));
 
-            //dd(!$validate_model_name, !$validate_price_name, !$validate_additional, !$validate_qty_name, $nameValid);
+            //dd($validate_model_name, $validate_price_name, $validate_qty_name, $validate_additional, $valid);
 
-            if ($validate_model_name && $validate_price_name && $validate_qty_name && $validate_additional) {
+            if ($valid == 'ok') {
                 foreach (array_slice($xlsx->rows(), $numeration_started - 1) as $k => $r) {
                     if ($k === 0) {
                         $header_values = $r;
@@ -70,7 +72,7 @@ class parsePriceUseCase
                 }
             } else {
                 return back()->with('error',
-                    'Ошибка, проверьте правильность поля - "'.$nameValid.'". Или номер строки, где размещено наименование');
+                    'Ошибка, проверьте правильность поля - "'.$valid.'". Или номер строки, где размещено наименование');
             }
         }
 

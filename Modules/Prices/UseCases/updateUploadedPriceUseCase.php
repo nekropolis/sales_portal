@@ -21,12 +21,12 @@ class updateUploadedPriceUseCase
         if (isset($data['name'])) {
             $price->name               = $data['name'];
             $price->sheet_name         = $data['sheet_name'];
-            $price->numeration_started = $data['numeration_started'];
+            $price->numeration_started = $data['numeration_started'] ?? 1;
             $price->model_name         = $data['model_name'];
             $price->price_name         = $data['price_name'];
             $price->qty_name           = $data['qty_name'];
             $price->additional         = $data['additional'];
-            $price->currency_id        = $data['currency_id'];
+            $price->currency_id        = $data['currency_id'] ?? 0;
             $price->save();
 
             return redirect()->back()->with('success', 'Настройки обновлены!');

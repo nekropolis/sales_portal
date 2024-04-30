@@ -49,6 +49,7 @@
             <thead>
             <tr>
                 <th scope="col">ID</th>
+                <th scope="col">Активный</th>
                 <th scope="col">Поставщик</th>
                 <th scope="col">Прайс</th>
                 <th scope="col">Названия прайса в системе</th>
@@ -59,17 +60,23 @@
             </thead>
             @foreach($prices as $key=>$price)
                 <tbody>
-                <tr>
+                <tr class="{{$price['is_active'] == 1 ? 'table-success' : ''}}">
                     <th scope="row">{{$price['id']}}</th>
+                    <td class="active-price">
+                        <input class="check-input" type="checkbox" id="is_link"
+                               data-id="{{ $price['id'] }}"
+                               value="{{ $price['is_active'] }}" {{$price['is_active'] == 1 ? 'checked' : ''}}>
+                    </td>
                     <td>{{$price['seller_name']}}</td>
                     <td>{{$price['orig_name']}}</td>
-                    <td class="cursor-table" onclick="window.location='{{ route('getPriceParse', $price['id']) }}'">{{$price['name']}}</td>
+                    <td class="cursor-table" onclick="window.location='{{ route('getPriceParse', $price['id']) }}'">
+                        <i class="bi bi-box-arrow-in-right"></i> {{$price['name']}} <i class="bi bi-folder2-open"></i>
+                    </td>
                     <td>{{$price['status']}}</td>
                     <td>{{date('d-m-Y H:i', strtotime($price['updated_at']))}}</td>
                     <td>
                         <button type="button" id="delete_price" data-id="{{$price['id']}}"
-                                class="btn btn-sm btn-lg btn-outline-danger delete_price"
-                                onclick="return confirm('Подтвердить удаление?')">
+                                class="btn btn-sm btn-lg btn-outline-danger delete_price">
                             <i class="bi bi-trash3"></i>
                         </button>
                     </td>

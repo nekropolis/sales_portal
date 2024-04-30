@@ -11,13 +11,38 @@ function showFileName(event) {
     infoArea.textContent = 'Имя файла: ' + fileName;
 }
 
-$(document).ready(function () {
+$(document).ready(function (e) {
     $(".delete_price").on('click', function () {
+        let retVal = confirm('Подтвердить удаление?')
         const price_id = $(this).data('id');
 
-        axios.post("/delete-upload-price", {price_id},
+        if (retVal === true) {
+            axios.post("/delete-upload-price", {price_id},
+                {'content-type': 'application/x-www-form-urlencoded'}).then(({}) => {
+                location.reload();
+            }).catch((error) => {
+                console.log(error)
+            });
+        } else {
+           e.preventDefault();
+        }
+    });
+});
+
+$(function () {
+    $('td.active-price input[type="checkbox"]').on('click', function () {
+        let param = {
+            price_id: $(this).data("id"),
+            checkbox: $(this).is(":checked") ? 1 : 0,
+        }
+
+        if (this.checked)
+            $(this).closest("tr").addClass("table-success");
+        else
+            $(this).closest("tr").removeClass("table-success");
+
+        axios.post("/is_active", {param},
             {'content-type': 'application/x-www-form-urlencoded'}).then(({}) => {
-            location.reload();
         }).catch((error) => {
             console.log(error)
         });
