@@ -1,6 +1,11 @@
 function settingsPrice(price_id) {
     $('#settingsPrice').modal('show');
     $(".modal-body #price_id").val(price_id);
+    $("#currency").change(function () {
+        let currency_id = $('#datalistCurrency option[value="' + $('#currency').val() + '"]').data('id');
+        $(".modal-body #currency_id").val(currency_id);
+    });
+
     const settingsPriceModal = document.getElementById('settingsPrice');
     const name = settingsPriceModal.querySelector('.modal-body .name');
     const sheet_name = settingsPriceModal.querySelector('.modal-body .sheet_name');
@@ -9,9 +14,11 @@ function settingsPrice(price_id) {
     const price_name = settingsPriceModal.querySelector('.modal-body .price_name');
     const qty_name = settingsPriceModal.querySelector('.modal-body .qty_name');
     const additional = settingsPriceModal.querySelector('.modal-body .additional');
+    const currency = settingsPriceModal.querySelector('.modal-body .currency');
 
     axios.post("/update-upload-price", {price_id},
         {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
+        $(".modal-body #currency_id").val(data.currency_id);
         name.value = data.name
         sheet_name.value = data.sheet_name == '[]' ? '' : data.sheet_name
         numeration_started.value = data.numeration_started == '[]' ? '' : data.numeration_started
@@ -19,17 +26,21 @@ function settingsPrice(price_id) {
         price_name.value = data.price_name == '[]' ? '' : data.price_name
         qty_name.value = data.qty_name == '[]' ? '' : data.qty_name
         additional.value = data.additional == '[]' ? '' : data.additional
+        currency.value = data.currency.name == '[]' ? '' : data.currency.name
     }).catch((error) => {
         console.log(error)
     });
 }
 
 function parsePrice(price_id) {
+    $('#modalWaitParse').modal('show');
     //const price_id = $('#price_id').val();
     axios.post("/parse-price", {price_id},
         {'content-type': 'application/x-www-form-urlencoded'}).then(({}) => {
+        $('#modalWaitParse').modal('hide');
         location.reload();
     }).catch((error) => {
+        $('#modalWaitParse').modal('hide');
         console.log(error)
     });
 }
@@ -48,10 +59,6 @@ function updateFile(price_id) {
     }
 
     $(".modal-body #price_id").val(price_id);
-}
-
-function addProduct() {
-    $('#addProduct').modal('show');
 }
 
 let timeout = null;
@@ -79,6 +86,7 @@ $('#search').on('keyup', function () {
 function linkListProduct(id, model) {
     $('#linkProductCanvas').offcanvas('show');
     document.getElementById('priceModel').innerHTML = model;
+    $(".offcanvas #price_model_id").val(id);
 
     axios({
         method: "get",
@@ -156,5 +164,27 @@ function sortIsLink(price_upload_id) {
     }).then(function (response) {
         console.log(response.data);
         //location.reload();
+    });
+}
+
+function getIdOfDatalist() {
+    let element_input = document.getElementById('product-select');
+    let element_datalist = document.getElementById('datalistOptions');
+    let opSelected = element_datalist.querySelector(`[value="${element_input.value}"]`);
+    let product_id = opSelected.getAttribute('data-value');
+    let price_model_id = document.getElementById('price_model_id').value;
+
+    let param = {
+        price_id: parseInt(price_model_id),
+        product_id: parseInt(product_id),
+    }
+
+    axios.post("/is-link", {param},
+        {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
+        console.log(data)
+        $('#linkProductCanvas').offcanvas('hide');
+        location.reload();
+    }).catch((error) => {
+        console.log(error)
     });
 }

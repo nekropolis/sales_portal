@@ -3,7 +3,7 @@
 namespace Modules\Prices\UseCases;
 
 use Illuminate\Http\Request;
-use Modules\Prices\Entities\PricesUploaded;
+use Modules\Prices\Models\PricesUploaded;
 
 class updateUploadedPriceUseCase
 {
@@ -13,7 +13,7 @@ class updateUploadedPriceUseCase
 
         //dd($data);
 
-        $price = PricesUploaded::find($data['price_id']);
+        $price = PricesUploaded::with('currency')->find($data['price_id']);
         if (!$price) {
             throw new \Exception('Not found');
         }
@@ -26,6 +26,7 @@ class updateUploadedPriceUseCase
             $price->price_name         = $data['price_name'];
             $price->qty_name           = $data['qty_name'];
             $price->additional         = $data['additional'];
+            $price->currency_id        = $data['currency_id'];
             $price->save();
 
             return redirect()->back()->with('success', 'Настройки обновлены!');

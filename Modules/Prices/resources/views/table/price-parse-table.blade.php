@@ -1,4 +1,4 @@
-@extends('price::table.price-parse-links')
+@extends('prices::price-parse-links')
 
 @section('price-table')
     <table class="table table-sm table-hover table-bordered sp-table align-middle">

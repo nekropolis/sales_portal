@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Modules\Catalog\Models\Brands;
+use Modules\Catalog\Models\Categories;
 use Modules\Catalog\Models\Products;
 
 class LinkPrices extends Model
@@ -37,8 +38,13 @@ class LinkPrices extends Model
         return $this->belongsTo(Products::class);
     }
 
-    public function categoryName() : hasManyThrough
+    public function brandName() : hasManyThrough
     {
         return $this->hasManyThrough(Products::class, Brands::class);
+    }
+
+    public function categoryName() : hasManyThrough
+    {
+        return $this->hasManyThrough(Products::class, Categories::class);
     }
 }

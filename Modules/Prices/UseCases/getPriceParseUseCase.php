@@ -5,6 +5,8 @@ namespace Modules\Prices\UseCases;
 
 use App\Traits\Makeable;
 use Illuminate\Http\Request;
+use Modules\Catalog\Models\Currency;
+use Modules\Catalog\Models\Products;
 use Modules\Prices\Models\PricesUploaded;
 
 class getPriceParseUseCase
@@ -20,11 +22,12 @@ class getPriceParseUseCase
         } elseif ($sort_link == 1) {
             $price = sortIsLinksUseCase::make()->execute($request, [$id]);
         } else {
-            $price = listLinksUseCase::make()->execute($request, [$id]);
+            $price = listLinksUseCase::make()->execute($id);
         }
 
         $collection = PricesUploaded::where('id', $id)
             ->with('seller')
+            ->with('currency')
             ->get();
 
         $price_uploaded = $collection->map(function ($price_upload) {
@@ -33,12 +36,18 @@ class getPriceParseUseCase
             $data['orig_price_name'] = $price_upload['orig_name'];
             $data['status']          = $price_upload['status'];
             $data['seller_name']     = $price_upload->seller->name;
+            $data['currency']        = $price_upload->currency->code;
 
             return $data;
         });
 
+        $products   = Products::all();
+        $currencies = Currency::all();
+
         return view('prices::price-parse-links', [
             'price'          => $price,
+            'products'       => $products,
+            'currencies'     => $currencies,
             'price_uploaded' => $price_uploaded[0],
             'showPagination' => is_null($request->get('q')),
         ]);

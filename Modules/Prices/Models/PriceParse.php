@@ -18,8 +18,6 @@ class PriceParse extends Model
         'quantity',
         'additional',
     ];
-
-    //protected $primaryKey = 'model';
     protected $keyType = 'string';
     public $incrementing = false;
 

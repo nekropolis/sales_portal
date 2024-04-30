@@ -3,20 +3,6 @@
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Валюта</h1>
-        @if ($message = Session::get('success'))
-            <div class="alert alert-success">
-                <strong>{{ $message }}</strong>
-            </div>
-        @endif
-        @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
         <div class="btn-toolbar mb-2 mb-md-0">
             <button type="button" class="custom-file-upload" data-bs-toggle="modal" data-bs-target="#createCurrency">
                 Создать
@@ -25,7 +11,8 @@
             <!-- Create Brand -->
             <form action="{{route('createCurrency')}}" method="post" enctype="multipart/form-data">
                 @csrf
-                <div class="modal fade" id="createCurrency" tabindex="-1" aria-labelledby="createCurrency" aria-hidden="true">
+                <div class="modal fade" id="createCurrency" tabindex="-1" aria-labelledby="createCurrency"
+                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -57,7 +44,8 @@
             <!-- Update Brand -->
             <form action="{{route('updateCurrency')}}" method="post" enctype="multipart/form-data">
                 @csrf
-                <div class="modal fade" id="updateCurrency" tabindex="-1" aria-labelledby="updateCurrency" aria-hidden="true">
+                <div class="modal fade" id="updateCurrency" tabindex="-1" aria-labelledby="updateCurrency"
+                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -99,7 +87,7 @@
                 <th scope="col" class="col-2">Действия</th>
             </tr>
             </thead>
-            @foreach($currency as $key=>$item)
+            @foreach($currencies as $key=>$item)
                 <tbody>
                 <tr>
                     <th scope="row">{{$item['id']}}</th>
@@ -121,6 +109,9 @@
                 </tbody>
             @endforeach
         </table>
+    </div>
+    <div class="d-felx justify-content-center">
+        {{ $currencies->links() }}
     </div>
 
     <script src="/js/components/currency.js"></script>

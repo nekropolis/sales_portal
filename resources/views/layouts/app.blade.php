@@ -11,21 +11,21 @@
 </header>
 <div class="container-fluid">
     <div class="row flex-grow-sm-1 flex-grow-0">
+        @auth
         <aside class="col-sm-2 flex-grow-sm-1 flex-shrink-1 flex-grow-0 pb-sm-0 pb-3">
             <div class="col-sm-2 bg-light h-100 position-fixed border-end">
-                @auth
                     @include('sidebar_menu')
-                @endauth
             </div>
         </aside>
+        @endauth
         <main class="col overflow-auto h-100">
             <div class="bg-light p-3">
+                @include('layouts.flash-messages')
                 @yield('content')
             </div>
         </main>
     </div>
 </div>
-
 <footer class="row">
     {{--   @include('includes.footer')--}}
 </footer>

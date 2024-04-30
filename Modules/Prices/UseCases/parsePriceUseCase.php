@@ -24,10 +24,9 @@ class parsePriceUseCase
         $qty_name           = PricesUploaded::where("id", $data['price_id'])->value("qty_name");
         $additional         = PricesUploaded::where("id", $data['price_id'])->value("additional");
         $numeration_started = PricesUploaded::where("id", $data['price_id'])->value("numeration_started");
-        $data               = Storage::disk('local')->get('public/uploads/'.$orig_name);
+        $dataFile           = Storage::disk('local')->get('public/uploads/'.$orig_name);
 
-
-        $xlsx = SimpleXLSX::parseData($data);
+        $xlsx = SimpleXLSX::parseData($dataFile);
 
         //print_r( $xlsx->rows() );
 
@@ -53,6 +52,14 @@ class parsePriceUseCase
                 }
             }
 
+            $nameValid = !$validate_model_name ? 'Название колонки с наименованием'
+                : (!$validate_price_name ? 'Название колонки с ценой'
+                    : (!$validate_qty_name ? 'Название колонки с колличеством'
+                        : (!$validate_additional ? 'Любое название колонки из прайса'
+                            : 'Нумерация')));
+
+            //dd(!$validate_model_name, !$validate_price_name, !$validate_additional, !$validate_qty_name, $nameValid);
+
             if ($validate_model_name && $validate_price_name && $validate_qty_name && $validate_additional) {
                 foreach (array_slice($xlsx->rows(), $numeration_started - 1) as $k => $r) {
                     if ($k === 0) {
@@ -61,6 +68,9 @@ class parsePriceUseCase
                     }
                     $rows[] = array_combine($header_values, $r);
                 }
+            } else {
+                return back()->with('error',
+                    'Ошибка, проверьте правильность поля - "'.$nameValid.'". Или номер строки, где размещено наименование');
             }
         }
 
@@ -79,7 +89,8 @@ class parsePriceUseCase
                 ]);
         }
 
-        PriceParse::where(['price_uploaded_id' => $id])->whereNotIn('model', $existingNamesRows)->update(['quantity' => 0]);
+        PriceParse::where(['price_uploaded_id' => $id])->whereNotIn('model',
+            $existingNamesRows)->update(['quantity' => 0]);
 
         $prices = PriceParse::with('link')->where(['price_uploaded_id' => $id])->whereNotIn('quantity', [0])->get();
 
@@ -130,7 +141,7 @@ class parsePriceUseCase
 
             $existingNames[] = $price->model;
             LinkPrices::query()->updateOrCreate([
-                'price_model_id'             => $price->id,
+                'price_model_id'       => $price->id,
                 'price_model_name_md5' => md5($price->model),
                 'price_model_name'     => $price->model,
             ], $dataToUpdate);
@@ -143,8 +154,6 @@ class parsePriceUseCase
             ->whereNotIn('price_model_name', $existingNames)
             ->update(['is_exist' => 0]);
 
-        dd(LinkPrices::all());
-
-        return back()->with('success', 'Price parsed successfully.');
+        return back()->with('success', 'Готово!');
     }
 }

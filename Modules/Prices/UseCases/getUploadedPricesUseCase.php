@@ -2,8 +2,8 @@
 
 namespace Modules\Prices\UseCases;
 
-use App\Models\Sellers;
 use Modules\Prices\Models\PricesUploaded;
+use Modules\Sellers\Models\Sellers;
 
 class getUploadedPricesUseCase
 {

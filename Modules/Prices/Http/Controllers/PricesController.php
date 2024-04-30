@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use Modules\Prices\Models\PricesUploaded;
+use Modules\Prices\UseCases\addModelToPriceParseUseCase;
 use Modules\Prices\UseCases\getPriceParseUseCase;
+use Modules\Prices\UseCases\getPriceUseCase;
 use Modules\Prices\UseCases\getUploadedPricesUseCase;
 use Modules\Prices\UseCases\IsLinkUseCase;
 use Modules\Prices\UseCases\parsePriceUseCase;
@@ -121,6 +123,15 @@ class PricesController extends Controller
     {
         try {
             return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
+    }
+
+    function getPrice(Request $request, $id, getPriceUseCase $useCase)
+    {
+        try {
+            return $useCase->execute($request, $id);
         } catch (\Exception $e) {
             return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
         }

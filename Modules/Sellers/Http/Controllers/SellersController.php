@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Modules\Sellers\Http\Controllers;
 
-use App\Models\Sellers;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Modules\Sellers\Models\Sellers;
 
 class SellersController extends Controller
 {
@@ -18,7 +19,7 @@ class SellersController extends Controller
     public function listSeller(){
         $sellers = Sellers::query()->get()->toArray();
 
-        return view('pages.sellers')->with('sellers', $sellers);
+        return view('sellers::sellers')->with('sellers', $sellers);
 
     }
 }

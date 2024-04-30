@@ -10,13 +10,11 @@ class listLinksUseCase
 {
     use Makeable;
 
-    public function execute(Request $request, $id)
+    public function execute($id)
     {
-        $price_uploaded_id = $id[0];
-
         return LinkPrices::query()
-            ->whereHas('priceParse', function ($query) use ($price_uploaded_id) {
-                $query->where('price_uploaded_id', $price_uploaded_id);
+            ->whereHas('priceParse', function ($query) use ($id) {
+                $query->where('price_uploaded_id', $id);
             })
             ->where('is_exist', 1)
             ->with('priceParse')

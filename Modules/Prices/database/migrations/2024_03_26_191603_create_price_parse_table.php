@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->integer('price_uploaded_id');
             $table->string('model');
-            $table->integer('price');
-            $table->integer('quantity');
+            $table->integer('price')->default(0);
+            $table->integer('quantity')->default(0);
             $table->string('additional')->nullable();
+            $table->integer('currency_id')->default(0);
             $table->timestamps();
         });
     }

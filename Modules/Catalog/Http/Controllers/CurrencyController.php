@@ -7,16 +7,15 @@ use Modules\Catalog\Http\Requests\CreateCurrencyRequest;
 use Modules\Catalog\Http\Requests\DeleteCurrencyRequest;
 use Modules\Catalog\Http\Requests\UpdateCurrencyRequest;
 use Modules\Catalog\Models\Currency;
+use Mgcodeur\CurrencyConverter\Facades\CurrencyConverter;
 
 class CurrencyController extends Controller
 {
     public function list()
     {
-        $currency = Currency::paginate(15);
+        $currencies = Currency::paginate(15);
 
-        //dd($categories);
-
-        return view('catalog::currency', ['currency' => $currency,]);
+        return view('catalog::currency', ['currencies' => $currencies,]);
     }
 
     public function create(CreateCurrencyRequest $request)
@@ -68,5 +67,16 @@ class CurrencyController extends Controller
         $currency->delete();
 
         //return redirect()->back()->with('success', 'Бренд удален!');
+    }
+
+    public function uploadCurrency()
+    {
+        $currencies = CurrencyConverter::currencies()->get();
+
+        foreach ( $currencies as $code=>$name) {
+            Currency::query()->updateOrCreate([
+                'code' => $code,
+            ], ['name' => $name,]);
+        }
     }
 }

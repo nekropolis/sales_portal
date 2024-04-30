@@ -18,16 +18,15 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation
      */
     public function model(array $row)
     {
-        //dd($brand->id);
-
         if($row['model'] !== null) {
             $brand = Brands::where('name', $row['brend'])->first();
             $category = Categories::where('name', $row['kategoriia'])->first();
 
-            return new Products([
+            return Products::query()->updateOrCreate([
+                'model'       => $row['model'],
+            ], [
                 'brand_id'    => $brand->id,
                 'category_id' => $category->id,
-                'model'       => $row['model'],
             ]);
         }
     }

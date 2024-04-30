@@ -16,7 +16,7 @@ class searchProductForPriceUseCase
         //dd($q);
         $response = Elasticsearch::search([
             'index' => 'products',
-            "size"  => 15,
+            "size"  => 5,
             'body'  => [
                 'query' => [
                     'function_score' => [

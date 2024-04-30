@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use Modules\Catalog\Http\Requests\CreateProductRequest;
+use Modules\Catalog\Http\Requests\DeleteProductRequest;
 use Modules\Catalog\Http\Requests\UpdateProductRequest;
 use Modules\Catalog\Models\Brands;
 use Modules\Catalog\Models\Categories;
@@ -73,13 +74,44 @@ class ProductsController extends Controller
         //
     }
 
-    public function update(UpdateProductRequest $request, Products $products)
+    /**
+     * @throws \Exception
+     */
+    public function update(UpdateProductRequest $request)
     {
-        //
+        $data = $request->all();
+
+        //dd($data);
+        $product = Products::findOrFail($data['product_id']);
+        if (!$product) {
+            throw new \Exception('Not found');
+        }
+
+        if (isset($data['model'])) {
+            $product->sku          = $data['sku'];
+            $product->category_id  = $data['category_id'];
+            $product->brand_id     = $data['brand_id'];
+            $product->model        = $data['model'];
+            $product->localization = $data['localization'];
+            $product->package      = $data['package'];
+            $product->condition    = $data['condition'];
+            $product->update();
+
+            return redirect()->back()->with('success', 'Продукт обновлен!');
+        } else {
+            $product->get()->toArray();
+
+            return $product;
+        }
     }
 
-    public function delete(Products $products)
+    public function delete(DeleteProductRequest $request)
     {
-        //
+        $data = $request->all();
+
+        $product = Products::findOrFail($data['product_id']);
+        $product->delete();
+
+        return redirect()->back()->with('success', 'Продукт удален!');
     }
 }

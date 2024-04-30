@@ -40,6 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/create-currency', [CurrencyController::class, 'create'])->name('createCurrency');
     Route::post('/update-currency', [CurrencyController::class, 'update'])->name('updateCurrency');
     Route::post('/delete-currency', [CurrencyController::class, 'delete'])->name('deleteCurrency');
+    Route::get('/upload-currency', [CurrencyController::class, 'uploadCurrency'])->name('uploadCurrency');
 
     Route::get('/margin', [MarginController::class, 'list'])->name('margin');
     Route::post('/create-margin', [MarginController::class, 'create'])->name('createMargin');

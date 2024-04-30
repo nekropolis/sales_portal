@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/tradezone",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\TradeZone\\": "$APP_FOLDER_NAME$",
+            "Modules\\TradeZone\\Database\\Factories\\": "database/factories/",
+            "Modules\\TradeZone\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\TradeZone\\Tests\\": "tests/"
+        }
+    }
+}

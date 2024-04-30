@@ -1,0 +1,11 @@
+{
+    "name": "TradeZone",
+    "alias": "tradezone",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\TradeZone\\Providers\\TradeZoneServiceProvider"
+    ],
+    "files": []
+}

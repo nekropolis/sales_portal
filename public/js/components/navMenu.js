@@ -1,25 +1,43 @@
 $(document).ready(function () {
     $('.collapse')
         .on('shown.bs.collapse', function () {
-            $(this)
-                .parent()
-                .find(".bi-chevron-down")
-                .removeClass("bi-chevron-down")
-                .addClass("bi-chevron-up");
+            let element;
+            if (this.id === 'catalogMenu') {
+                element = document.getElementById("catalogCollapse");
+                element.classList.remove("bi-chevron-down");
+                element.classList.add("bi-chevron-up");
+            } else if (this.id === 'sellersMenu') {
+                element = document.getElementById("sellersCollapse");
+                element.classList.remove("bi-chevron-down");
+                element.classList.add("bi-chevron-up");
+            }
         })
         .on('hidden.bs.collapse', function () {
-            $(this)
-                .parent()
-                .find(".bi-chevron-up")
-                .removeClass("bi-chevron-up")
-                .addClass("bi-chevron-down");
+            let element;
+            if (this.id === 'catalogMenu') {
+                element = document.getElementById("catalogCollapse");
+                element.classList.remove("bi-chevron-up");
+                element.classList.add("bi-chevron-down");
+            } else if (this.id === 'sellersMenu') {
+                element = document.getElementById("sellersCollapse");
+                element.classList.remove("bi-chevron-up");
+                element.classList.add("bi-chevron-down");
+            }
         })
 
-    const collapseMenu = ['/products', '/categories', '/brands', '/margin', '/currency'];
+    const catalogCollapseMenu = ['/products', '/categories', '/brands', '/margin', '/currency'];
 
-    if (collapseMenu.includes(window.location.pathname)) {
+    if (catalogCollapseMenu.includes(window.location.pathname)) {
         let icon = document.getElementById("catalogCollapse");
+        //$('#linkProductCanvas').collapse('show')
+        icon.className = "bi bi-chevron-up";
+    }
 
+    const sellersCollapseMenu = ['sellers', 'price-parse', 'prices'];
+
+    if (sellersCollapseMenu.includes(window.location.pathname.split('/')[1])) {
+        let icon = document.getElementById("sellersCollapse");
+        $('#sellersMenu').collapse('show')
         icon.className = "bi bi-chevron-up";
     }
 });

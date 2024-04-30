@@ -2,11 +2,11 @@
 
 namespace Modules\Prices\Models;
 
-use App\Models\Sellers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Modules\Catalog\Models\Currency;
+use Modules\Sellers\Models\Sellers;
 
 class PricesUploaded extends Model
 {
@@ -17,7 +17,8 @@ class PricesUploaded extends Model
     protected $fillable = [
         'name',
         'orig_name',
-        'file_path'
+        'file_path',
+        'currency_id'
     ];
 
 
@@ -26,8 +27,8 @@ class PricesUploaded extends Model
         return $this->belongsTo(Sellers::class);
     }
 
-    public function price(): hasOne
+    public function currency(): BelongsTo
     {
-        return $this->hasOne(Prices::class, 'price_uploaded_id');
+        return $this->belongsTo(Currency::class);
     }
 }
