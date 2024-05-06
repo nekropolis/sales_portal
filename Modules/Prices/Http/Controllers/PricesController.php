@@ -5,10 +5,10 @@ namespace Modules\Prices\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
+use Modules\Prices\Models\LinkPrices;
 use Modules\Prices\Models\PricesUploaded;
-use Modules\Prices\UseCases\addModelToPriceParseUseCase;
 use Modules\Prices\UseCases\getPriceParseUseCase;
-use Modules\Prices\UseCases\getPriceUseCase;
+use Modules\Prices\UseCases\getTableLinkUseCase;
 use Modules\Prices\UseCases\getUploadedPricesUseCase;
 use Modules\Prices\UseCases\IsActiveUseCase;
 use Modules\Prices\UseCases\IsLinkUseCase;
@@ -130,6 +130,15 @@ class PricesController extends Controller
     }
 
     function isActive(Request $request, IsActiveUseCase $useCase)
+    {
+        try {
+            return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
+    }
+
+    public function getTableLink(Request $request, getTableLinkUseCase $useCase)
     {
         try {
             return $useCase->execute($request);

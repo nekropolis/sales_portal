@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Modules\TradeZone\Http\Controllers\TradeZoneController;
 
@@ -14,6 +15,10 @@ use Modules\TradeZone\Http\Controllers\TradeZoneController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('tradezone', TradeZoneController::class)->names('tradezone');
+Auth::routes();
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/trade-price', [TradeZoneController::class, 'getTradePrice'])->name('getTradePrice');
+    Route::get('/trade-price-settings', [TradeZoneController::class, 'settingsTradePrice'])->name('settingsTradePrice');
+    Route::get('/trade-table', [TradeZoneController::class, 'getTable'])->name('getTable');
 });

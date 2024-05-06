@@ -35,7 +35,7 @@
         </li>
         </div>
     </ul>
-    <a href="#" class="nav-link px-2 align-middle {{( (request()->path()=="home")=="price") ? "active" : null}}">
+    <a href="/trade-price" class="nav-link px-2 align-middle {{ str_starts_with(request()->path(), 'trade-price') ? "active" : null}}">
         <i class="fs-4 bi-clipboard-data"></i><span class="ms-1 d-none d-sm-inline">Трейд Зона</span></a>
     {{--    <a href="/sellers" class="nav-link px-2 align-middle {{(request()->path()=="sellers") ? "active" : null}}">
             <i class="fs-4 bi-truck"></i><span class="ms-1 d-none d-sm-inline">Поставщики</span></a>--}}

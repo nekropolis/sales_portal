@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/is-link', [PricesController::class, 'isLink'])->name('isLink');
     Route::post('/is_active', [PricesController::class, 'isActive'])->name('isActive');
+    Route::get('/link-table', [PricesController::class, 'getTableLink'])->name('getTableLink');
 
     Route::get('/search-product-price', [PricesController::class, 'searchProductPrice'])->name('searchProductPrice');
 });

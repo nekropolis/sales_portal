@@ -15,17 +15,6 @@ class getPriceParseUseCase
 
     public function execute(Request $request, $id)
     {
-        $sort_link = $request->get('is_link_sort');
-
-        if ($request->get('q')) {
-            $price = searchInPriceParseLinksUseCase::make()->execute($request, [$id]);
-        } elseif ($sort_link === '1' || $sort_link === '0') {
-            // not work else
-            $price = sortIsLinksUseCase::make()->execute($request);
-        } else {
-            $price = listLinksUseCase::make()->execute($id);
-        }
-
         $collection = PricesUploaded::where('id', $id)
             ->with('seller')
             ->with('currency')
@@ -46,7 +35,6 @@ class getPriceParseUseCase
         $currencies = Currency::all();
 
         return view('prices::price-parse-links', [
-            'price'          => $price,
             'products'       => $products,
             'currencies'     => $currencies,
             'price_uploaded' => $price_uploaded[0],

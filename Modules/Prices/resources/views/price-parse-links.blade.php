@@ -184,27 +184,6 @@
                     onclick="return settingsPrice({{$price_uploaded['id']}})"><i class="bi bi-gear"></i>
             </button>
         </div>
-
-        <!-- Search -->
-        <form action="/price-parse/{{$price_uploaded['id']}}" method="get">
-            <div class="input-group">
-                <input
-                        type="text"
-                        id="search"
-                        data-id="{{$price_uploaded['id']}}"
-                        name="q"
-                        class="form-control"
-                        placeholder="Поиск..."
-                        value="{{ request('q') }}"
-                        aria-label="Example input"
-                        aria-describedby="button-addon1"
-                />
-                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-sm btn-lg btn-outline-primary"
-                        type="submit" id="button-addon1" data-mdb-ripple-color="dark">
-                    <i class="bi bi-search"></i> GO
-                </button>
-            </div>
-        </form>
     </div>
 
     <!-- Modal Wait Parse -->
@@ -220,66 +199,39 @@
         </div>
     </div>
 
-    <div class="d-felx justify-content-center">
-        @if($showPagination)
-            {{ $price->links() }}
-        @endif
-    </div>
-
     <!-- Table -->
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade" id="price-tab-pane" role="tabpanel" aria-labelledby="price-tab" tabindex="0">...
-        </div>
-        <div class="tab-pane fade show active" id="link-tab-pane" role="tabpanel" aria-labelledby="link-tab"
-             tabindex="0">
-            <table class="table table-sm table-hover table-bordered sp-table align-middle">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col" onClick="return sortIsLink({{$price_uploaded['id']}})">Связь</th>
-                    <th scope="col">Наименование</th>
-                    <th scope="col">Связка Каталог</th>
-                    <th scope="col">Дополнительная информация</th>
-                    <th scope="col">К-во</th>
-                    <th scope="col">Цена</th>
-                    <th scope="col">Валюта</th>
-                </tr>
-                </thead>
-                @foreach($price as $key=>$item)
-                    {{--            @php
-                                dd($item);
-                                @endphp--}}
-                    <tbody>
-                    <tr class="{{$item->is_link == 1 ? 'table-success' : ''}}">
-                        <th scope="row">{{$item->id}}</th>
-                        <td class="is-link">
-                            <input class="check-input" type="checkbox" id="is_link"
-                                   data-id="{{ $item->price_model_id }}"
-                                   value="{{ $item->is_link }}" {{$item->is_link == 1 ? 'checked' : ''}}>
-                        </td>
-                        <td>{{$item->priceParse->model}}</td>
-                        <td class="cursor-table"
-                            onClick="linkListProduct('{{ $item->priceParse->id }}', '{{ $item->priceParse->model}}')">
-                            @if ($item->product !== null)
-                                {{$item->product->brand->name}} {{$item->product->model}}
-                            @else
-                                Не нашлось совпадения
-                            @endif
-                        </td>
-                        <td>{{$item->priceParse->additional}}</td>
-                        <td>{{$item->priceParse->quantity}}</td>
-                        <td>{{$item->priceParse->price}}</td>
-                        <td>{{$price_uploaded['currency']}}</td>
-                    </tr>
-                    </tbody>
-                @endforeach
-            </table>
-            <div class="d-felx justify-content-center">
-                @if($showPagination)
-                    {{ $price->links() }}
-                @endif
-            </div>
-        </div>
+
+        <table
+                id="tablePriceParse"
+                data-locale="ru-RU"
+                data-pagination-v-align="both"
+                data-toggle="table"
+                data-unique-id="id"
+                data-checkbox-header="false"
+                data-ajax="ajaxRequest"
+                data-search="true"
+                data-side-pagination="server"
+                data-pagination="true"
+                data-page-size="15"
+                data-page-list="[15, 25, 50]"
+                data-server-sort="false"
+                data-query-params="queryParams"
+                data-response-handler="responseHandler"
+                data-id="{{$price_uploaded['id']}}">
+            <thead>
+            <tr>
+                <th data-field="id" data-sortable="true">ID</th>
+                <th data-field="is_link" data-checkbox="true">Связь</th>
+                <th data-field="price_model_name" data-sortable="true">Наименование</th>
+                <th data-field="product.model" data-sortable="true">Связка Каталог</th>
+                <th data-field="price_parse.additional" data-sortable="true">Доп. инфо</th>
+                <th data-field="price_parse.quantity">К-во</th>
+                <th data-field="price_parse.price">Цена</th>
+                <th data-field="price_parse.price_uploaded.currency.code">Валюта</th>
+            </tr>
+            </thead>
+        </table>
     </div>
 
     <script src="/js/components/price.js"></script>

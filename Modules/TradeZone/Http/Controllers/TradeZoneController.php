@@ -3,65 +3,44 @@
 namespace Modules\TradeZone\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Traits\ResponseTrait;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Modules\Prices\Models\Inventories;
+use Modules\TradeZone\UseCases\getTableTradePriceUseCase;
+use Modules\TradeZone\UseCases\getTradePriceUseCase;
+use Modules\TradeZone\UseCases\settingsTradePriceUseCase;
 
 class TradeZoneController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    use ResponseTrait;
+
+    public function getTradePrice(Request $request, getTradePriceUseCase $useCase)
     {
-        return view('tradezone::index');
+        try {
+            return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function settingsTradePrice(Request $request, settingsTradePriceUseCase $useCase)
     {
-        return view('tradezone::create');
+        try {
+            return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): RedirectResponse
+    public function getTable(Request $request, getTableTradePriceUseCase $useCase)
     {
-        //
-    }
-
-    /**
-     * Show the specified resource.
-     */
-    public function show($id)
-    {
-        return view('tradezone::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        return view('tradezone::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id): RedirectResponse
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    {
-        //
+        try {
+            return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
     }
 }

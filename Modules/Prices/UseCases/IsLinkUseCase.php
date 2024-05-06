@@ -13,16 +13,34 @@ class IsLinkUseCase
 
         //dd($data, isset($data['checkbox']), isset($data['product_id']), !empty($data['checkbox']), !empty($data['product_id']));
 
+        $isLinkData = [];
         if (isset($data['checkbox'])) {
-            return LinkPrices::where('price_model_id', $data['price_id'])->update([
+            LinkPrices::where('id', $data['price_id'])->update([
                 'is_link' => $data['checkbox'],
             ]);
+            $isLinkData = LinkPrices::where('id', $data['price_id'])
+                ->where('is_exist', 1)
+                ->with('priceParse')
+                ->with('priceParse.priceUploaded.currency')
+                ->with('product')
+                ->with('product.brand')
+                ->first();
         }
         if (isset($data['product_id'])) {
-            return LinkPrices::where('price_model_id', $data['price_id'])->update([
+            LinkPrices::where('price_model_id', $data['price_id'])->update([
                 'product_id' => $data['product_id'],
-                'is_link' => 1,
+                'is_link'    => 1,
             ]);
+            $isLinkData = LinkPrices::where('price_model_id', $data['price_id'])
+                ->where('is_exist', 1)
+                ->with('priceParse')
+                ->with('priceParse.priceUploaded.currency')
+                ->with('product')
+                ->with('product.brand')
+                ->first();
         }
+
+        //dd($isLinkData);
+        return $isLinkData;
     }
 }

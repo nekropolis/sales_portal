@@ -5,6 +5,7 @@ namespace Modules\Prices\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Catalog\Models\Currency;
 use Modules\Sellers\Models\Sellers;
 
@@ -30,5 +31,10 @@ class PricesUploaded extends Model
     public function currency(): BelongsTo
     {
         return $this->belongsTo(Currency::class);
+    }
+
+    public function priceParse(): hasMany
+    {
+        return $this->hasMany(PriceParse::class, 'price_uploaded_id', 'id');
     }
 }

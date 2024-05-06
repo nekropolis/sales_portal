@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Modules\Catalog\Models\Brands;
 use Modules\Catalog\Models\Categories;
 use Modules\Catalog\Models\Products;
@@ -46,5 +47,10 @@ class LinkPrices extends Model
     public function categoryName() : hasManyThrough
     {
         return $this->hasManyThrough(Products::class, Categories::class);
+    }
+
+    public function priceUploaded() : hasOneThrough
+    {
+        return $this->hasOneThrough(PriceParse::class, PricesUploaded::class);
     }
 }
