@@ -12,6 +12,7 @@ use Modules\Catalog\Models\Brands;
 use Modules\Catalog\Models\Categories;
 use Modules\Catalog\Models\Products;
 use Elasticsearch;
+use Modules\Catalog\UseCases\getProductsTableUseCase;
 
 class ProductsController extends Controller
 {
@@ -97,7 +98,7 @@ class ProductsController extends Controller
             $product->condition    = $data['condition'];
             $product->update();
 
-            return redirect()->back()->with('success', 'Продукт обновлен!');
+            return Products::where('id', $data['product_id'])->with('category')->with('brand')->first();
         } else {
             $product->get()->toArray();
 
@@ -113,5 +114,14 @@ class ProductsController extends Controller
         $product->delete();
 
         return redirect()->back()->with('success', 'Продукт удален!');
+    }
+
+    public function getProductsTable(Request $request, getProductsTableUseCase $useCase)
+    {
+        try {
+            return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
     }
 }
