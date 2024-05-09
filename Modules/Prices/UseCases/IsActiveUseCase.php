@@ -11,8 +11,14 @@ class IsActiveUseCase
     {
         $data = $request->param;
 
-        return PricesUploaded::where('id', $data['price_id'])->update([
+        PricesUploaded::where('id', $data['price_id'])->update([
             'is_active' => $data['checkbox'],
         ]);
+
+        $isActive = PricesUploaded::where('id', $data['price_id'])
+            ->with('seller')
+            ->first();
+
+        return $isActive;
     }
 }

@@ -10,6 +10,7 @@ use Modules\Prices\Models\PricesUploaded;
 use Modules\Prices\UseCases\getPriceParseUseCase;
 use Modules\Prices\UseCases\getTableLinkUseCase;
 use Modules\Prices\UseCases\getUploadedPricesUseCase;
+use Modules\Prices\UseCases\getUploadPriceTableUseCase;
 use Modules\Prices\UseCases\IsActiveUseCase;
 use Modules\Prices\UseCases\IsLinkUseCase;
 use Modules\Prices\UseCases\parsePriceUseCase;
@@ -139,6 +140,15 @@ class PricesController extends Controller
     }
 
     public function getTableLink(Request $request, getTableLinkUseCase $useCase)
+    {
+        try {
+            return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
+    }
+
+    public function getUploadPriceTable(Request $request, getUploadPriceTableUseCase $useCase)
     {
         try {
             return $useCase->execute($request);

@@ -184,6 +184,14 @@
                     onclick="return settingsPrice({{$price_uploaded['id']}})"><i class="bi bi-gear"></i>
             </button>
         </div>
+
+        <div class="d-flex flex-row-reverse justify-content">
+            <div class="input-group p-2">
+                <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+                <input type="text" class="form-control" id="customSearchPriceParse" style="width:220px;"
+                       placeholder="Поиск по наименованию ..." aria-label="customSearchPriceParse" aria-describedby="basic-addon1">
+            </div>
+        </div>
     </div>
 
     <!-- Modal Wait Parse -->
@@ -204,13 +212,14 @@
 
         <table
                 id="tablePriceParse"
+                class="table table-sm sp-table"
                 data-locale="ru-RU"
-                data-pagination-v-align="both"
                 data-toggle="table"
                 data-unique-id="id"
                 data-checkbox-header="false"
                 data-ajax="ajaxRequest"
                 data-search="true"
+                data-search-selector="#customSearchPriceParse"
                 data-side-pagination="server"
                 data-pagination="true"
                 data-page-size="15"
@@ -218,13 +227,14 @@
                 data-server-sort="false"
                 data-query-params="queryParams"
                 data-response-handler="responseHandler"
+                data-row-style="rowStyle"
                 data-id="{{$price_uploaded['id']}}">
             <thead>
             <tr>
                 <th data-field="id" data-sortable="true">ID</th>
                 <th data-field="is_link" data-checkbox="true">Связь</th>
                 <th data-field="price_model_name" data-sortable="true">Наименование</th>
-                <th data-field="product.model" data-sortable="true">Связка Каталог</th>
+                <th data-field="product.model" data-cell-style="cellStyle" data-sortable="true">Связка Каталог</th>
                 <th data-field="price_parse.additional" data-sortable="true">Доп. инфо</th>
                 <th data-field="price_parse.quantity">К-во</th>
                 <th data-field="price_parse.price">Цена</th>

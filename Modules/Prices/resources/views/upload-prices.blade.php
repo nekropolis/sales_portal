@@ -44,45 +44,39 @@
         </div>
     </div>
 
-    <div>
-        <table class="table table-sm table-hover table-bordered sp-table">
+    <!-- Table -->
+    <div class="tab-content" id="myTabContent">
+
+        <table
+                id="tableUploadPrices"
+                class="table table-sm sp-table"
+                data-locale="ru-RU"
+                data-toggle="table"
+                data-unique-id="id"
+                data-checkbox-header="false"
+                data-ajax="ajaxRequest"
+                data-search="true"
+                data-row-style="rowStyle"
+               {{-- data-search-selector="#customSearchPriceParse"--}}
+                data-side-pagination="server"
+                data-pagination="true"
+                data-page-size="15"
+                data-page-list="[15, 25, 50]"
+                data-server-sort="false"
+                data-query-params="queryParams"
+                data-response-handler="responseHandler">
             <thead>
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Активный</th>
-                <th scope="col">Поставщик</th>
-                <th scope="col">Прайс</th>
-                <th scope="col">Названия прайса в системе</th>
-                <th scope="col">Статус</th>
-                <th scope="col">Дата загрузки</th>
-                <th scope="col">Действие</th>
+                <th data-field="id" data-sortable="true">ID</th>
+                <th data-field="is_active" data-checkbox="true">Активный</th>
+                <th data-field="seller.name" data-sortable="true">Поставщик</th>
+                <th data-field="orig_name" data-sortable="true">Прайс</th>
+                <th data-field="name" data-cell-style="cellStyle" data-sortable="true">Названия прайса в системе</th>
+                <th data-field="status">Статус</th>
+                <th data-field="updated_at">Дата загрузки</th>
+                <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">Действие</th>
             </tr>
             </thead>
-            @foreach($prices as $key=>$price)
-                <tbody>
-                <tr class="{{$price['is_active'] == 1 ? 'table-success' : ''}}">
-                    <th scope="row">{{$price['id']}}</th>
-                    <td class="active-price">
-                        <input class="check-input" type="checkbox" id="is_link"
-                               data-id="{{ $price['id'] }}"
-                               value="{{ $price['is_active'] }}" {{$price['is_active'] == 1 ? 'checked' : ''}}>
-                    </td>
-                    <td>{{$price['seller_name']}}</td>
-                    <td>{{$price['orig_name']}}</td>
-                    <td class="cursor-table" onclick="window.location='{{ route('getPriceParse', $price['id']) }}'">
-                        <i class="bi bi-box-arrow-in-right"></i> {{$price['name']}} <i class="bi bi-folder2-open"></i>
-                    </td>
-                    <td>{{$price['status']}}</td>
-                    <td>{{date('d-m-Y H:i', strtotime($price['updated_at']))}}</td>
-                    <td>
-                        <button type="button" id="delete_price" data-id="{{$price['id']}}"
-                                class="btn btn-sm btn-lg btn-outline-danger delete_price">
-                            <i class="bi bi-trash3"></i>
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
-            @endforeach
         </table>
     </div>
 

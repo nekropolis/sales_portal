@@ -19,6 +19,14 @@
         <div class="btn-group btn-group-sm p-2 bd-highlight" role="group">
 
         </div>
+        <!-- Search -->
+        <div class="d-flex flex-row-reverse justify-content">
+            <div class="input-group w-auto p-2">
+                <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+                <input type="text" class="form-control" id="customSearchTradeZone" style="width:220px;"
+                       placeholder="Поиск по модели ..." aria-label="customSearchTradeZone" aria-describedby="basic-addon1">
+            </div>
+        </div>
     </div>
 
     <!-- Table -->
@@ -27,7 +35,8 @@
         <table
                 id="tableTradeZone"
                 data-locale="ru-RU"
-                {{--data-pagination-v-align="both"--}}
+                class="table table-sm sp-table"
+                data-search-selector="#customSearchTradeZone"
                 data-toggle="table"
                 data-unique-id="id"
                 data-checkbox-header="false"

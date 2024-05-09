@@ -67,3 +67,12 @@
 *:focus {
     box-shadow: none !important;
 }
+
+.selected {
+    background-color: rgba(155, 234, 172, 0.25);
+    font-weight: bold;
+}
+
+.bs-checkbox {
+
+}

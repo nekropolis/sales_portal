@@ -3,40 +3,30 @@
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Продукты</h1>
-        <button type="button" class="custom-file-upload" data-bs-toggle="modal" data-bs-target="#createProduct">
-            Создать
-        </button>
+
         <form action="{{ route('products.import') }}" method="POST" enctype="multipart/form-data">
             @csrf
-
             <input type="file" name="file" class="form-control">
-
             <br>
             <button class="btn btn-success"><i class="fa fa-file"></i> Import User Data</button>
         </form>
     </div>
 
     <div>
-
-        <!-- Search -->
-        <div class="d-flex flex-row-reverse justify-content">
-            <form action="/products" method="get">
-                <div class="input-group w-auto form-group">
-                    <input
-                            type="text"
-                            name="q"
-                            class="form-control"
-                            placeholder="Поиск..."
-                            value="{{ request('q') }}"
-                            aria-label="Example input"
-                            aria-describedby="button-addon1"
-                    />
-                    <button data-mdb-button-init data-mdb-ripple-init class="btn btn-sm btn-lg btn-outline-primary"
-                            type="submit" id="button-addon1" data-mdb-ripple-color="dark">
-                        <i class="bi bi-search"></i> GO
-                    </button>
+        <div class="d-flex justify-content-between mb-2 form-group">
+            <div class="btn-group btn-group-sm p-2 bd-highlight" role="group">
+                <button type="button" class="btn btn-outline-secondary update_file"
+                        data-bs-toggle="modal" data-bs-target="#createProduct">Создать
+                </button>
+            </div>
+            <!-- Search -->
+            <div class="d-flex flex-row-reverse justify-content">
+                <div class="input-group w-auto p-2">
+                    <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control" id="customSearchProduct" style="width:220px;"
+                           placeholder="Поиск по модели ..." aria-label="customSearchProduct" aria-describedby="basic-addon1">
                 </div>
-            </form>
+            </div>
         </div>
 
         <!-- Create Product -->
@@ -112,9 +102,7 @@
             </div>
         </form>
 
-        <!-- Update Brand -->
-        <form action="{{route('updateProduct')}}" method="post" enctype="multipart/form-data">
-            @csrf
+        <!-- Update Product -->
             <div class="modal fade" id="updateProduct" tabindex="-1" aria-labelledby="updateProduct" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -180,58 +168,47 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                            <button type="submit" class="btn btn-primary">Обновить</button>
+                            <button type="button" class="btn btn-primary buttonUpdateProduct">Обновить</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
 
+        <!-- Table -->
+        <div class="tab-content" id="myTabContent">
 
-        <table class="table table-sm table-hover table-bordered sp-table">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">SKU</th>
-                <th scope="col">Категория</th>
-                <th scope="col">Бренд</th>
-                <th scope="col">Модель</th>
-                <th scope="col">Локализация</th>
-                <th scope="col">Комплектация</th>
-                <th scope="col">Состояние</th>
-                <th scope="col" class="col-1">Действия</th>
-            </tr>
-            </thead>
-            @foreach($products as $key=>$product)
-                <tbody>
+            <table
+                    id="tableProducts"
+                    class="table table-sm sp-table"
+                    data-locale="ru-RU"
+                    data-toggle="table"
+                    data-unique-id="id"
+                    data-checkbox-header="false"
+                    data-ajax="ajaxRequest"
+                    data-search="true"
+                    data-search-selector="#customSearchProduct"
+                    data-side-pagination="server"
+                    data-pagination="true"
+                    data-page-size="15"
+                    data-page-list="[15, 25, 50]"
+                    data-server-sort="false"
+                    data-query-params="queryParams"
+                    data-response-handler="responseHandler"
+                    data-row-style="rowStyle">
+                <thead>
                 <tr>
-                    <th scope="row">{{$product['id']}}</th>
-                    <td>{{$product['sku']}}</td>
-                    <td>{{$product['category']['name']}}</td>
-                    <td>{{$product['brand']['name']}}</td>
-                    <td>{{$product['model']}}</td>
-                    <td>{{$product['localization']}}</td>
-                    <td>{{$product['package']}}</td>
-                    <td>{{$product['condition']}}</td>
-                    <td>
-                        <button type="button" id="updateProduct" data-id="{{$product['id']}}"
-                                class="btn btn-sm btn-lg btn-outline-success updateProduct">
-                            <i class="bi bi-pencil-square"></i>
-                        </button>
-                        <button type="button" id="deleteProduct" data-id="{{$product['id']}}"
-                                class="btn btn-sm btn-lg btn-outline-danger deleteProduct"
-                                onclick="return confirm('Подтвердить удаление?')">
-                            <i class="bi bi-trash3"></i>
-                        </button>
-                    </td>
+                    <th data-field="id" data-sortable="true">ID</th>
+                    <th data-field="sku">SKU</th>
+                    <th data-field="category.name" data-sortable="true">Категория</th>
+                    <th data-field="brand.name" data-sortable="true">Бренд</th>
+                    <th data-field="model" data-sortable="true">Модель</th>
+                    <th data-field="localization">Локализация</th>
+                    <th data-field="package">Комплектация</th>
+                    <th data-field="condition">Состояние</th>
+                    <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">Действие</th>
                 </tr>
-                </tbody>
-            @endforeach
-        </table>
-        <div class="d-felx justify-content-center">
-            @if($showPagination)
-                {{ $products->links() }}
-            @endif
+                </thead>
+            </table>
         </div>
 
         <script src="/js/components/products.js"></script>
