@@ -15,15 +15,17 @@ class CreateProductRequest extends FormRequest
         return Auth::check();
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            //
+            'model' => 'required|max:128',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'model.required' => 'Наименование продутка обязательное поле!',
         ];
     }
 }

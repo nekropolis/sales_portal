@@ -4,12 +4,13 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Прайс-листы</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <form action="{{route('fileUpload')}}" method="post" enctype="multipart/form-data">
-                @csrf
-                <button type="button" class="custom-file-upload" data-toggle="modal" data-target="#addPrice">
-                    Добавить новый прайс
-                </button>
+            <button type="button" class="custom-file-upload" data-toggle="modal" data-target="#addPrice">
+                Добавить новый прайс
+            </button>
 
+            <!--Form Price Upload -->
+            <form action="{{route('createUploadPrice')}}" method="post" enctype="multipart/form-data">
+                @csrf
                 <div class="modal fade" id="addPrice" tabindex="-1" role="dialog" aria-labelledby="addPrice"
                      aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -22,16 +23,16 @@
                             </div>
                             <div class="modal-body-upload">
                                 <select name="seller_name" class="form-select mb-3" aria-label="Default select example">
-                                    <option selected>Выбирете поставщика</option>
+                                    <option selected hidden>Выбирете поставщика *</option>
                                     @foreach($sellers as $seller)
                                         <option data-val={{ $seller['id'] }} value="{{ $seller['id'] }}">{{ $seller['name'] }} </option>
                                     @endforeach
                                 </select>
-                                <label for="name" class="col-form-label">Название прайс-листа:</label>
+                                <label for="name" class="col-form-label">Название прайс-листа: *</label>
                                 <input type="text" id="name" name="name" class="form-control name mb-3"
-                                       placeholder="Введите название">
+                                       placeholder="Введите название" required>
                                 <input type="file" name="file" id="file-upload" hidden/>
-                                <label class="file-upload" for="file-upload"> <span>  <i class="bi bi-filetype-xls"></i> Выбрать файл</span></label>
+                                <label class="file-upload" for="file-upload"> <span>  <i class="bi bi-filetype-xls"></i> Выбрать файл *</span></label>
                                 <div id="file-upload-filename"></div>
                             </div>
                             <div class="modal-footer">

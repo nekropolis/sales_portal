@@ -23,7 +23,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/update-upload-price', [PricesController::class, 'updateUploadPrice'])->name('updateUploadPrice');
     Route::post('/delete-upload-price', [PricesController::class, 'deleteUploadPrice'])->name('deleteUploadPrice');
     Route::post('/parse-price', [PricesController::class, 'parsePrice'])->name('parsePrice');
-    Route::post('/upload-file', [PricesController::class, 'fileUpload'])->name('fileUpload');
+    Route::post('/create-upload-price', [PricesController::class, 'createUploadPrice'])->name('createUploadPrice');
     Route::post('/update-file', [PricesController::class, 'fileUpdateUpload'])->name('updateFile');
 
     Route::post('/is-link', [PricesController::class, 'isLink'])->name('isLink');

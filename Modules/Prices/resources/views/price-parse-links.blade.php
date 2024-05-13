@@ -33,18 +33,17 @@
                                name="currency_id" value="currency_id" hidden>
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="name" class="col-form-label">Название:</label>
+                                <label for="name" class="col-form-label">Название: *</label>
                                 <input type="text" class="form-control name" id="name"
                                        name="name" aria-label=".form-control-sm example">
                             </div>
                             <div class="col mb-3">
-                                <label for="currency" class="col-form-label">Валюта:</label>
+                                <label for="currency" class="col-form-label">Валюта: *</label>
                                 <input class="form-control currency" list="datalistCurrency" id="currency"
                                        name="currency" placeholder="Введите валюту ...">
                                 <datalist id="datalistCurrency">
                                     @foreach($currencies as $currency)
-                                        <option data-id="{{ $currency['id'] }}"
-                                                value="{{ $currency['name']}} {{ $currency['code'] }}">
+                                        <option data-id="{{ $currency['id'] }}" value="{{ $currency['code'] }}">
                                     @endforeach
                                 </datalist>
                             </div>
@@ -66,24 +65,24 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div><h5>Наименование товара:</h5></div>
+                            <div><h5>Наименование товара: *</h5></div>
                             <div class="col mb-3">
                                 <input type="text" class="form-control model_name" id="model_name"
                                        name="model_name" aria-label=".form-control-sm"
                                        aria-describedby="model_name">
-                                <div id="model_name" class="form-text">Название колонки с наименованием</div>
+                                <div id="model_name" class="form-text">Название колонки с наименованием *</div>
                             </div>
                             <div class="col mb-3">
                                 <input type="text" class="form-control price_name" id="price_name"
                                        name="price_name" aria-label=".form-control-sm"
                                        aria-describedby="price_name">
-                                <div id="price_name" class="form-text">Название колонки с ценой</div>
+                                <div id="price_name" class="form-text">Название колонки с ценой *</div>
                             </div>
                             <div class="col mb-3">
                                 <input type="text" class="form-control qty_name" id="qty_name"
                                        name="qty_name" aria-label=".form-control-sm"
                                        aria-describedby="qty_name">
-                                <div id="qty_name" class="form-text">Название колонки с колличеством</div>
+                                <div id="qty_name" class="form-text">Название колонки с колличеством *</div>
                             </div>
                         </div>
                         <div><h5>Дополнительное поле:</h5></div>

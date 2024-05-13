@@ -2,12 +2,12 @@
 
 namespace Modules\Prices\UseCases;
 
-use Illuminate\Http\Request;
+use Modules\Prices\Http\Requests\UpdateUploadPriceRequest;
 use Modules\Prices\Models\PricesUploaded;
 
 class updateUploadedPriceUseCase
 {
-    public function execute(Request $request)
+    public function execute(UpdateUploadPriceRequest $request)
     {
         $data = $request->all();
 

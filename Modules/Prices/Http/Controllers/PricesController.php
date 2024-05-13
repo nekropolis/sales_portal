@@ -5,6 +5,9 @@ namespace Modules\Prices\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
+use Modules\Prices\Http\Requests\UpdatePriceFileRequest;
+use Modules\Prices\Http\Requests\CreateUploadPriceRequest;
+use Modules\Prices\Http\Requests\UpdateUploadPriceRequest;
 use Modules\Prices\Models\PricesUploaded;
 use Modules\Prices\UseCases\getPriceParseUseCase;
 use Modules\Prices\UseCases\getTableLinkUseCase;
@@ -15,10 +18,21 @@ use Modules\Prices\UseCases\IsLinkUseCase;
 use Modules\Prices\UseCases\parsePriceUseCase;
 use Modules\Prices\UseCases\searchProductForPriceUseCase;
 use Modules\Prices\UseCases\updateUploadedPriceUseCase;
+use Modules\Prices\UseCases\createUploadPriceUseCase;
+use Modules\Prices\UseCases\updateUploadPriceFileUseCase;
 
 class PricesController extends Controller
 {
     use ResponseTrait;
+
+    public function createUploadPrice(CreateUploadPriceRequest $request, createUploadPriceUseCase $useCase)
+    {
+        try {
+            $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
+    }
 
     public function listUploadedPrices(getUploadedPricesUseCase $useCase)
     {
@@ -29,7 +43,7 @@ class PricesController extends Controller
         }
     }
 
-    public function updateUploadPrice(Request $request, updateUploadedPriceUseCase $useCase)
+    public function updateUploadPrice(UpdateUploadPriceRequest $request, updateUploadedPriceUseCase $useCase)
     {
         try {
             return $useCase->execute($request);
@@ -47,49 +61,12 @@ class PricesController extends Controller
         return response()->json(["success" => "Прайс удален!"]);
     }
 
-    public function fileUpload(Request $request)
+    public function fileUpdateUpload(UpdatePriceFileRequest $request, updateUploadPriceFileUseCase $useCase)
     {
-        /*        $req->validate([
-                    'file' => 'required|mimes:csv,txt,xlx,xls,pdf|max:2048'
-                ]);*/
-        $fileModel = new PricesUploaded();
-        if ($request->file()) {
-            $fileName             = $request->file->getClientOriginalName();
-            $filePath             = $request->file('file')->storeAs('uploads', $fileName, 'public');
-            $fileModel->seller_id = $request->seller_name;
-            $fileModel->orig_name = $fileName;
-            $fileModel->name      = $request->name;
-            $fileModel->file_path = '/storage/'.$filePath;
-            $fileModel->save();
-
-            return back()
-                ->with('success', 'File has been uploaded.')
-                ->with('file', $fileName);
-        }
-    }
-
-    public function fileUpdateUpload(Request $request)
-    {
-        /*        $req->validate([
-                    'file' => 'required|mimes:csv,txt,xlx,xls,pdf|max:2048'
-                ]);*/
-        //dd($request['price_id'], $request->file());
-
-        $priceUpload = PricesUploaded::find($request['price_id']);
-        $timestamp   = now();
-
-        if ($priceUpload) {
-            if ($request->file()) {
-                $fileName                = $request->file->getClientOriginalName();
-                $filePath                = $request->file('file')->storeAs('uploads', $fileName, 'public');
-                $priceUpload->file_path  = '/storage/'.$filePath;
-                $priceUpload->updated_at = $timestamp;
-                $priceUpload->update();
-
-                return back()
-                    ->with('success', 'File has been update.')
-                    ->with('file', $fileName);
-            }
+        try {
+            $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
         }
     }
 

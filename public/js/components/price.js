@@ -53,8 +53,8 @@ function updateFile(price_id) {
     input.addEventListener('change', showFileName);
 
     function showFileName(event) {
-        var input = event.srcElement;
-        var fileName = input.files[0].name;
+        let input = event.srcElement;
+        let fileName = input.files[0].name;
         infoArea.textContent = 'Имя файла: ' + fileName;
     }
 
