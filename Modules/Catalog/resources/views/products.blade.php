@@ -65,7 +65,7 @@
                             <div class="mb-3">
                                 <label for="model" class="col-form-label"><h5>Наименование продукта *</h5></label>
                                 <input type="text" class="form-control model" id="model"
-                                       name="model" aria-label=".form-control-sm example">
+                                       name="model" aria-label=".form-control-sm example" required>
                             </div>
                             <div class="row">
                                 <div><h5>Дополнительная информация:</h5></div>

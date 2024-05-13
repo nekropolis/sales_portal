@@ -1,3 +1,31 @@
+$(document).ready(function () {
+    let input = document.getElementsByTagName("INPUT");
+    for (let i = 0; i < input.length; i++) {
+        input[i].oninvalid = function (e) {
+            e.target.setCustomValidity("");
+            if (!e.target.validity.valid) {
+                e.target.setCustomValidity("Это поле обязательное!");
+            }
+        };
+        input[i].oninput = function (e) {
+            e.target.setCustomValidity("");
+        };
+    }
+
+    let select = document.getElementsByTagName("SELECT");
+    for (let i = 0; i < select.length; i++) {
+        select[i].oninvalid = function (e) {
+            e.target.setCustomValidity("");
+            if (!e.target.validity.valid) {
+                e.target.setCustomValidity("Пожалуйста, выбирите значение из списка!");
+            }
+        };
+        select[i].oninput = function (e) {
+            e.target.setCustomValidity("");
+        };
+    }
+});
+
 const input = document.getElementById('file-upload');
 const infoArea = document.getElementById('file-upload-filename');
 
@@ -95,9 +123,9 @@ function operateFormatter(value, row, index) {
 }
 
 window.operateEvents = {
-/*    'click .like': function (e, value, row, index) {
-        alert('You click like action, row: ' + JSON.stringify(row))
-    },*/
+    /*    'click .like': function (e, value, row, index) {
+            alert('You click like action, row: ' + JSON.stringify(row))
+        },*/
     'click .remove': function (e, value, row, index) {
         let retVal = confirm('Подтвердить удаление?')
         let price_id = row.id;

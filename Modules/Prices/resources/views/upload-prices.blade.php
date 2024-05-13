@@ -22,8 +22,8 @@
                                 </button>
                             </div>
                             <div class="modal-body-upload">
-                                <select name="seller_name" class="form-select mb-3" aria-label="Default select example">
-                                    <option selected hidden>Выбирете поставщика *</option>
+                                <select name="seller_name" class="form-select mb-3" aria-label="Default select example" required>
+                                    <option value="" selected hidden>Выбирете поставщика *</option>
                                     @foreach($sellers as $seller)
                                         <option data-val={{ $seller['id'] }} value="{{ $seller['id'] }}">{{ $seller['name'] }} </option>
                                     @endforeach

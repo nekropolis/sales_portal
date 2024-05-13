@@ -35,12 +35,12 @@
                             <div class="col mb-3">
                                 <label for="name" class="col-form-label">Название: *</label>
                                 <input type="text" class="form-control name" id="name"
-                                       name="name" aria-label=".form-control-sm example">
+                                       name="name" aria-label=".form-control-sm example" required>
                             </div>
                             <div class="col mb-3">
                                 <label for="currency" class="col-form-label">Валюта: *</label>
                                 <input class="form-control currency" list="datalistCurrency" id="currency"
-                                       name="currency" placeholder="Введите валюту ...">
+                                       name="currency" placeholder="Введите валюту ..." required>
                                 <datalist id="datalistCurrency">
                                     @foreach($currencies as $currency)
                                         <option data-id="{{ $currency['id'] }}" value="{{ $currency['code'] }}">
@@ -69,19 +69,19 @@
                             <div class="col mb-3">
                                 <input type="text" class="form-control model_name" id="model_name"
                                        name="model_name" aria-label=".form-control-sm"
-                                       aria-describedby="model_name">
+                                       aria-describedby="model_name" required>
                                 <div id="model_name" class="form-text">Название колонки с наименованием *</div>
                             </div>
                             <div class="col mb-3">
                                 <input type="text" class="form-control price_name" id="price_name"
                                        name="price_name" aria-label=".form-control-sm"
-                                       aria-describedby="price_name">
+                                       aria-describedby="price_name" required>
                                 <div id="price_name" class="form-text">Название колонки с ценой *</div>
                             </div>
                             <div class="col mb-3">
                                 <input type="text" class="form-control qty_name" id="qty_name"
                                        name="qty_name" aria-label=".form-control-sm"
-                                       aria-describedby="qty_name">
+                                       aria-describedby="qty_name" required>
                                 <div id="qty_name" class="form-text">Название колонки с колличеством *</div>
                             </div>
                         </div>

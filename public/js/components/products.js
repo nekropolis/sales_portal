@@ -1,3 +1,18 @@
+$(document).ready(function () {
+    let input = document.getElementsByTagName("INPUT");
+    for (let i = 0; i < input.length; i++) {
+        input[i].oninvalid = function (e) {
+            e.target.setCustomValidity("");
+            if (!e.target.validity.valid) {
+                e.target.setCustomValidity("Это поле обязательное!");
+            }
+        };
+        input[i].oninput = function (e) {
+            e.target.setCustomValidity("");
+        };
+    }
+});
+
 let $table = $('#tableProducts')
 
 function ajaxRequest(params) {
@@ -73,7 +88,16 @@ window.operateEvents = {
             const package = updateProductModal.querySelector('.modal-body .package').value;
             const condition = updateProductModal.querySelector('.modal-body .condition').value;
 
-            axios.post("/update-product", {product_id, sku, category_id, brand_id, model, localization, package, condition},
+            axios.post("/update-product", {
+                    product_id,
+                    sku,
+                    category_id,
+                    brand_id,
+                    model,
+                    localization,
+                    package,
+                    condition
+                },
                 {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
                 $table.bootstrapTable('updateByUniqueId', {
                     id: data.id,

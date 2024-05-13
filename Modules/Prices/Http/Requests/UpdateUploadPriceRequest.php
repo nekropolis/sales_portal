@@ -15,7 +15,7 @@ class UpdateUploadPriceRequest extends FormRequest
     public function rules(): array
     {
         $data = $this->request->all();
-        
+
         if (isset($data['name'])) {
             return [
                 'name'        => 'required|string',

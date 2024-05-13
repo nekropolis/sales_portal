@@ -1,3 +1,18 @@
+$(document).ready(function () {
+    let input = document.getElementsByTagName("INPUT");
+    for (let i = 0; i < input.length; i++) {
+        input[i].oninvalid = function (e) {
+            e.target.setCustomValidity("");
+            if (!e.target.validity.valid) {
+                e.target.setCustomValidity("Это поле обязательное!");
+            }
+        };
+        input[i].oninput = function (e) {
+            e.target.setCustomValidity("");
+        };
+    }
+});
+
 function settingsPrice(price_id) {
     $('#settingsPrice').modal('show');
     $(".modal-body #price_id").val(price_id);
