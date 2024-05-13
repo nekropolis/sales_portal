@@ -6,31 +6,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Modules\Catalog\Models\Currency;
 use Modules\Prices\Models\LinkPrices;
 use Modules\Prices\Models\PricesUploaded;
 
-class PriceTrade extends Model
+class PriceTradeSettings extends Model
 {
     use HasFactory;
 
-    protected $table   = 'price_trade';
+    protected $table   = 'trade_settings';
     protected $fillable = [
-        'price_uploaded_id',
-        'model',
-        'price',
-        'quantity',
-        'additional',
+        'currency_id',
     ];
     protected $keyType = 'string';
     public $incrementing = false;
 
-    public function link(): hasOne
+    public function currency(): belongsTo
     {
-        return $this->hasOne(LinkPrices::class, 'price_model_id', 'id');
-    }
-
-    public function priceUploaded(): belongsTo
-    {
-        return $this->belongsTo(PricesUploaded::class);
+        return $this->belongsTo(Currency::class);
     }
 }

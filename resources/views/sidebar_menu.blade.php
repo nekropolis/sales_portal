@@ -9,7 +9,7 @@
     <ul class="collapse nav flex-column ms-1
     {{
     (request()->path()=="products" || request()->path()=="categories" ||
-       request()->path()=="brands" || request()->path()=="currency" || request()->path()=="margin")
+       request()->path()=="brands" || request()->path()=="currency")
        ? "show" : null
     }}" id="catalogMenu" data-bs-parent="#menu">
         <div>
@@ -24,10 +24,6 @@
         <li>
             <a href="/brands" class="nav-link px-4 {{(request()->path()=="brands") ? "active" : null}}"> <span
                         class="d-none d-sm-inline">Бренды</span></a>
-        </li>
-        <li>
-            <a href="/margin" class="nav-link px-4 {{(request()->path()=="margin") ? "active" : null}}"> <span
-                        class="d-none d-sm-inline">Наценка</span></a>
         </li>
         <li>
             <a href="/currency" class="nav-link px-4 {{(request()->path()=="currency") ? "active" : null}}"> <span

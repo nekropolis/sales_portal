@@ -2,6 +2,7 @@
 
 namespace Modules\Prices\Models;
 
+use Doctrine\Inflector\Rules\French\Rules;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -36,5 +37,10 @@ class PricesUploaded extends Model
     public function priceParse(): hasMany
     {
         return $this->hasMany(PriceParse::class, 'price_uploaded_id', 'id');
+    }
+
+    public function rules(): hasMany
+    {
+        return $this->hasMany(Rules::class);
     }
 }

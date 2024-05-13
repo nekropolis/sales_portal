@@ -5,12 +5,11 @@ namespace Modules\Prices\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
-use Modules\Prices\Models\LinkPrices;
 use Modules\Prices\Models\PricesUploaded;
 use Modules\Prices\UseCases\getPriceParseUseCase;
 use Modules\Prices\UseCases\getTableLinkUseCase;
+use Modules\Prices\UseCases\getTableUploadPriceUseCase;
 use Modules\Prices\UseCases\getUploadedPricesUseCase;
-use Modules\Prices\UseCases\getUploadPriceTableUseCase;
 use Modules\Prices\UseCases\IsActiveUseCase;
 use Modules\Prices\UseCases\IsLinkUseCase;
 use Modules\Prices\UseCases\parsePriceUseCase;
@@ -148,7 +147,7 @@ class PricesController extends Controller
         }
     }
 
-    public function getUploadPriceTable(Request $request, getUploadPriceTableUseCase $useCase)
+    public function getUploadPriceTable(Request $request, getTableUploadPriceUseCase $useCase)
     {
         try {
             return $useCase->execute($request);

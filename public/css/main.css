@@ -76,3 +76,19 @@
 .bs-checkbox {
 
 }
+
+.input-text-table {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 65px;
+    border-bottom: 1px solid #000000;
+}
+
+.currency-select {
+    border: none;
+    width: 70px;
+    border-bottom: 1px solid #000000;
+    outline: none;
+    text-align: center;
+}

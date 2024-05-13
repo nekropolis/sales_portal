@@ -6,15 +6,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Prices\Models\Inventories;
+use Modules\Prices\Models\PricesUploaded;
 
-class Margin extends Model
+class Rules extends Model
 {
     use HasFactory;
 
-    protected $table = 'margin';
+    protected $table = 'rules';
+
+    protected $fillable = ['is_active'];
 
     public function inventories(): HasMany
     {
         return $this->hasMany(Inventories::class);
+    }
+
+    public function priceUploaded(): HasMany
+    {
+        return $this->hasMany(PricesUploaded::class, 'id', 'price_uploaded_id');
     }
 }

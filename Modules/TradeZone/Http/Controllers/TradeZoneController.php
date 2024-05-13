@@ -4,13 +4,15 @@ namespace Modules\TradeZone\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Traits\ResponseTrait;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use Modules\Prices\Models\Inventories;
+use Modules\TradeZone\UseCases\createRuleTradePriceUseCase;
+use Modules\TradeZone\UseCases\deleteRuleTradePriceUseCase;
+use Modules\TradeZone\UseCases\editRuleTradePriceUseCase;
+use Modules\TradeZone\UseCases\formTradePriceUseCase;
 use Modules\TradeZone\UseCases\getTableTradePriceUseCase;
 use Modules\TradeZone\UseCases\getTradePriceUseCase;
+use Modules\TradeZone\UseCases\rulesTradePriceTableUseCase;
+use Modules\TradeZone\UseCases\setCurrencyTradePriceUseCase;
 use Modules\TradeZone\UseCases\settingsTradePriceUseCase;
 
 class TradeZoneController extends Controller
@@ -36,6 +38,60 @@ class TradeZoneController extends Controller
     }
 
     public function getTable(Request $request, getTableTradePriceUseCase $useCase)
+    {
+        try {
+            return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
+    }
+
+    public function formTradePrice(Request $request, formTradePriceUseCase $useCase)
+    {
+        try {
+            return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
+    }
+
+    public function rulesTradePriceTable(Request $request, rulesTradePriceTableUseCase $useCase)
+    {
+        try {
+            return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
+    }
+
+    public function createRuleTradePrice(Request $request, createRuleTradePriceUseCase $useCase)
+    {
+        try {
+            return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
+    }
+
+    public function editRuleTradePrice(Request $request, editRuleTradePriceUseCase $useCase)
+    {
+        try {
+            return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
+    }
+
+    public function deleteRuleTradePrice(Request $request, deleteRuleTradePriceUseCase $useCase)
+    {
+        try {
+            return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
+    }
+
+    public function setCurrencyTradePrice(Request $request, setCurrencyTradePriceUseCase $useCase)
     {
         try {
             return $useCase->execute($request);

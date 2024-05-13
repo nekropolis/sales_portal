@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Catalog\Models\Currency;
-use Modules\Catalog\Models\Margin;
 use Modules\Catalog\Models\Products;
 
 class Inventories extends Model
@@ -19,15 +18,9 @@ class Inventories extends Model
         'product_id',
         'price_model_id',
         'price',
-        'margin_id',
         'currency_id',
         'qty',
     ];
-
-    public function margin(): BelongsTo
-    {
-        return $this->belongsTo(Margin::class);
-    }
 
     public function currency(): BelongsTo
     {

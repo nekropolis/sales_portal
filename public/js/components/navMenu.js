@@ -25,7 +25,7 @@ $(document).ready(function () {
             }
         })
 
-    const catalogCollapseMenu = ['/products', '/categories', '/brands', '/margin', '/currency'];
+    const catalogCollapseMenu = ['/products', '/categories', '/brands', '/currency'];
 
     if (catalogCollapseMenu.includes(window.location.pathname)) {
         let icon = document.getElementById("catalogCollapse");

@@ -34,7 +34,7 @@ function settingsPrice(price_id) {
 
 function parsePrice(price_id) {
     $('#modalWaitParse').modal('show');
-    //const price_id = $('#price_id').val();
+
     axios.post("/parse-price", {price_id},
         {'content-type': 'application/x-www-form-urlencoded'}).then(({}) => {
         $('#modalWaitParse').modal('hide');

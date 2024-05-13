@@ -2,12 +2,12 @@
 
 namespace Modules\TradeZone\UseCases;
 
-
 use App\Traits\Makeable;
 use Illuminate\Http\Request;
-
+use Mgcodeur\CurrencyConverter\Facades\CurrencyConverter;
 use Modules\Prices\Models\Inventories;
 use Modules\Prices\Models\LinkPrices;
+use Modules\TradeZone\Models\PriceTradeSettings;
 
 class formTradePriceUseCase
 {
@@ -27,24 +27,30 @@ class formTradePriceUseCase
 
         //dd($collections);
 
-        $price = [];
+        $setCurrency = PriceTradeSettings::with('currency')->first();
+
+        $existingModelIds = [];
         foreach ($collections as $item) {
-            //dd($item->priceParse->qty);
+            $convertedAmount = CurrencyConverter::convert($item->priceParse->price)
+                ->from($item->priceParse->priceUploaded->currency->code)
+                ->to($setCurrency->currency->code)
+                ->format();
 
             $dataToUpdate = [
-                'price_model_name' => $item->price_model_name,
-                'price'            => $item->priceParse->price,
-                'margin_id'        => 5,
-                'currency_id'      => $item->priceParse->priceUploaded->currency_id,
+                'price'            => $convertedAmount,
+                'rule_id'          => 1,
+                'currency_id'      => $setCurrency->currency_id,
                 'qty'              => $item->priceParse->quantity,
             ];
-
-            $price = Inventories::query()->updateOrCreate([
+            $existingModelIds[] = $item->price_model_id;
+            Inventories::query()->updateOrCreate([
                 'product_id'     => $item->product_id,
                 'price_model_id' => $item->price_model_id,
             ], $dataToUpdate);
         }
 
-        dd($price);
+        Inventories::whereNotIn('price_model_id', $existingModelIds)->delete();
+
+        return back()->with('info', 'Готово!');
     }
 }

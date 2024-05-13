@@ -1,33 +1,33 @@
 <?php
 
-namespace Modules\Prices\UseCases;
+namespace Modules\TradeZone\UseCases;
 
 use App\Traits\Makeable;
 use Illuminate\Http\Request;
-use Modules\Prices\Models\LinkPrices;
-use Modules\Prices\Models\PricesUploaded;
+use Modules\Catalog\Models\Rules;
 
-class getUploadPriceTableUseCase
+class rulesTradePriceTableUseCase
 {
     use Makeable;
 
     public function execute(Request $request)
     {
         $data = $request->all();
+        //dd($data);
 
-        $pricesUploaded = PricesUploaded::query()
-            ->with('seller')
+        $rulesTrade = Rules::with('priceUploaded')
             ->limit($data['limit'])
             ->offset($data['offset'])
             ->get();
 
-        $count = PricesUploaded::all()->count();
+        $count = Rules::all()->count();
+
+        //dd($rulesTrade);
 
         return response()->json([
-            'total' => $count,
+            'total'            => $count,
             'totalNotFiltered' => $count,
-            'rows' => $pricesUploaded,
+            'rows'             => $rulesTrade,
         ]);
-
     }
 }
