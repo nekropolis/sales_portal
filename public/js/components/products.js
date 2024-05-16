@@ -128,3 +128,7 @@ window.operateEvents = {
         }
     }
 }
+
+function checkIcon() {
+    $table.bootstrapTable('resetSearch');
+}

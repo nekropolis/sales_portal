@@ -26,6 +26,7 @@ class getTableLinkUseCase
                 ->with('product.brand')
                 ->limit($data['limit'])
                 ->offset($data['offset'])
+                ->orderBy($data['sort'], $data['order'])
                 ->get();
 
             $count = LinkPrices::query()
@@ -50,6 +51,7 @@ class getTableLinkUseCase
                 ->with('product.brand')
                 ->limit($data['limit'])
                 ->offset($data['offset'])
+                ->orderBy($data['sort'], $data['order'])
                 ->get();
 
             $count = LinkPrices::query()

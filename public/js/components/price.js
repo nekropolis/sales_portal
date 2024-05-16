@@ -99,7 +99,6 @@ function addProductToLink(price_id, product_id) {
             row: data
         })
         $('#linkProductCanvas').offcanvas('hide');
-        //location.reload();
     }).catch((error) => {
         console.log(error)
     });
@@ -146,19 +145,14 @@ function ajaxRequest(params) {
 
 function queryParams(params) {
     const parseTable = document.getElementById('tablePriceParse');
-    let id = parseTable.getAttribute('data-id');
 
-    delete params.sort
-    delete params.order
-    params.id = id
-    return params
-}
-
-function responseHandler(res) {
-    if ($('#table').bootstrapTable('getOptions').sortOrder === 'desc') {
-        res.rows = res.rows.reverse()
+    if ( params.sort === undefined || params.order === undefined) {
+         params.sort = 'id'
+         params.order = 'asc'
     }
-    return res
+
+    params.id = parseTable.getAttribute('data-id')
+    return params
 }
 
 $(function () {
@@ -207,7 +201,7 @@ $(function () {
                 let linkProductName = document.getElementById("linkProductName");
                 searchProduct.forEach((e) => {
                     linkProductName.innerHTML +=
-                        `<td class="cursor-table" onclick="return addProductToLink('${row.price_model_id}', '${e.id}')"> ${e.brand ? e.brand.name : ''} ${e.model} <input type="text" id="searchProductId" value="${e.id}" hidden></td>`;
+                        `<td class="cursor-table" onclick="return addProductToLink('${row.price_model_id}', '${e.id}')"> ${e.brand ? e.brand.name : ''} ${e.model} ${e.localization !== null ? e.localization : ''} ${e.condition !== null ? e.condition : ''} <input type="text" id="searchProductId" value="${e.id}" hidden></td>`;
                 });
             });
         }
@@ -221,4 +215,8 @@ function cellStyle(value, row, index) {
             cursor: 'pointer'
         }
     }
+}
+
+function checkIcon() {
+    $table.bootstrapTable('resetSearch');
 }

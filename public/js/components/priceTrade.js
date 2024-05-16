@@ -1,3 +1,5 @@
+let $table = $('#tableTradeZone')
+
 function ajaxRequest(params) {
     let url = '/trade-table'
     console.log(params.data)
@@ -14,12 +16,12 @@ function queryParams(params) {
 }
 
 function responseHandler(res) {
-    if ($('#tableTradeZone').bootstrapTable('getOptions').sortOrder === 'desc') {
+    if ($table.bootstrapTable('getOptions').sortOrder === 'desc') {
         res.rows = res.rows.reverse()
     }
     return res
 }
 
-function createRules() {
-
+function checkIcon() {
+    $table.bootstrapTable('resetSearch');
 }

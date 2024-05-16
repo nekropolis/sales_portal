@@ -155,14 +155,16 @@
                 </div>
                 <label for="product-select" class="form-label">Или выбирите из списка</label>
                 <div class="input-group">
-                    <input class="form-control" list="datalistOptions"
+                    <input class="form-control link-canvas" list="datalistOptions"
                            data-id="{{$price_uploaded['id']}}" id="product-select"
+                           onfocus="this.value=''" onchange="this.blur();"
                            placeholder="Введите название модели ...">
                     <button type="button" class="btn btn-outline-secondary btn-sm" onclick="getIdOfDatalist()">Связать
                     </button>
                     <datalist id="datalistOptions">
                         @foreach($products as $product)
-                            <option data-value="{{ $product['id'] }}" value="{{ $product['model'] }}">
+                            <option data-value="{{ $product['id'] }}"
+                                    value="{{ $product['model'] }}">{{ $product['localization'] !== null ? $product['localization'] : '' }} {{ $product['condition'] !== null ? $product['condition'] : '' }}</option>
                         @endforeach
                     </datalist>
                 </div>
@@ -186,9 +188,11 @@
 
         <div class="d-flex flex-row-reverse justify-content">
             <div class="input-group p-2">
-                <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
                 <input type="text" class="form-control" id="customSearchPriceParse" style="width:220px;"
-                       placeholder="Поиск по наименованию ..." aria-label="customSearchPriceParse" aria-describedby="basic-addon1">
+                       placeholder="Поиск по наименованию ..." aria-label="customSearchPriceParse"
+                       aria-describedby="basic-addon1">
+                <span class="input-group-text reset-search" id="basic-addon1" onclick="checkIcon()">
+                    <i class="bi bi-x-lg"></i></span>
             </div>
         </div>
     </div>
@@ -223,18 +227,16 @@
                 data-pagination="true"
                 data-page-size="15"
                 data-page-list="[15, 25, 50]"
-                data-server-sort="false"
                 data-query-params="queryParams"
-                data-response-handler="responseHandler"
                 data-row-style="rowStyle"
                 data-id="{{$price_uploaded['id']}}">
             <thead>
             <tr>
                 <th data-field="id" data-sortable="true">ID</th>
-                <th data-field="is_link" data-checkbox="true">Связь</th>
+                <th data-field="is_link" data-checkbox="true" data-sortable="true">Связь</th>
                 <th data-field="price_model_name" data-sortable="true">Наименование</th>
-                <th data-field="product.model" data-cell-style="cellStyle" data-sortable="true">Связка Каталог</th>
-                <th data-field="price_parse.additional" data-sortable="true">Доп. инфо</th>
+                <th data-field="product.model" data-cell-style="cellStyle">Связка Каталог</th>
+                <th data-field="price_parse.additional">Доп. инфо</th>
                 <th data-field="price_parse.quantity">К-во</th>
                 <th data-field="price_parse.price">Цена</th>
                 <th data-field="price_parse.price_uploaded.currency.code">Валюта</th>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Mgcodeur\CurrencyConverter\Facades\CurrencyConverter;
 use Modules\Prices\Models\Inventories;
 use Modules\Prices\Models\LinkPrices;
+use Modules\TradeZone\Models\PriceModelsInProduct;
 use Modules\TradeZone\Models\PriceTradeSettings;
 
 class formTradePriceUseCase
@@ -15,8 +16,18 @@ class formTradePriceUseCase
 
     public function execute(Request $request)
     {
+        $linksModels = LinkPrices::where('is_link', true)->get();
+        foreach ($linksModels as $item) {
+            PriceModelsInProduct::query()->updateOrCreate([
+                'product_id'     => $item->product_id,
+                'price_parse_id' => $item->price_model_id,
+            ]);
+        }
 
-        $collections = LinkPrices::where(['is_link' => true, 'is_exist' => true])
+        $collections = LinkPrices::where([
+            'is_link'  => true,
+            'is_exist' => true,
+        ])
             ->whereHas('priceParse.priceUploaded', function ($query) {
                 $query->where('is_active', true);
             })
@@ -36,11 +47,11 @@ class formTradePriceUseCase
                 ->to($setCurrency->currency->code)
                 ->format();
 
-            $dataToUpdate = [
-                'price'            => $convertedAmount,
-                'rule_id'          => 1,
-                'currency_id'      => $setCurrency->currency_id,
-                'qty'              => $item->priceParse->quantity,
+            $dataToUpdate       = [
+                'price'       => $convertedAmount,
+                'rule_id'     => 1,
+                'currency_id' => $setCurrency->currency_id,
+                'qty'         => $item->priceParse->quantity,
             ];
             $existingModelIds[] = $item->price_model_id;
             Inventories::query()->updateOrCreate([

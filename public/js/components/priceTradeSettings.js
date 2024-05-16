@@ -184,12 +184,13 @@ window.deleteEvents = {
 
         axios.post("/edit-rule-trade-price", {copy, id},
             {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
-            console.log(data, data.id)
+/*            console.log(data, data.id)
             let newIndex = index +1
             $table.bootstrapTable('insertRow', {
                 index: newIndex,
                 row: data,
-            })
+            })*/
+            $table.bootstrapTable('refresh')
         }).catch((error) => {
             console.log(error)
         });

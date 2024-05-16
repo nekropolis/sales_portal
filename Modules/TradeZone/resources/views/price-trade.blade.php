@@ -22,9 +22,10 @@
         <!-- Search -->
         <div class="d-flex flex-row-reverse justify-content">
             <div class="input-group w-auto p-2">
-                <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
                 <input type="text" class="form-control" id="customSearchTradeZone" style="width:220px;"
-                       placeholder="Поиск по модели ..." aria-label="customSearchTradeZone" aria-describedby="basic-addon1">
+                       placeholder="Поиск по модели ..." aria-label="customSearchTradeZone"
+                       aria-describedby="basic-addon1">
+                <span class="input-group-text reset-search" id="basic-addon1" onclick="checkIcon()"><i class="bi bi-x-lg"></i></span>
             </div>
         </div>
     </div>
