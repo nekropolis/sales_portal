@@ -48,10 +48,14 @@
                 data-page-size="15"
                 data-page-list="[15, 25, 50]"
                 data-server-sort="false"
+                data-detail-view="true"
+                data-detail-view-icon="false"
+                data-detail-formatter="detailFormatter"
                 data-query-params="queryParams"
                 data-response-handler="responseHandler">
             <thead>
             <tr>
+                <th data-field="icon" class="detail" data-formatter="detailIconFormatter" data-events="detailIconEvents"></th>
                 <th data-field="id" data-sortable="true">ID</th>
                 <th data-field="product.sku">SKU</th>
                 <th data-field="product.category.name" data-sortable="true">Категория</th>

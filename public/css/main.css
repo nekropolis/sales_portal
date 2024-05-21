@@ -96,3 +96,11 @@
 .reset-search {
     cursor: pointer;
 }
+
+.prise-models-in-product {
+    text-align: left;
+
+    .item-models {
+        margin: 5px;
+    }
+}

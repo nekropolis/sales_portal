@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Modules\Catalog\Models\Products;
 
 class PriceParse extends Model
 {
@@ -30,5 +31,10 @@ class PriceParse extends Model
     public function priceUploaded(): belongsTo
     {
         return $this->belongsTo(PricesUploaded::class);
+    }
+
+    public function products(): BelongsTo
+    {
+        return $this->belongsTo(Products::class);
     }
 }

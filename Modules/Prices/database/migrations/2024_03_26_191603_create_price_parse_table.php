@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('price_parse', function (Blueprint $table) {
             $table->id();
-            $table->integer('price_uploaded_id');
+            $table->integer('price_uploaded_id')->unsigned()->index();
             $table->string('model');
             $table->integer('price')->default(0);
             $table->integer('quantity')->default(0);
             $table->string('additional')->nullable();
-            $table->integer('currency_id')->default(0);
+            $table->integer('currency_id')->default(0)->unsigned()->index();
             $table->timestamps();
         });
     }
