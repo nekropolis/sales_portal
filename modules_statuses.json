@@ -1,5 +1,8 @@
 {
     "Prices": true,
     "Products": true,
-    "Catalog": true
+    "Catalog": true,
+    "ImportExelProducts": true,
+    "Sellers": true,
+    "TradeZone": true
 }
