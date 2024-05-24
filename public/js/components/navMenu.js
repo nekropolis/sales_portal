@@ -30,7 +30,7 @@ $(document).ready(function () {
     if (catalogCollapseMenu.includes(window.location.pathname)) {
         let icon = document.getElementById("catalogCollapse");
         //$('#linkProductCanvas').collapse('show')
-        icon.className = "bi bi-chevron-up";
+        icon.className = "bi bi-chevron-up icon-sidebar";
     }
 
     const sellersCollapseMenu = ['sellers', 'price-parse', 'prices'];
@@ -38,6 +38,6 @@ $(document).ready(function () {
     if (sellersCollapseMenu.includes(window.location.pathname.split('/')[1])) {
         let icon = document.getElementById("sellersCollapse");
         $('#sellersMenu').collapse('show')
-        icon.className = "bi bi-chevron-up";
+        icon.className = "bi bi-chevron-up icon-sidebar";
     }
 });

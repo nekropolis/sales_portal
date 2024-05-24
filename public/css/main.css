@@ -34,19 +34,28 @@
     background-color: transparent;
     border-bottom: transparent;
     text-decoration: underline;
-    color: indigo;
+    color: rgb(13, 110, 253);
+    border-bottom: 1px solid;
+    width: 100%;
 }
 
 .nav .nav-link {
     color: #000000;
+    border-bottom: 1px solid;
+    width: 100%;
+    padding: 5px 15px;
 }
 
 .nav .nav-link:hover {
-    color: indigo;
+    color: rgb(13, 110, 253);
+    border-bottom: 1px solid;
+    width: 100%;
 }
 
 .nav .nav-link:focus {
     color: #000000;
+    border-bottom: 1px solid;
+    width: 100%;
 }
 
 .cursor-table {
@@ -103,4 +112,18 @@
     .item-models {
         margin: 5px;
     }
+}
+
+.sticky-offset{
+    top: 40px !important;
+    margin-bottom: -150px;
+    border-right: 1px solid grey;
+}
+
+.icon-sidebar {
+    float: right;
+}
+
+.bs-checkbox .th-inner {
+    padding: 15px 10px !important;
 }

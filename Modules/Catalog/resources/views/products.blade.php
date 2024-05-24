@@ -200,7 +200,7 @@
                     data-row-style="rowStyle">
                 <thead>
                 <tr>
-                    <th data-field="id" data-sortable="true">ID</th>
+                    <th data-field="id" data-halign="center" data-sortable="true">ID</th>
                     <th data-field="sku">SKU</th>
                     <th data-field="category.name" data-sortable="true">Категория</th>
                     <th data-field="brand.name" data-sortable="true">Бренд</th>

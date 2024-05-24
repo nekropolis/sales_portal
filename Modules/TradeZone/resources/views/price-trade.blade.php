@@ -56,7 +56,7 @@
             <thead>
             <tr>
                 <th data-field="icon" class="detail" data-formatter="detailIconFormatter" data-events="detailIconEvents"></th>
-                <th data-field="id" data-sortable="true">ID</th>
+                <th data-field="id" data-halign="center" data-sortable="true">ID</th>
                 <th data-field="product.sku">SKU</th>
                 <th data-field="product.category.name" data-sortable="true">Категория</th>
                 <th data-field="product.brand.name" data-sortable="true">Бренд</th>

@@ -10,20 +10,16 @@
     @include('includes.header')
 </header>
 <div class="container-fluid">
-    <div class="row flex-grow-sm-1 flex-grow-0">
+    <div class="row flex-nowrap">
         @auth
-        <aside class="col-sm-2 flex-grow-sm-1 flex-shrink-1 flex-grow-0 pb-sm-0 pb-3">
-            <div class="col-sm-2 bg-light h-100 position-fixed border-end">
-                    @include('sidebar_menu')
+            <div class="col-auto col-md-3 col-xl-2">
+                @include('sidebar_menu')
             </div>
-        </aside>
         @endauth
-        <main class="col overflow-auto h-100">
-            <div class="bg-light p-3">
-                @include('layouts.flash-messages')
-                @yield('content')
-            </div>
-        </main>
+        <div class="col py-3 px-sm-3">
+            @include('layouts.flash-messages')
+            @yield('content')
+        </div>
     </div>
 </div>
 <footer class="row">
