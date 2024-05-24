@@ -1,0 +1,11 @@
+{
+    "name": "ImportExportExel",
+    "alias": "ImportExportExel",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ImportExportExel\\Providers\\ImportExportExelServiceProvider"
+    ],
+    "files": []
+}

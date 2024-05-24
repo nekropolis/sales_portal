@@ -2,7 +2,7 @@
     "Prices": true,
     "Products": true,
     "Catalog": true,
-    "ImportExelProducts": true,
+    "ImportExportExel": true,
     "Sellers": true,
     "TradeZone": true
 }

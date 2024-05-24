@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\ImportExelProducts\Imports;
+namespace Modules\ImportExportExel\Imports;
 
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;

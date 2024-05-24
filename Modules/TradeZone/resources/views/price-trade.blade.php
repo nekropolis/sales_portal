@@ -17,7 +17,10 @@
     <!-- Buttons -->
     <div class="d-flex justify-content-between mb-2 form-group">
         <div class="btn-group btn-group-sm p-2 bd-highlight" role="group">
-
+            <form action="{{ route('priceTrade.export') }}" method="GET" enctype="multipart/form-data">
+                @csrf
+                <button class="btn btn-outline-secondary" type="submit">Экспорт Прайс-Листа</button>
+            </form>
         </div>
         <!-- Search -->
         <div class="d-flex flex-row-reverse justify-content">

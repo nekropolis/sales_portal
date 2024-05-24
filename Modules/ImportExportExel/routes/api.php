@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\ImportExelProducts\Http\Controllers\ImportExelProductsController;
+use Modules\ImportExportExel\Http\Controllers\exelProductsController;
 
 /*
  *--------------------------------------------------------------------------

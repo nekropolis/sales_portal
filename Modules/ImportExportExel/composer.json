@@ -1,5 +1,5 @@
 {
-    "name": "nwidart/importexelproducts",
+    "name": "nwidart/ImportExportExel",
     "description": "",
     "authors": [
         {
@@ -17,14 +17,14 @@
     },
     "autoload": {
         "psr-4": {
-            "Modules\\ImportExelProducts\\": "app/",
-            "Modules\\ImportExelProducts\\Database\\Factories\\": "database/factories/",
-            "Modules\\ImportExelProducts\\Database\\Seeders\\": "database/seeders/"
+            "Modules\\ImportExportExel\\": "app/",
+            "Modules\\ImportExportExel\\Database\\Factories\\": "database/factories/",
+            "Modules\\ImportExportExel\\Database\\Seeders\\": "database/seeders/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Modules\\ImportExelProducts\\Tests\\": "tests/"
+            "Modules\\ImportExportExel\\Tests\\": "tests/"
         }
     }
 }

@@ -1,15 +1,15 @@
 <?php
 
-namespace Modules\ImportExelProducts\Providers;
+namespace Modules\ImportExportExel\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
-class ImportExelProductsServiceProvider extends ServiceProvider
+class ImportExportExelServiceProvider extends ServiceProvider
 {
-    protected string $moduleName = 'ImportExelProducts';
+    protected string $moduleName = 'ImportExportExel';
 
-    protected string $moduleNameLower = 'importexelproducts';
+    protected string $moduleNameLower = 'ImportExportExel';
 
     /**
      * Boot the application events.

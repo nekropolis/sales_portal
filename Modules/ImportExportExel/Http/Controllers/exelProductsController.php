@@ -1,21 +1,21 @@
 <?php
 
-namespace Modules\ImportExelProducts\Http\Controllers;
+namespace Modules\ImportExportExel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Modules\ImportExelProducts\Exports\ProductsExport;
+use Modules\ImportExportExel\Exports\ProductsExport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use Modules\ImportExelProducts\Imports\ProductsImport;
+use Modules\ImportExportExel\Imports\ProductsImport;
 
-class ImportExelProductsController extends Controller
+class exelProductsController extends Controller
 {
     /**
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function export()
     {
-        return Excel::download(new ProductsExport, 'products.xlsx');
+        return Excel::download(new ProductsExport, 'products_'.date('Y:m:d').'.xlsx');
     }
 
     /**

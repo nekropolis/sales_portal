@@ -6,9 +6,16 @@
 
         <form action="{{ route('products.import') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <input type="file" name="file" class="form-control">
-            <br>
-            <button class="btn btn-success"><i class="fa fa-file"></i> Import User Data</button>
+            <div class="input-group">
+                <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Import</button>
+            </div>
+        </form>
+
+
+        <form action="{{ route('products.export') }}" method="GET" enctype="multipart/form-data">
+            @csrf
+            <button class="btn btn-outline-secondary" type="submit">Экспорт Каталога</button>
         </form>
     </div>
 
