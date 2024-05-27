@@ -17,7 +17,6 @@
             </div>
         @endauth
         <div class="col py-3 px-sm-3">
-            @include('layouts.flash-messages')
             @yield('content')
         </div>
     </div>

@@ -1,4 +1,5 @@
 <nav class="navbar navbar-expand-md fixed-top shadow p-2 mb-1 bg-body-tertiary rounded">
+    @include('layouts.flash-messages')
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}
         </a>

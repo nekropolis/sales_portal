@@ -56,5 +56,7 @@
             </li>
         </div>
     </ul>
+    <a href="/users" class="nav-link px-2 align-middle {{ str_starts_with(request()->path(), 'users') ? "active" : null}}">
+        <i class="fs-5 bi-people"></i><span class="ms-1 d-none d-sm-inline">Пользователи</span></a>
 </nav>
 <script src="/js/components/navMenu.js"></script>

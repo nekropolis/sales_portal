@@ -35,7 +35,7 @@ function queryParams(params) {
 }
 
 function responseHandler(res) {
-    if ($('#table').bootstrapTable('getOptions').sortOrder === 'desc') {
+    if ($table.bootstrapTable('getOptions').sortOrder === 'desc') {
         res.rows = res.rows.reverse()
     }
     return res

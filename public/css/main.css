@@ -127,3 +127,10 @@
 .bs-checkbox .th-inner {
     padding: 15px 10px !important;
 }
+
+.alert {
+    position: absolute !important;
+    top: 20px;
+    right: 15px;
+    z-index: 11111;
+}

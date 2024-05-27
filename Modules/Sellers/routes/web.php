@@ -19,6 +19,9 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/sellers', [SellersController::class, 'listSeller'])->name('sellers');
+    Route::get('/sellers-table', [SellersController::class, 'getTableSellers'])->name('getTableSellers');
     Route::post('/add-seller', [SellersController::class, 'addSeller'])->name('addSeller');
     Route::post('/update-seller', [SellersController::class, 'updateSeller'])->name('updateSeller');
+    Route::post('/delete-seller', [SellersController::class, 'deleteSeller'])->name('deleteSeller');
+
 });
