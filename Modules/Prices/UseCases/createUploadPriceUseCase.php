@@ -18,9 +18,5 @@ class createUploadPriceUseCase
         $fileModel->name      = $request->name;
         $fileModel->file_path = '/storage/'.$filePath;
         $fileModel->save();
-
-        return back()
-            ->with('success', 'File has been uploaded.')
-            ->with('file', $fileName);
     }
 }

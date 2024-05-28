@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Modules\Prices\Http\Requests\UpdatePriceFileRequest;
 use Modules\Prices\Http\Requests\CreateUploadPriceRequest;
 use Modules\Prices\Http\Requests\UpdateUploadPriceRequest;
+use Modules\Prices\Models\PriceParse;
 use Modules\Prices\Models\PricesUploaded;
 use Modules\Prices\UseCases\getPriceParseUseCase;
 use Modules\Prices\UseCases\getTableLinkUseCase;
@@ -29,6 +30,8 @@ class PricesController extends Controller
     {
         try {
             $useCase->execute($request);
+
+            return redirect()->back()->with('success', 'Файл загружен!.');
         } catch (\Exception $e) {
             return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
         }
@@ -57,6 +60,7 @@ class PricesController extends Controller
         $data = $request->all();
 
         PricesUploaded::where('id', $data['price_id'])->delete();
+        PriceParse::where('price_uploaded_id', $data['price_id'])->delete();
 
         return response()->json(["success" => "Прайс удален!"]);
     }
