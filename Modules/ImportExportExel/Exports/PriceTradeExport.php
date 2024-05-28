@@ -31,8 +31,8 @@ class PriceTradeExport implements FromCollection, WithHeadings
                 return [
                     'id'           => $item->id,
                     'sku'          => $item->product->sku,
-                    'brand'        => $item->product->brand->name,
-                    'category'     => $item->product->category->name,
+                    'brand'        => $item->product->brand == null ? '-' : $item->product->brand->name,
+                    'category'     => $item->product->category == null ? '-' : $item->product->category->name,
                     'model'        => $item->product->model,
                     'localization' => $item->product->localization,
                     'package'      => $item->product->package,
