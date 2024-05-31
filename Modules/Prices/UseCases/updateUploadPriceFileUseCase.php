@@ -21,9 +21,5 @@ class updateUploadPriceFileUseCase
         $priceUpload->file_path  = '/storage/'.$filePath;
         $priceUpload->updated_at = $timestamp;
         $priceUpload->update();
-
-        return back()
-            ->with('success', 'File has been update.')
-            ->with('file', $fileName);
     }
 }

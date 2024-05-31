@@ -15,15 +15,19 @@ class CreateCurrencyRequest extends FormRequest
         return Auth::check();
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string',
+            'code' => 'required|string',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Название валюты обязательное поле!',
+            'code.required' => 'Код валюты обязательное поле!',
         ];
     }
 }

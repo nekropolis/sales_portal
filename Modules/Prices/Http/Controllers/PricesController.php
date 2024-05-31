@@ -69,6 +69,8 @@ class PricesController extends Controller
     {
         try {
             $useCase->execute($request);
+            
+            return back()->with('success', 'File has been update.');
         } catch (\Exception $e) {
             return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
         }

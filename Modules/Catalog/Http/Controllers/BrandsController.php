@@ -7,6 +7,7 @@ use Modules\Catalog\Http\Requests\CreateBrandRequest;
 use Modules\Catalog\Http\Requests\DeleteBrandRequest;
 use Modules\Catalog\Http\Requests\UpdateBrandRequest;
 use Modules\Catalog\Models\Brands;
+use Modules\Catalog\Models\Products;
 
 class BrandsController extends Controller
 {
@@ -50,7 +51,7 @@ class BrandsController extends Controller
             $brand->name = $data['name'];
             $brand->update();
 
-        return redirect()->back()->with('success', 'Бренд обновлен!');
+            return redirect()->back()->with('success', 'Бренд обновлен!');
         } else {
             $brand->get()->toArray();
 
@@ -62,9 +63,14 @@ class BrandsController extends Controller
     {
         $data = $request->all();
 
-        $brand = Brands::findOrFail($data['brand_id']);
-        $brand->delete();
+        $brand            = Brands::findOrFail($data['brand_id']);
+        $checkDeleteBrand = Products::where('brand_id', $data['brand_id'])->get();
 
+        if ($checkDeleteBrand) {
+            return back()->with('error', 'Бренд присутсвует в каталоге, нельзя удлить.');
+        }
+
+        $brand->delete();
         //return redirect()->back()->with('success', 'Бренд удален!');
     }
 }

@@ -8,7 +8,7 @@
                 Создать
             </button>
 
-            <!-- Create Brand -->
+            <!-- Create Category -->
             <form action="{{route('createCategory')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal fade" id="createCategory" tabindex="-1" aria-labelledby="createCategory" aria-hidden="true">
@@ -21,9 +21,9 @@
                             </div>
                             <div class="modal-body">
                                 <div>
-                                    <label>
-                                        <input type="text" id="name" name="name" placeholder="Название категории"/>
-                                    </label>
+                                    <label for="name" class="col-form-label"><h5>Название категории</h5></label>
+                                    <input type="text" class="form-control name" id="name"
+                                           name="name" aria-label=".form-control-sm example" required>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -35,7 +35,7 @@
                 </div>
             </form>
 
-            <!-- Update Brand -->
+            <!-- Update Category -->
             <form action="{{route('updateCategory')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal fade" id="updateCategory" tabindex="-1" aria-labelledby="updateCategory" aria-hidden="true">
@@ -51,7 +51,7 @@
                                        name="category_id" value="category_id" hidden>
                                 <div>
                                     <label for="name" class="col-form-label">Название Категории</label>
-                                    <input type="text" class="form-control name" id="name" name="name">
+                                    <input type="text" class="form-control name" id="name" name="name" required>
                                 </div>
                             </div>
                             <div class="modal-footer">

@@ -18,14 +18,14 @@ class UpdateBrandRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'model' => 'required|max:128',
+            //
         ];
     }
 
     public function messages(): array
     {
         return [
-            'model.required' => 'Наименование продутка обязательное поле!',
+            //
         ];
     }
 }

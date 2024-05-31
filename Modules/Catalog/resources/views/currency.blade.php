@@ -8,7 +8,7 @@
                 Создать
             </button>
 
-            <!-- Create Brand -->
+            <!-- Create Currency -->
             <form action="{{route('createCurrency')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal fade" id="createCurrency" tabindex="-1" aria-labelledby="createCurrency"
@@ -23,12 +23,12 @@
                             <div class="modal-body">
                                 <div>
                                     <div>
-                                        <label for="name" class="col-form-label">Валюта</label>
-                                        <input type="text" class="form-control name" id="name" name="name">
+                                        <label for="name" class="col-form-label">Валюта*</label>
+                                        <input type="text" class="form-control name" id="name" name="name" required>
                                     </div>
                                     <div>
-                                        <label for="code" class="col-form-label">Код Валюты</label>
-                                        <input type="text" class="form-control code" id="code" name="code">
+                                        <label for="code" class="col-form-label">Код Валюты*</label>
+                                        <input type="text" class="form-control code" id="code" name="code" required>
                                     </div>
                                 </div>
                             </div>
@@ -41,7 +41,7 @@
                 </div>
             </form>
 
-            <!-- Update Brand -->
+            <!-- Update Currency -->
             <form action="{{route('updateCurrency')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal fade" id="updateCurrency" tabindex="-1" aria-labelledby="updateCurrency"
@@ -58,11 +58,11 @@
                                        name="currency_id" value="currency_id" hidden>
                                 <div>
                                     <label for="name" class="col-form-label">Валюта</label>
-                                    <input type="text" class="form-control name" id="name" name="name">
+                                    <input type="text" class="form-control name" id="name" name="name" required>
                                 </div>
                                 <div>
                                     <label for="code" class="col-form-label">Код Валюты</label>
-                                    <input type="text" class="form-control code" id="code" name="code">
+                                    <input type="text" class="form-control code" id="code" name="code" required>
                                 </div>
                             </div>
                             <div class="modal-footer">

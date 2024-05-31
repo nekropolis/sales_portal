@@ -15,15 +15,15 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="createBrand">Modal title</h1>
+                                <h1 class="modal-title fs-5" id="createBrand">Создать</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <div>
-                                    <label>
-                                        <input type="text" id="name" name="name" placeholder="Название бренда"/>
-                                    </label>
+                                    <label for="name" class="col-form-label"><h5>Название бренда</h5></label>
+                                    <input type="text" class="form-control name" id="name"
+                                           name="name" aria-label=".form-control-sm example" required>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -51,7 +51,7 @@
                                        name="brand_id" value="brand_id" hidden>
                                 <div>
                                     <label for="name" class="col-form-label">Название Бренда</label>
-                                    <input type="text" class="form-control name" id="name" name="name">
+                                    <input type="text" class="form-control name" id="name" name="name" required>
                                 </div>
                             </div>
                             <div class="modal-footer">

@@ -7,6 +7,7 @@ use Modules\Catalog\Http\Requests\CreateCategoryRequest;
 use Modules\Catalog\Http\Requests\DeleteCategoryRequest;
 use Modules\Catalog\Http\Requests\UpdateCategoryRequest;
 use Modules\Catalog\Models\Categories;
+use Modules\Catalog\Models\Products;
 
 class CategoriesController extends Controller
 {
@@ -63,6 +64,12 @@ class CategoriesController extends Controller
         $data = $request->all();
 
         $category = Categories::findOrFail($data['category_id']);
+        $checkDeleteCategory = Products::where('category_id', $data['category_id'])->get();
+
+        if ($checkDeleteCategory) {
+            return back()->with('error', 'Категория присутсвует в каталоге, нельзя удлить.');
+        }
+
         $category->delete();
 
         //return redirect()->back()->with('success', 'Бренд удален!');

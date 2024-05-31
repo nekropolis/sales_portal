@@ -25,7 +25,7 @@
                         <div>
                             <label for="name" class="col-form-label"><h5>Название поставщика</h5></label>
                             <input type="text" class="form-control name" id="name"
-                                   name="name" aria-label=".form-control-sm example">
+                                   name="name" aria-label=".form-control-sm example" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -55,7 +55,7 @@
                         <div>
                             <label for="name" class="col-form-label"><h5>Назваие поставщика</h5></label>
                             <input type="text" class="form-control name" id="name"
-                                   name="name" aria-label=".form-control-sm example">
+                                   name="name" aria-label=".form-control-sm example" required>
                         </div>
                     </div>
                     <div class="modal-footer">
