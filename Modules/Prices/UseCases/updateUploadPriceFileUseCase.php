@@ -18,6 +18,7 @@ class updateUploadPriceFileUseCase
 
         $fileName                = $request->file->getClientOriginalName();
         $filePath                = $request->file('file')->storeAs('uploads', $fileName, 'public');
+        $priceUpload->orig_name  = $fileName;
         $priceUpload->file_path  = '/storage/'.$filePath;
         $priceUpload->updated_at = $timestamp;
         $priceUpload->update();

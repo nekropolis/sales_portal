@@ -80,23 +80,25 @@ window.operateEvents = {
         });
 
         $(".buttonUpdateProduct").on('click', function () {
-            const sku = updateProductModal.querySelector('.modal-body .sku').value;
-            const category_id = updateProductModal.querySelector('.modal-body .category_id').value;
-            const brand_id = updateProductModal.querySelector('.modal-body .brand_id').value;
-            const model = updateProductModal.querySelector('.modal-body .model').value;
-            const localization = updateProductModal.querySelector('.modal-body .localization').value;
-            const package = updateProductModal.querySelector('.modal-body .package').value;
-            const condition = updateProductModal.querySelector('.modal-body .condition').value;
+
+            console.log(  product_id,
+               sku.value,
+                category_id.value,
+                brand_id.value,
+                model.value,
+                localization.value,
+                package.value,
+                condition.value)
 
             axios.post("/update-product", {
                     product_id,
-                    sku,
-                    category_id,
-                    brand_id,
-                    model,
-                    localization,
-                    package,
-                    condition
+                    sku: sku.value,
+                    category_id: category_id.value,
+                    brand_id: brand_id.value,
+                    model: model.value,
+                    localization: localization.value,
+                    package: package.value,
+                    condition: condition.value
                 },
                 {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
                 $table.bootstrapTable('updateByUniqueId', {

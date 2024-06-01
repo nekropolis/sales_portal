@@ -13,6 +13,7 @@ use Modules\Catalog\Models\Categories;
 use Modules\Catalog\Models\Products;
 use Elasticsearch;
 use Modules\Catalog\UseCases\getProductsTableUseCase;
+use Modules\Catalog\UseCases\updateProductUseCase;
 
 class ProductsController extends Controller
 {
@@ -78,31 +79,12 @@ class ProductsController extends Controller
     /**
      * @throws \Exception
      */
-    public function update(UpdateProductRequest $request)
+    public function update(UpdateProductRequest $request, updateProductUseCase $useCase)
     {
-        $data = $request->all();
-
-        //dd($data);
-        $product = Products::findOrFail($data['product_id']);
-        if (!$product) {
-            throw new \Exception('Not found');
-        }
-
-        if (isset($data['model'])) {
-            $product->sku          = $data['sku'];
-            $product->category_id  = $data['category_id'];
-            $product->brand_id     = $data['brand_id'];
-            $product->model        = $data['model'];
-            $product->localization = $data['localization'];
-            $product->package      = $data['package'];
-            $product->condition    = $data['condition'];
-            $product->update();
-
-            return Products::where('id', $data['product_id'])->with('category')->with('brand')->first();
-        } else {
-            $product->get()->toArray();
-
-            return $product;
+        try {
+            return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
         }
     }
 

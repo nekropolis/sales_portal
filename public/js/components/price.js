@@ -220,3 +220,11 @@ function cellStyle(value, row, index) {
 function checkIcon() {
     $table.bootstrapTable('resetSearch');
 }
+
+function existValueTable(value) {
+    if (value === 0) {
+        return 'Нет'
+    } else {
+        return 'Да'
+    }
+}

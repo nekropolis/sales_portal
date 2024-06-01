@@ -37,8 +37,11 @@ class parsePriceUseCase
             $validate_qty_name   = false;
             $validate_additional = false;
 
+            $nameRow =[];
             foreach (array_slice($xlsx->rows(), $numeration_started - 1) as $k => $r) {
                 if ($k === 0) {
+                    $nameRow = $r;
+
                     if ($model_name && in_array($model_name, $r)) {
                         $validate_model_name = true;
                     }
@@ -54,10 +57,10 @@ class parsePriceUseCase
                 }
             }
 
-            $valid = !$validate_model_name ? 'Название колонки с наименованием'
-                : (!$validate_price_name ? 'Название колонки с ценой'
-                    : (!$validate_qty_name ? 'Название колонки с колличеством'
-                        : (!$validate_additional ? 'Любое название колонки из прайса'
+            $valid = !$validate_model_name ? 'Наименование'.'-('.implode(",", $nameRow).')'
+                : (!$validate_price_name ? 'Цена'.'-('.implode(",", $nameRow).')'
+                    : (!$validate_qty_name ? 'Колличество'.'-('.implode(",", $nameRow).')'
+                        : (!$validate_additional ? 'Любое название колонки'.'-('.implode(",", $nameRow).')'
                             : 'ok')));
 
             //dd($validate_model_name, $validate_price_name, $validate_qty_name, $validate_additional, $valid);

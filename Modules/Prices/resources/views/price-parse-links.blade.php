@@ -239,6 +239,7 @@
                 <th data-field="price_parse.additional">Доп. инфо</th>
                 <th data-field="price_parse.quantity">К-во</th>
                 <th data-field="price_parse.price">Цена</th>
+                <th data-field="is_exist" data-formatter="existValueTable">Наличие</th>
                 <th data-field="price_parse.price_uploaded.currency.code">Валюта</th>
             </tr>
             </thead>

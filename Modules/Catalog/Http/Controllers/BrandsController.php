@@ -64,13 +64,14 @@ class BrandsController extends Controller
         $data = $request->all();
 
         $brand            = Brands::findOrFail($data['brand_id']);
-        $checkDeleteBrand = Products::where('brand_id', $data['brand_id'])->get();
+        $checkDeleteBrand = Products::where('brand_id', $data['brand_id'])->get()->count();
 
         if ($checkDeleteBrand) {
             return back()->with('error', 'Бренд присутсвует в каталоге, нельзя удлить.');
         }
 
         $brand->delete();
-        //return redirect()->back()->with('success', 'Бренд удален!');
+
+        return redirect()->back()->with('success', 'Бренд удален!');
     }
 }

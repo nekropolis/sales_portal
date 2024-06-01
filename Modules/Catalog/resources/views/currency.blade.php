@@ -16,7 +16,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="createCurrency">Modal title</h1>
+                                <h1 class="modal-title fs-5" id="createCurrency">Создать</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </div>
@@ -49,7 +49,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="updateCurrency">Modal title</h1>
+                                <h1 class="modal-title fs-5" id="updateCurrency">Обновить</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </div>

@@ -51,7 +51,7 @@ class CategoriesController extends Controller
             $categories->name = $data['name'];
             $categories->update();
 
-        return redirect()->back()->with('success', 'Категория обновлена!');
+            return redirect()->back()->with('success', 'Категория обновлена!');
         } else {
             $categories->get()->toArray();
 
@@ -63,8 +63,8 @@ class CategoriesController extends Controller
     {
         $data = $request->all();
 
-        $category = Categories::findOrFail($data['category_id']);
-        $checkDeleteCategory = Products::where('category_id', $data['category_id'])->get();
+        $category            = Categories::findOrFail($data['category_id']);
+        $checkDeleteCategory = Products::where('category_id', $data['category_id'])->get()->count();
 
         if ($checkDeleteCategory) {
             return back()->with('error', 'Категория присутсвует в каталоге, нельзя удлить.');
@@ -72,6 +72,6 @@ class CategoriesController extends Controller
 
         $category->delete();
 
-        //return redirect()->back()->with('success', 'Бренд удален!');
+        return redirect()->back()->with('success', 'Бренд удален!');
     }
 }
