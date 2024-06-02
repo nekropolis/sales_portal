@@ -28,22 +28,23 @@ function checkIcon() {
 
 function detailFormatter(index, row) {
     let html = []
-    $.each(row, function (key, value) {
-        if (key === 'product') {
+
+    row.product.parse_models.map(item => {
+        if (item.price_uploaded.is_active === 1) {
             let list = `<div class="prise-models-in-product">`
-            value.parse_models.map(items => {
                 list += (`<div class="item-models">
-                        <span>- ${items.model} | </span>
-                        <span>${items.quantity} шт. | </span>
-                        <span>${items.price} ${items.price_uploaded.currency.code} | </span>
-                        <span>${items.price_uploaded.name}</span>
+                        <span>- ${item.model} | </span>
+                        <span>${item.quantity} шт. | </span>
+                        <span>${item.price} ${item.price_uploaded.currency.code} | </span>
+                        <span>${item.price_uploaded.name}</span>
                         </div>`)
-            })
-                list += '</div>'
+
+            list += '</div>'
 
             html.push(list)
         }
     })
+
     return html.join('')
 }
 

@@ -74,7 +74,7 @@
                 <th data-field="orig_name" data-sortable="true">Прайс</th>
                 <th data-field="name" data-cell-style="cellStyle" data-sortable="true">Названия прайса в системе</th>
                 <th data-field="status">Статус</th>
-                <th data-field="updated_at">Дата загрузки</th>
+                <th data-field="updated_at" data-formatter="formDateValueTable">Дата загрузки</th>
                 <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">Действие</th>
             </tr>
             </thead>

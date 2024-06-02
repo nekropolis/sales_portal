@@ -100,7 +100,7 @@
             <thead>
             <tr>
                 <th data-field="id" data-halign="center" data-sortable="true">ID</th>
-                <th data-field="name">SKU</th>
+                <th data-field="name">Поставщики</th>
                 <th data-field="created_at" data-formatter="formDateValueTable">Дата создания</th>
                 <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">Действие</th>
             </tr>

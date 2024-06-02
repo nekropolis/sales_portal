@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('model');
             $table->integer('price')->default(0);
             $table->integer('quantity')->default(0);
-            $table->string('additional')->nullable();
+            $table->longText('additional')->nullable();
             $table->integer('currency_id')->default(0)->unsigned()->index();
             $table->timestamps();
         });

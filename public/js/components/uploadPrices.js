@@ -145,3 +145,9 @@ window.operateEvents = {
         }
     }
 }
+
+function formDateValueTable(value) {
+    if (value !== null) {
+        return new Date(value).toLocaleDateString()
+    }
+}

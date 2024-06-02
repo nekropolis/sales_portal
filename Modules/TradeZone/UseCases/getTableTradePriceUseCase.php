@@ -24,7 +24,7 @@ class getTableTradePriceUseCase
                 $join->on('sub.price', '=', 'inventories.price');
                 $join->on('sub.product_id', '=', 'inventories.product_id');
             })
-                ->with('priceParse')
+                ->with('priceParse.priceUploaded')
                 ->with('product.parseModels.priceUploaded.currency')
                 ->with('currency')
                 ->with('product.brand')
@@ -37,7 +37,7 @@ class getTableTradePriceUseCase
                 ->whereHas('product', function ($query) use ($data) {
                     $query->where('model', 'LIKE', "%{$data['search']}%");
                 })
-                ->with('priceParse')
+                ->with('priceParse.priceUploaded')
                 ->with('product')
                 ->with('currency')
                 ->with('product.brand')
