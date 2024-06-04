@@ -147,8 +147,8 @@ function queryParams(params) {
     const parseTable = document.getElementById('tablePriceParse');
 
     if ( params.sort === undefined || params.order === undefined) {
-         params.sort = 'id'
-         params.order = 'asc'
+         params.sort = null
+         params.order = 'desc'
     }
 
     params.id = parseTable.getAttribute('data-id')
