@@ -39,7 +39,10 @@ function operateFormatter(value, row, index) {
 
 window.operateEvents = {
     'click .edit': function (e, value, row, index) {
-        $('#updateSellerModal').modal('show');
+        let $modal = $('#updateSellerModal')
+        let modalMarkup = $modal.html()
+
+        $modal.html(modalMarkup).modal('show')
         const seller_id = row.id;
         $(".modal-body #seller_id").val(seller_id);
         const updateSellerModal = document.getElementById('updateSellerModal');

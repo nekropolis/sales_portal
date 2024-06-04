@@ -54,7 +54,10 @@ function operateFormatter(value, row, index) {
 
 window.operateEvents = {
     'click .edit': function (e, value, row, index) {
-        $('#updateProduct').modal('show');
+        let $modal = $('#updateProduct')
+        let modalMarkup = $modal.html()
+
+        $modal.html(modalMarkup).modal('show')
         const product_id = row.id;
         $(".modal-body #product_id").val(product_id);
         const updateProductModal = document.getElementById('updateProduct');
@@ -80,16 +83,6 @@ window.operateEvents = {
         });
 
         $(".buttonUpdateProduct").on('click', function () {
-
-            console.log(  product_id,
-               sku.value,
-                category_id.value,
-                brand_id.value,
-                model.value,
-                localization.value,
-                package.value,
-                condition.value)
-
             axios.post("/update-product", {
                     product_id,
                     sku: sku.value,
