@@ -12,8 +12,12 @@ use Modules\Catalog\Models\Brands;
 use Modules\Catalog\Models\Categories;
 use Modules\Catalog\Models\Products;
 use Elasticsearch;
+use Modules\Catalog\UseCases\deleteProductUseCase;
 use Modules\Catalog\UseCases\getProductsTableUseCase;
 use Modules\Catalog\UseCases\updateProductUseCase;
+use Modules\Prices\Models\Inventories;
+use Modules\Prices\Models\LinkPrices;
+use Modules\TradeZone\Models\PriceModelsInProduct;
 
 class ProductsController extends Controller
 {
@@ -88,14 +92,15 @@ class ProductsController extends Controller
         }
     }
 
-    public function delete(DeleteProductRequest $request)
+    public function delete(DeleteProductRequest $request, deleteProductUseCase $useCase)
     {
-        $data = $request->all();
+        try {
+            $useCase->execute($request);
 
-        $product = Products::findOrFail($data['product_id']);
-        $product->delete();
-
-        return redirect()->back()->with('success', 'Продукт удален!');
+            return back()->with('success', 'Продукт удален!');
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
     }
 
     public function getProductsTable(Request $request, getProductsTableUseCase $useCase)

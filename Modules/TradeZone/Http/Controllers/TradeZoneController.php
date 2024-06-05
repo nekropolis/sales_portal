@@ -11,7 +11,7 @@ use Modules\TradeZone\UseCases\editRuleTradePriceUseCase;
 use Modules\TradeZone\UseCases\formTradePriceUseCase;
 use Modules\TradeZone\UseCases\getTableTradePriceUseCase;
 use Modules\TradeZone\UseCases\getTradePriceUseCase;
-use Modules\TradeZone\UseCases\rulesTradePriceTableUseCase;
+use Modules\TradeZone\UseCases\rulesTableTradePriceUseCase;
 use Modules\TradeZone\UseCases\setCurrencyTradePriceUseCase;
 use Modules\TradeZone\UseCases\settingsTradePriceUseCase;
 
@@ -55,7 +55,7 @@ class TradeZoneController extends Controller
         }
     }
 
-    public function rulesTradePriceTable(Request $request, rulesTradePriceTableUseCase $useCase)
+    public function rulesTradePriceTable(Request $request, rulesTableTradePriceUseCase $useCase)
     {
         try {
             return $useCase->execute($request);

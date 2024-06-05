@@ -6,7 +6,7 @@ use App\Traits\Makeable;
 use Illuminate\Http\Request;
 use Modules\Catalog\Models\Rules;
 
-class rulesTradePriceTableUseCase
+class rulesTableTradePriceUseCase
 {
     use Makeable;
 

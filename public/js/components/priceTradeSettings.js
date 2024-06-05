@@ -122,17 +122,18 @@ function selectFormatter(value, row, index) {
         return '<option value="' + item.id + '"' + (item.id === value ? 'selected' : '') + '>' + item.name + '</option>'
     });
 
-    return '<select>' + options + '</select>'
+    return '<select id="example-getting-started" multiple="multiple">' + options + '</select>'
 
 }
     //return row.price_uploaded.map(item => item.name).join(', ');
 window.selectEvents = {
     'change select': function (e, value, row, index) {
         row.id = +$(e.target).val()
-        $table.bootstrapTable('updateRow', {
+        console.log($(e.target).val(), row.id)
+        /*$table.bootstrapTable('updateRow', {
             index: index,
             row: row
-        })
+        })*/
     }
 }
 

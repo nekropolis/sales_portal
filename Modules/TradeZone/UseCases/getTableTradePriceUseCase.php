@@ -47,8 +47,6 @@ class getTableTradePriceUseCase
         $count      = $table->get()->count();
         $priceTrade = $table->limit($data['limit'])->offset($data['offset'])->get();
 
-        //dd($priceTrade);
-
         return response()->json([
             'total'            => $count,
             'totalNotFiltered' => $count,
