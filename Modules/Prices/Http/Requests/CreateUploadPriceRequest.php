@@ -25,9 +25,9 @@ class CreateUploadPriceRequest extends FormRequest
     {
         return [
             'name.required'       => 'Название прайс-листа обязательное поле!',
-            'file.required' => 'Прикрепите файл для отправки в систему',
-            'file.mimes'    => 'Проверьте тип файла, поддерживаются только xlsx,xls,csv,txt.',
-            'file.max'      => 'Превышен максимальный размер 10mb',
+            'file.required'       => 'Прикрепите файл для отправки в систему',
+            'file.mimes'          => 'Проверьте тип файла, поддерживаются только xlsx,xls,csv,txt.',
+            'file.max'            => 'Превышен максимальный размер 10mb',
             'seller_name.integer' => 'Выбирите поставщика из списка',
         ];
     }

@@ -63,7 +63,7 @@ window.operateEvents = {
                     name,
                 },
                 {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
-                    console.log(data)
+                console.log(data)
                 $table.bootstrapTable('updateByUniqueId', {
                     id: data.id,
                     row: data
@@ -81,10 +81,7 @@ window.operateEvents = {
         if (retVal === true) {
             axios.post("/delete-seller", {seller_id},
                 {'content-type': 'application/x-www-form-urlencoded'}).then(({}) => {
-                $table.bootstrapTable('remove', {
-                    field: 'id',
-                    values: [row.id]
-                })
+                location.reload();
             }).catch((error) => {
                 console.log(error)
             });

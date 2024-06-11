@@ -4,5 +4,6 @@
     "Catalog": true,
     "ImportExportExel": true,
     "Sellers": true,
-    "TradeZone": true
+    "TradeZone": true,
+    "Users": true
 }

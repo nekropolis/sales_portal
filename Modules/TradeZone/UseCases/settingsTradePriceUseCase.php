@@ -27,8 +27,6 @@ class settingsTradePriceUseCase
         $brands        = Brands::all();
         $tradeSettings = PriceTradeSettings::with('currency')->first();
 
-        //dd($sellers);
-
         return view('tradezone::price-trade-settings', [
             'currencies'    => $currencies,
             'sellers'       => $sellers,

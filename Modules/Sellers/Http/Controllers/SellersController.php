@@ -7,8 +7,8 @@ use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use Modules\Sellers\Http\Requests\CreateSellerRequest;
 use Modules\Sellers\Http\Requests\UpdateSellerRequest;
-use Modules\Sellers\Models\Sellers;
 use Modules\Sellers\UseCases\createSellerUseCase;
+use Modules\Sellers\UseCases\deleteSellerUseCase;
 use Modules\Sellers\UseCases\getTableSellersUseCase;
 use Modules\Sellers\UseCases\updateSellerUseCase;
 
@@ -45,13 +45,13 @@ class SellersController extends Controller
         }
     }
 
-    public function deleteSeller(Request $request)
+    public function deleteSeller(Request $request, deleteSellerUseCase $useCase)
     {
-        $data = $request->all();
+        try {
+            $useCase->execute($request);
 
-        $seller = Sellers::findOrFail($data['seller_id']);
-        $seller->delete();
-
-        return redirect()->back()->with('success', 'deleted successfully.');
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
     }
 }

@@ -10,6 +10,7 @@ use Modules\Prices\Http\Requests\CreateUploadPriceRequest;
 use Modules\Prices\Http\Requests\UpdateUploadPriceRequest;
 use Modules\Prices\Models\PriceParse;
 use Modules\Prices\Models\PricesUploaded;
+use Modules\Prices\UseCases\deleteUploadedPriceUseCase;
 use Modules\Prices\UseCases\getPriceParseUseCase;
 use Modules\Prices\UseCases\getTableLinkUseCase;
 use Modules\Prices\UseCases\getTableUploadPriceUseCase;
@@ -55,14 +56,14 @@ class PricesController extends Controller
         }
     }
 
-    public function deleteUploadPrice(Request $request)
+    public function deleteUploadPrice(Request $request, deleteUploadedPriceUseCase $useCase)
     {
-        $data = $request->all();
+        try {
+            $useCase->execute($request);
 
-        PricesUploaded::where('id', $data['price_id'])->delete();
-        PriceParse::where('price_uploaded_id', $data['price_id'])->delete();
-
-        return response()->json(["success" => "Прайс удален!"]);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
     }
 
     public function fileUpdateUpload(UpdatePriceFileRequest $request, updateUploadPriceFileUseCase $useCase)

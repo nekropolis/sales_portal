@@ -28,6 +28,16 @@
                                         <option data-val={{ $seller['id'] }} value="{{ $seller['id'] }}">{{ $seller['name'] }} </option>
                                     @endforeach
                                 </select>
+                                <div class="col mb-3">
+                                    <label for="currency" class="col-form-label">Валюта: *</label>
+                                    <input class="form-control currency" list="datalistCurrency" id="currency"
+                                           name="currency" placeholder="Введите валюту ..." required>
+                                    <datalist id="datalistCurrency">
+                                        @foreach($currencies as $currency)
+                                            <option data-id="{{ $currency['id'] }}" value="{{ $currency['code'] }}">
+                                        @endforeach
+                                    </datalist>
+                                </div>
                                 <label for="name" class="col-form-label">Название прайс-листа: *</label>
                                 <input type="text" id="name" name="name" class="form-control name mb-3"
                                        placeholder="Введите название" required>

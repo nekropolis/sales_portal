@@ -133,10 +133,7 @@ window.operateEvents = {
         if (retVal === true) {
             axios.post("/delete-upload-price", {price_id},
                 {'content-type': 'application/x-www-form-urlencoded'}).then(({}) => {
-                $table.bootstrapTable('remove', {
-                    field: 'id',
-                    values: [row.id]
-                })
+                location.reload();
             }).catch((error) => {
                 console.log(error)
             });

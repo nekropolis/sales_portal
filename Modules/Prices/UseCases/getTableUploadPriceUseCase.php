@@ -4,6 +4,7 @@ namespace Modules\Prices\UseCases;
 
 use App\Traits\Makeable;
 use Illuminate\Http\Request;
+use Modules\Catalog\Models\Currency;
 use Modules\Prices\Models\LinkPrices;
 use Modules\Prices\Models\PricesUploaded;
 
@@ -24,10 +25,9 @@ class getTableUploadPriceUseCase
         $count = PricesUploaded::all()->count();
 
         return response()->json([
-            'total' => $count,
+            'total'            => $count,
             'totalNotFiltered' => $count,
-            'rows' => $pricesUploaded,
+            'rows'             => $pricesUploaded,
         ]);
-
     }
 }

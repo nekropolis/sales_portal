@@ -2,6 +2,7 @@
 
 namespace Modules\Prices\UseCases;
 
+use Modules\Catalog\Models\Currency;
 use Modules\Prices\Models\PricesUploaded;
 use Modules\Sellers\Models\Sellers;
 
@@ -20,11 +21,13 @@ class getUploadedPricesUseCase
             return $data;
         });
 
-        $sellers = Sellers::all();
+        $sellers    = Sellers::all();
+        $currencies = Currency::all();
 
         return view('prices::upload-prices', [
-            'prices'  => $result,
-            'sellers' => $sellers,
+            'prices'     => $result,
+            'sellers'    => $sellers,
+            'currencies' => $currencies,
         ]);
     }
 }
