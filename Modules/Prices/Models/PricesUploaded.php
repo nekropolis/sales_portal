@@ -39,8 +39,8 @@ class PricesUploaded extends Model
         return $this->hasMany(PriceParse::class, 'price_uploaded_id', 'id');
     }
 
-    public function rules(): hasMany
+    public function rule(): BelongsTo
     {
-        return $this->hasMany(Rules::class);
+        return $this->belongsTo(Rules::class);
     }
 }

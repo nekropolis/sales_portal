@@ -4,7 +4,7 @@ namespace Modules\TradeZone\UseCases;
 
 use App\Traits\Makeable;
 use Illuminate\Http\Request;
-use Modules\Catalog\Models\Rules;
+use Modules\TradeZone\Models\Rules;
 
 class createRuleTradePriceUseCase
 {

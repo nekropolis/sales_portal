@@ -28,10 +28,10 @@ class parsePriceUseCase
 
         $xlsx = SimpleXLSX::parseData($dataFile);
 
-        //print_r( $xlsx->rows() );
+        //dd($xlsx && $xlsx->rows() !== []);
 
         $header_values = $rows = [];
-        if ($xlsx->success()) {
+        if ($xlsx && $xlsx->rows() !== []) {
             $validate_model_name = false;
             $validate_price_name = false;
             $validate_qty_name   = false;
@@ -63,8 +63,6 @@ class parsePriceUseCase
                         : (!$validate_additional ? 'Любое название колонки'.'-('.implode(",", $nameRow).')'
                             : 'ok')));
 
-            //dd($validate_model_name, $validate_price_name, $validate_qty_name, $validate_additional, $valid);
-
             if ($valid == 'ok') {
                 foreach (array_slice($xlsx->rows(), $numeration_started - 1) as $k => $r) {
                     if ($k === 0) {
@@ -77,11 +75,13 @@ class parsePriceUseCase
                 return back()->with('error',
                     'Ошибка, проверьте правильность поля - "'.$valid.'". Или номер строки, где размещено наименование');
             }
+        } else {
+            return back()->with('error',
+                'Ошибка, не верный формат прайс-листа, попробуйте пересохранить в другом формате.');
         }
 
         $existingNamesRows = [];
         foreach ($rows as $item) {
-            //dd($rows, $item);
             $existingNamesRows[] = $item[$model_name];
             PriceParse::query()->updateOrCreate([
                 'model'             => $item[$model_name],

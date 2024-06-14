@@ -1,4 +1,4 @@
-function formPriceTrade () {
+function formPriceTrade() {
     $('#modalWait').modal('show');
 
     axios.post("/form-trade-price", {},
@@ -12,17 +12,15 @@ function formPriceTrade () {
 
 }
 
-$('#currencySelect').on('change',function(e) {
+$('#currencySelect').on('change', function (e) {
     let id = $(this).val();
 
     axios.post("/set-currency-trade-price", {id},
-        {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
-            console.log(data)
+        {'content-type': 'application/x-www-form-urlencoded'}).then(({}) => {
+
     }).catch((error) => {
         console.log(error)
     });
-
-    console.log($(this).val());
 });
 
 let $table = $('#tableRules')
@@ -30,10 +28,8 @@ let $table = $('#tableRules')
 function ajaxRequest(params) {
     let url = '/rules-trade-price-table'
 
-    console.log(params.data)
     $.get(url + '?' + $.param(params.data)).then(function (res) {
         params.success(res)
-        console.log(res)
     })
 }
 
@@ -55,8 +51,9 @@ function responseHandler(res) {
 }
 
 function price_minFormatter(value) {
-    return '<input type="number" class="input-text-table" value="'+value+'" >' + '<i class="bi bi-pencil"></i>' + '</input>'
+    return '<input type="number" class="input-text-table" value="' + value + '" >' + '<i class="bi bi-pencil"></i>' + '</input>'
 }
+
 window.price_minEvents = {
     'change :input': function (e, value, row, index) {
         let id = row.id;
@@ -75,8 +72,9 @@ window.price_minEvents = {
 }
 
 function price_maxFormatter(value) {
-    return '<input type="number" class="input-text-table" value="'+value+'" >' + '<i class="bi bi-pencil"></i>' + '</input>'
+    return '<input type="number" class="input-text-table" value="' + value + '" >' + '<i class="bi bi-pencil"></i>' + '</input>'
 }
+
 window.price_maxEvents = {
     'change :input': function (e, value, row, index) {
         let id = row.id;
@@ -95,8 +93,9 @@ window.price_maxEvents = {
 }
 
 function trade_marginFormatter(value) {
-    return '<input type="number" class="input-text-table" value="'+value+'" >' + '<i class="bi bi-pencil"></i>' + '</input>'
+    return '<input type="number" class="input-text-table" value="' + value + '" >' + '<i class="bi bi-pencil"></i>' + '</input>'
 }
+
 window.trade_marginEvents = {
     'change :input': function (e, value, row, index) {
         let id = row.id;
@@ -114,26 +113,123 @@ window.trade_marginEvents = {
     }
 }
 
-function selectFormatter(value, row, index) {
+function sortFormatter(value) {
+    return '<input type="number" class="input-text-table" value="' + value + '" >' + '<i class="bi bi-pencil"></i>' + '</input>'
+}
 
-    let options ='';
-    options += window.data.map(item => {
-        //console.log(item)
-        return '<option value="' + item.id + '"' + (item.id === value ? 'selected' : '') + '>' + item.name + '</option>'
+window.sortEvents = {
+    'change :input': function (e, value, row, index) {
+        let id = row.id;
+        let sort = e.target.value;
+
+        axios.post("/edit-rule-trade-price", {id, sort},
+            {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
+            $table.bootstrapTable('updateByUniqueId', {
+                id: data.id,
+                row: data
+            })
+        }).catch((error) => {
+            console.log(error)
+        });
+    }
+}
+
+function selectFormatterPriceUploaded(value, row, index) {
+    $(document).ready(function () {
+        $('#multiple-select-price-uploaded').select2({
+            theme: "bootstrap-5",
+            //width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+            //placeholder: $( this ).data( 'placeholder' ),
+            //closeOnSelect: false,
+        });
     });
 
-    return '<select id="example-getting-started" multiple="multiple">' + options + '</select>'
+    let options = '';
+    options += window.sellers.map(item => {
+        let selectPriceUploaded = value.find(o => o.id === item.id);
+        return '<option value="' + item.id + '"' + (selectPriceUploaded !== undefined ? 'selected' : '') + '>' + item.name + '</option>'
+    });
 
+    return '<select class="form-select" id="multiple-select-price-uploaded" data-placeholder="Выбрать" multiple>' + options + '</select>'
 }
-    //return row.price_uploaded.map(item => item.name).join(', ');
-window.selectEvents = {
+
+window.selectEventsPriceUploaded = {
     'change select': function (e, value, row, index) {
-        row.id = +$(e.target).val()
-        console.log($(e.target).val(), row.id)
-        /*$table.bootstrapTable('updateRow', {
-            index: index,
-            row: row
-        })*/
+        let pricesIds = $(e.target).val();
+        let id = row.id;
+
+        axios.post("/edit-rule-trade-price", {id, pricesIds},
+            {'content-type': 'application/x-www-form-urlencoded'}).then(({}) => {
+            $table.bootstrapTable('refresh')
+        }).catch((error) => {
+            console.log(error)
+        });
+    }
+}
+
+function selectFormatterCategory(value, row, index) {
+    $(document).ready(function () {
+        $('#multiple-select-categories').select2({
+            theme: "bootstrap-5",
+            //width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+            //placeholder: $( this ).data( 'placeholder' ),
+            //closeOnSelect: false,
+        });
+    });
+    console.log(value, row, window.categories)
+    let options = '';
+    options += window.categories.map(item => {
+        let selectCategories = value.find(o => o.id === item.id);
+        return '<option value="' + item.id + '"' + (selectCategories !== undefined ? 'selected' : '') + '>' + item.name + '</option>'
+    });
+
+    return '<select class="form-select" id="multiple-select-categories" data-placeholder="Выбрать" multiple>' + options + '</select>'
+}
+
+window.selectEventsCategory = {
+    'change select': function (e, value, row, index) {
+        let categoriesIds = $(e.target).val();
+        let id = row.id;
+
+        axios.post("/edit-rule-trade-price", {id, categoriesIds},
+            {'content-type': 'application/x-www-form-urlencoded'}).then(({}) => {
+            $table.bootstrapTable('refresh')
+        }).catch((error) => {
+            console.log(error)
+        });
+    }
+}
+
+function selectFormatterBrand(value, row, index) {
+    $(document).ready(function () {
+        $('#multiple-select-brands').select2({
+            theme: "bootstrap-5",
+            //width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+            //placeholder: $( this ).data( 'placeholder' ),
+            //closeOnSelect: false,
+        });
+    });
+
+    let options = '';
+    options += window.brands.map(item => {
+        let selectBrands = value.find(o => o.id === item.id);
+        return '<option value="' + item.id + '"' + (selectBrands !== undefined ? 'selected' : '') + '>' + item.name + '</option>'
+    });
+
+    return '<select class="form-select" id="multiple-select-brands" data-placeholder="Выбрать" multiple>' + options + '</select>'
+}
+
+window.selectEventsBrand = {
+    'change select': function (e, value, row, index) {
+        let brandsIds = $(e.target).val();
+        let id = row.id;
+
+        axios.post("/edit-rule-trade-price", {id, brandsIds},
+            {'content-type': 'application/x-www-form-urlencoded'}).then(({}) => {
+            $table.bootstrapTable('refresh')
+        }).catch((error) => {
+            console.log(error)
+        });
     }
 }
 
@@ -145,17 +241,12 @@ $(function () {
             if (e.type === 'uncheck-all') {
                 rows = rowsBefore
             }
-            let price_id = $.map(!$.isArray(rows) ? [rows] : rows, function (row) {
+            let id = $.map(!$.isArray(rows) ? [rows] : rows, function (row) {
                 return row.id
             })
-            let checkbox = $.inArray(e.type, ['check', 'check-all']) > -1 ? 1 : 0
+            let is_active = $.inArray(e.type, ['check', 'check-all']) > -1 ? 1 : 0
 
-            let param = {
-                price_id: price_id[0],
-                checkbox: checkbox
-            }
-
-            axios.post("/is_active", {param},
+            axios.post("/edit-rule-trade-price", {id, is_active},
                 {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
                 $table.bootstrapTable('updateByUniqueId', {
                     id: data.id,
@@ -185,12 +276,6 @@ window.deleteEvents = {
 
         axios.post("/edit-rule-trade-price", {copy, id},
             {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
-/*            console.log(data, data.id)
-            let newIndex = index +1
-            $table.bootstrapTable('insertRow', {
-                index: newIndex,
-                row: data,
-            })*/
             $table.bootstrapTable('refresh')
         }).catch((error) => {
             console.log(error)

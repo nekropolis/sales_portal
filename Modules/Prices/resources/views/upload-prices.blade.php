@@ -3,57 +3,58 @@
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Прайс-листы</h1>
+
         <div class="btn-toolbar mb-2 mb-md-0">
-            <button type="button" class="custom-file-upload" data-toggle="modal" data-target="#addPrice">
+            <!-- Button trigger addPrice -->
+            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#addPrice">
                 Добавить новый прайс
             </button>
-
-            <!--Form Price Upload -->
-            <form action="{{route('createUploadPrice')}}" method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="modal fade" id="addPrice" tabindex="-1" role="dialog" aria-labelledby="addPrice"
-                     aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="addPrice">Загрузка прйс-листа в систему</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body-upload">
-                                <select name="seller_name" class="form-select mb-3" aria-label="Default select example" required>
-                                    <option value="" selected hidden>Выбирете поставщика *</option>
-                                    @foreach($sellers as $seller)
-                                        <option data-val={{ $seller['id'] }} value="{{ $seller['id'] }}">{{ $seller['name'] }} </option>
-                                    @endforeach
-                                </select>
-                                <div class="col mb-3">
-                                    <label for="currency" class="col-form-label">Валюта: *</label>
-                                    <input class="form-control currency" list="datalistCurrency" id="currency"
-                                           name="currency" placeholder="Введите валюту ..." required>
-                                    <datalist id="datalistCurrency">
-                                        @foreach($currencies as $currency)
-                                            <option data-id="{{ $currency['id'] }}" value="{{ $currency['code'] }}">
-                                        @endforeach
-                                    </datalist>
-                                </div>
-                                <label for="name" class="col-form-label">Название прайс-листа: *</label>
-                                <input type="text" id="name" name="name" class="form-control name mb-3"
-                                       placeholder="Введите название" required>
-                                <input type="file" name="file" id="file-upload" hidden/>
-                                <label class="file-upload" for="file-upload"> <span>  <i class="bi bi-filetype-xls"></i> Выбрать файл *</span></label>
-                                <div id="file-upload-filename"></div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" value="submit" class="btn btn-primary">Загрузить</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
         </div>
     </div>
+
+    <!-- Modal addPrice-->
+    <form action="{{route('createUploadPrice')}}" method="post" enctype="multipart/form-data">
+        @csrf
+        <div class="modal fade" id="addPrice" tabindex="-1" aria-labelledby="addPriceLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="addPriceLabel">Загрузка прйс-листа в систему</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <select name="seller_name" class="form-select mb-3" aria-label="Default select example"
+                                required>
+                            <option value="" selected hidden>Выбирете поставщика *</option>
+                            @foreach($sellers as $seller)
+                                <option data-val={{ $seller['id'] }} value="{{ $seller['id'] }}">{{ $seller['name'] }} </option>
+                            @endforeach
+                        </select>
+                        <div class="col mb-3">
+                            <label for="currency" class="col-form-label">Валюта: *</label>
+                            <input class="form-control currency" list="datalistCurrency" id="currency"
+                                   name="currency" placeholder="Введите валюту ..." required>
+                            <datalist id="datalistCurrency">
+                                @foreach($currencies as $currency)
+                                    <option data-id="{{ $currency['id'] }}" value="{{ $currency['code'] }}">
+                                @endforeach
+                            </datalist>
+                        </div>
+                        <label for="name" class="col-form-label">Название прайс-листа: *</label>
+                        <input type="text" id="name" name="name" class="form-control name mb-3"
+                               placeholder="Введите название" required>
+                        <input type="file" name="file" id="file-upload" hidden/>
+                        <label class="file-upload" for="file-upload"> <span>  <i class="bi bi-filetype-xls"></i> Выбрать файл *</span></label>
+                        <div id="file-upload-filename"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-outline-primary">Загрузить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 
     <!-- Table -->
     <div class="tab-content" id="myTabContent">
@@ -68,7 +69,7 @@
                 data-ajax="ajaxRequest"
                 data-search="true"
                 data-row-style="rowStyle"
-               {{-- data-search-selector="#customSearchPriceParse"--}}
+                {{-- data-search-selector="#customSearchPriceParse"--}}
                 data-side-pagination="server"
                 data-pagination="true"
                 data-page-size="15"

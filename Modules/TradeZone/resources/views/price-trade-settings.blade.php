@@ -144,18 +144,18 @@
             <tr>
                 <th data-field="id" data-sortable="true">ID</th>
                 <th data-field="is_active" data-checkbox="true"></th>
-                <th data-field="price_uploaded" data-formatter="selectFormatter" data-events="selectEvents">Прайс</th>
+                <th data-field="price_uploaded" data-formatter="selectFormatterPriceUploaded" data-events="selectEventsPriceUploaded">Прайс</th>
                 <th data-field="price_min" data-formatter="price_minFormatter" data-events="price_minEvents">Мин. Цена
                 </th>
                 <th data-field="price_max" data-formatter="price_maxFormatter" data-events="price_maxEvents">Макс.
                     Цена
                 </th>
-                <th data-field="category_id">Категории</th>
-                <th data-field="brand_id">Бренды</th>
+                <th data-field="categories" data-formatter="selectFormatterCategory" data-events="selectEventsCategory">Категории</th>
+                <th data-field="brands" data-formatter="selectFormatterBrand" data-events="selectEventsBrand">Бренды</th>
                 <th data-field="trade_margin" data-formatter="trade_marginFormatter" data-events="trade_marginEvents">
                     Наценка
                 </th>
-                <th data-field="sort">Приоритет</th>
+                <th data-field="sort" data-formatter="sortFormatter" data-events="sortEvents">Приоритет</th>
                 <th data-field="operate" data-formatter="deleteFormatter" data-events="deleteEvents">Действие</th>
             </tr>
             </thead>
@@ -190,7 +190,9 @@
     </table>
 
     <script type="text/javascript">
-        window.data = {!! json_encode($sellers) !!};
+        window.sellers = {!! json_encode($sellers) !!};
+        window.categories = {!! json_encode($categories) !!};
+        window.brands = {!! json_encode($brands) !!};
     </script>
 
 
