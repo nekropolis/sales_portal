@@ -7,8 +7,10 @@
         <form action="{{ route('products.import') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="input-group">
-                <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Import</button>
+                <input type="file" name="file" id="file-upload" hidden/>
+                <label class="form-control" for="file-upload"> <span>  <i class="bi bi-filetype-xls"></i> Выбрать файл *</span></label>
+                <div id="file-upload-filename"></div>
+                <button type="submit" class="btn btn btn-outline-secondary">Загрузить</button>
             </div>
         </form>
 

@@ -25,8 +25,8 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation
             return Products::query()->updateOrCreate([
                 'model'       => $row['model'],
             ], [
-                'brand_id'    => $brand->id,
-                'category_id' => $category->id,
+                'brand_id'    => $brand->id ?? 0,
+                'category_id' => $category->id ?? 0,
             ]);
         }
     }
