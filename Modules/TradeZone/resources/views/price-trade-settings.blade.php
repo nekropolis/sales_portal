@@ -115,7 +115,7 @@
             <span class="align-middle fs-5">Валюта:</span>
             <select id="currencySelect" class="currency-select">
                 @foreach($currencies as $currency)
-                    <option value={{$currency['id']}} {{$tradeSettings->currency_id == $currency['id']  ? 'selected' : ''}}>{{$currency['code']}}</option>
+                    <option value={{$currency['id']}} {{$tradeSettings && $tradeSettings->currency_id == $currency['id']  ? 'selected' : ''}}>{{$currency['code']}}</option>
                 @endforeach
             </select>
         </div>

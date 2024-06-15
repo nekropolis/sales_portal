@@ -14,9 +14,9 @@ class setCurrencyTradePriceUseCase
     public function execute(Request $request)
     {
         $data = $request->all();
-        //dd($data);
 
-        PriceTradeSettings::where('id', 1)->update(['currency_id' => $data['id']]);
+        $tradeSettings = PriceTradeSettings::where('id', 1);
+        $tradeSettings->update(['currency_id' => $data['id']]);
 
         return redirect()->back()->with('success', 'Курс задан!');
     }
