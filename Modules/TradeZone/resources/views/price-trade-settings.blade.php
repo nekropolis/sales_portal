@@ -27,7 +27,7 @@
                     <div class="modal-body">
                         @csrf
                         <div class="row">
-                            <div class="col">
+                            {{--<div class="col">
                                 <label for="price_id" class="col-form-label">Выберете прайс</label>
                                 <select name="price_id" class="form-select mb-3"
                                         aria-label="Default select example">
@@ -56,7 +56,7 @@
                                         <option value="{{ $category['id'] }}">{{ $category['name'] }}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div>--}}
                         </div>
                         <div class="row">
                             <div class="col">

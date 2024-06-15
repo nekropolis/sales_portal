@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "bootstrap-icons": "^1.11.3",
-        "bootstrap-table": "^1.22.5"
+        "bootstrap-table": "^1.22.5",
+        "select2": "^4.1.0-rc.0"
     }
 }

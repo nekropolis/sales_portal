@@ -22,19 +22,31 @@ class editRuleTradePriceUseCase
         }
         if (isset($data['price_min'])) {
             Rules::where('id', $data['id'])->update(['price_min' => $data['price_min']]);
-            $rulesTrade = Rules::where('id', $data['id'])->with('priceUploaded')->first();
+            $rulesTrade = Rules::where('id', $data['id'])
+                ->with('priceUploaded')
+                ->with('price_uploaded')
+                ->first();
         }
         if (isset($data['price_max'])) {
             Rules::where('id', $data['id'])->update(['price_max' => $data['price_max']]);
-            $rulesTrade = Rules::where('id', $data['id'])->with('priceUploaded')->first();
+            $rulesTrade = Rules::where('id', $data['id'])
+                ->with('priceUploaded')
+                ->with('price_uploaded')
+                ->first();
         }
         if (isset($data['trade_margin'])) {
             Rules::where('id', $data['id'])->update(['trade_margin' => $data['trade_margin']]);
-            $rulesTrade = Rules::where('id', $data['id'])->with('priceUploaded')->first();
+            $rulesTrade = Rules::where('id', $data['id'])
+                ->with('priceUploaded')
+                ->with('price_uploaded')
+                ->first();
         }
         if (isset($data['sort'])) {
             Rules::where('id', $data['id'])->update(['sort' => $data['sort']]);
-            $rulesTrade = Rules::where('id', $data['id'])->with('priceUploaded')->first();
+            $rulesTrade = Rules::where('id', $data['id'])
+                ->with('priceUploaded')
+                ->with('price_uploaded')
+                ->first();
         }
         if (isset($data['pricesIds'])) {
             $rule =  Rules::find($data['id']);
@@ -76,7 +88,10 @@ class editRuleTradePriceUseCase
             $copy = Rules::findOrFail($data['id'])->replicate()->fill(['is_active' => 0]);
             $copy->save();
 
-            $rulesTrade = Rules::where('id', $copy->id)->with('priceUploaded')->first();
+            $rulesTrade = Rules::where('id', $copy->id)
+                ->with('priceUploaded')
+                ->with('price_uploaded')
+                ->first();
         }
 
         return $rulesTrade;

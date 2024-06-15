@@ -16,9 +16,6 @@ return new class extends Migration
             $table->integer('is_active')->default(0);
             $table->integer('price_min')->default(0);
             $table->integer('price_max')->default(0);
-            $table->integer('price_uploaded_id')->default(0);
-            $table->integer('category_id')->default(0);
-            $table->integer('brand_id')->default(0);
             $table->integer('trade_margin')->default(0);
             $table->integer('sort')->default(0);
             $table->timestamps();
