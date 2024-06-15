@@ -104,10 +104,6 @@ function addProductToLink(price_id, product_id) {
     });
 }
 
-function sortIsLink(price_upload_id) {
-
-}
-
 function getIdOfDatalist() {
     let element_input = document.getElementById('product-select');
     let element_datalist = document.getElementById('datalistOptions');
@@ -136,7 +132,7 @@ function getIdOfDatalist() {
 function ajaxRequest(params) {
     let url = '/link-table'
 
-    console.log(params.data)
+    //console.log(params.data)
     $.get(url + '?' + $.param(params.data)).then(function (res) {
         params.success(res)
         console.log(res)
@@ -147,7 +143,7 @@ function queryParams(params) {
     const parseTable = document.getElementById('tablePriceParse');
 
     if ( params.sort === undefined || params.order === undefined) {
-         params.sort = null
+         params.sort = 'id'
          params.order = 'desc'
     }
 

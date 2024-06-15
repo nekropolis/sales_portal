@@ -211,40 +211,37 @@
     </div>
 
     <!-- Table -->
-    <div class="tab-content" id="myTabContent">
-
-        <table
-                id="tablePriceParse"
-                class="table table-sm sp-table"
-                data-locale="ru-RU"
-                data-toggle="table"
-                data-unique-id="id"
-                data-checkbox-header="false"
-                data-ajax="ajaxRequest"
-                data-search="true"
-                data-search-selector="#customSearchPriceParse"
-                data-side-pagination="server"
-                data-pagination="true"
-                data-page-size="15"
-                data-page-list="[15, 25, 50]"
-                data-query-params="queryParams"
-                data-row-style="rowStyle"
-                data-id="{{$price_uploaded['id']}}">
-            <thead>
-            <tr>
-                <th data-field="id" data-sortable="true">ID</th>
-                <th data-field="is_link" data-checkbox="true" data-sortable="true">Связь</th>
-                <th data-field="price_model_name" data-sortable="true">Наименование</th>
-                <th data-field="product.model" data-cell-style="cellStyle">Связка Каталог</th>
-                <th data-field="price_parse.additional">Доп. инфо</th>
-                <th data-field="price_parse.quantity">К-во</th>
-                <th data-field="price_parse.price">Цена</th>
-                <th data-field="is_exist" data-formatter="existValueTable" data-sortable="true">Наличие</th>
-                <th data-field="price_parse.price_uploaded.currency.code">Валюта</th>
-            </tr>
-            </thead>
-        </table>
-    </div>
+    <table
+            id="tablePriceParse"
+            class="table table-sm sp-table"
+            data-locale="ru-RU"
+            data-toggle="table"
+            data-unique-id="id"
+            data-checkbox-header="false"
+            data-ajax="ajaxRequest"
+            data-search="true"
+            data-search-selector="#customSearchPriceParse"
+            data-side-pagination="server"
+            data-pagination="true"
+            data-page-size="15"
+            data-page-list="[15, 25, 50]"
+            data-query-params="queryParams"
+            data-row-style="rowStyle"
+            data-id="{{$price_uploaded['id']}}">
+        <thead>
+        <tr>
+            <th data-field="id" data-sortable="true">ID</th>
+            <th data-field="is_link" data-checkbox="true" data-sortable="true">Связь</th>
+            <th data-field="price_model_name" data-sortable="true">Наименование</th>
+            <th data-field="product.model" data-cell-style="cellStyle">Связка Каталог</th>
+            <th data-field="price_parse.additional">Доп. инфо</th>
+            <th data-field="price_parse.quantity">К-во</th>
+            <th data-field="price_parse.price">Цена</th>
+            <th data-field="is_exist" data-formatter="existValueTable" data-sortable="true">Наличие</th>
+            <th data-field="price_parse.price_uploaded.currency.code">Валюта</th>
+        </tr>
+        </thead>
+    </table>
 
     <script src="/js/components/price.js"></script>
 @endsection

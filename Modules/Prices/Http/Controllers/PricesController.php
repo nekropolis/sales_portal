@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 use Modules\Prices\Http\Requests\UpdatePriceFileRequest;
 use Modules\Prices\Http\Requests\CreateUploadPriceRequest;
 use Modules\Prices\Http\Requests\UpdateUploadPriceRequest;
-use Modules\Prices\Models\PriceParse;
-use Modules\Prices\Models\PricesUploaded;
 use Modules\Prices\UseCases\deleteUploadedPriceUseCase;
 use Modules\Prices\UseCases\getPriceParseUseCase;
 use Modules\Prices\UseCases\getTableLinkUseCase;
