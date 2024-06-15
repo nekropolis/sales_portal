@@ -18,7 +18,10 @@ class editRuleTradePriceUseCase
         $rulesTrade = [];
         if (isset($data['is_active'])) {
             Rules::where('id', $data['id'][0])->update(['is_active' => $data['is_active']]);
-            $rulesTrade = Rules::where('id', $data['id'])->with('priceUploaded')->first();
+            $rulesTrade = Rules::where('id', $data['id'])
+                ->with('priceUploaded')
+                ->with('price_uploaded')
+                ->first();
         }
         if (isset($data['price_min'])) {
             Rules::where('id', $data['id'])->update(['price_min' => $data['price_min']]);
