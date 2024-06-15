@@ -135,13 +135,17 @@ window.sortEvents = {
 }
 
 function selectFormatterPriceUploaded(value, row, index) {
+    let selectClassPriceUploaded = "multiple-select-price-uploaded-" + row.id
     $(document).ready(function () {
-        $('#multiple-select-price-uploaded').select2({
+        $('#' + selectClassPriceUploaded).select2({
             theme: "bootstrap-5",
-            //width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             //placeholder: $( this ).data( 'placeholder' ),
             //closeOnSelect: false,
         });
+        $('.select2-selection__rendered li:not(.select2-search--inline)').hide();
+        let counter = document.getElementById('select2-'+ selectClassPriceUploaded + '-container').children.length;
+        $('#select2-' + selectClassPriceUploaded + '-container').after('<div style="line-height: 28px; padding: 5px;" class="counter">' + counter + ' выбрано</div>');
     });
 
     let options = '';
@@ -150,7 +154,7 @@ function selectFormatterPriceUploaded(value, row, index) {
         return '<option value="' + item.id + '"' + (selectPriceUploaded !== undefined ? 'selected' : '') + '>' + item.name + '</option>'
     });
 
-    return '<select class="form-select" id="multiple-select-price-uploaded" data-placeholder="Выбрать" multiple>' + options + '</select>'
+    return '<select class="form-select" id="' + selectClassPriceUploaded + '" data-placeholder="Выбрать" multiple>' + options + '</select>'
 }
 
 window.selectEventsPriceUploaded = {
@@ -168,22 +172,26 @@ window.selectEventsPriceUploaded = {
 }
 
 function selectFormatterCategory(value, row, index) {
+    let selectClassCategory = "multiple-select-categories-" + row.id
     $(document).ready(function () {
-        $('#multiple-select-categories').select2({
+        $('#' + selectClassCategory).select2({
             theme: "bootstrap-5",
-            //width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             //placeholder: $( this ).data( 'placeholder' ),
             //closeOnSelect: false,
         });
+        $('.select2-selection__rendered li:not(.select2-search--inline)').hide();
+        let counter = document.getElementById('select2-'+ selectClassCategory + '-container').children.length;
+        $('#select2-' + selectClassCategory + '-container').after('<div style="line-height: 28px; padding: 5px;" class="counter">' + counter + ' выбрано</div>');
     });
-    console.log(value, row, window.categories)
+    //console.log(value, row, window.categories)
     let options = '';
     options += window.categories.map(item => {
         let selectCategories = value.find(o => o.id === item.id);
         return '<option value="' + item.id + '"' + (selectCategories !== undefined ? 'selected' : '') + '>' + item.name + '</option>'
     });
 
-    return '<select class="form-select" id="multiple-select-categories" data-placeholder="Выбрать" multiple>' + options + '</select>'
+    return '<select class="form-select" id="' + selectClassCategory + '" data-placeholder="Выбрать" multiple>' + options + '</select>'
 }
 
 window.selectEventsCategory = {
@@ -201,13 +209,18 @@ window.selectEventsCategory = {
 }
 
 function selectFormatterBrand(value, row, index) {
+    let selectClassBrand = "multiple-select-brands-" + row.id
     $(document).ready(function () {
-        $('#multiple-select-brands').select2({
+        console.log(value, row)
+        $('#' + selectClassBrand).select2({
             theme: "bootstrap-5",
-            //width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             //placeholder: $( this ).data( 'placeholder' ),
             //closeOnSelect: false,
         });
+        $('.select2-selection__rendered li:not(.select2-search--inline)').hide();
+        let counter = document.getElementById('select2-'+ selectClassBrand + '-container').children.length;
+        $('#select2-' + selectClassBrand + '-container').after('<div style="line-height: 28px; padding: 5px;" class="counter">' + counter + ' выбрано</div>');
     });
 
     let options = '';
@@ -216,7 +229,7 @@ function selectFormatterBrand(value, row, index) {
         return '<option value="' + item.id + '"' + (selectBrands !== undefined ? 'selected' : '') + '>' + item.name + '</option>'
     });
 
-    return '<select class="form-select" id="multiple-select-brands" data-placeholder="Выбрать" multiple>' + options + '</select>'
+    return '<select class="form-select" id="' + selectClassBrand + '" data-placeholder="Выбрать" multiple>' + options + '</select>'
 }
 
 window.selectEventsBrand = {
