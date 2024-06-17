@@ -145,7 +145,9 @@ function selectFormatterPriceUploaded(value, row, index) {
         });
         $('.select2-selection__rendered li:not(.select2-search--inline)').hide();
         let counter = document.getElementById('select2-'+ selectClassPriceUploaded + '-container').children.length;
-        $('#select2-' + selectClassPriceUploaded + '-container').after('<div style="line-height: 28px; padding: 5px;" class="counter">' + counter + ' выбрано</div>');
+        if (counter > 0) {
+            $('#select2-' + selectClassPriceUploaded + '-container').after('<div style="line-height: 28px; padding: 5px;" class="counter">' + counter + ' выбрано</div>');
+        }
     });
 
     let options = '';
@@ -181,8 +183,10 @@ function selectFormatterCategory(value, row, index) {
             //closeOnSelect: false,
         });
         $('.select2-selection__rendered li:not(.select2-search--inline)').hide();
-        let counter = document.getElementById('select2-'+ selectClassCategory + '-container').children.length;
-        $('#select2-' + selectClassCategory + '-container').after('<div style="line-height: 28px; padding: 5px;" class="counter">' + counter + ' выбрано</div>');
+        let counter = document.getElementById('select2-' + selectClassCategory + '-container').children.length;
+        if (counter > 0) {
+            $('#select2-' + selectClassCategory + '-container').after('<div style="line-height: 28px; padding: 5px;" class="counter">' + counter + ' выбрано</div>');
+        }
     });
     //console.log(value, row, window.categories)
     let options = '';
@@ -219,8 +223,10 @@ function selectFormatterBrand(value, row, index) {
             //closeOnSelect: false,
         });
         $('.select2-selection__rendered li:not(.select2-search--inline)').hide();
-        let counter = document.getElementById('select2-'+ selectClassBrand + '-container').children.length;
-        $('#select2-' + selectClassBrand + '-container').after('<div style="line-height: 28px; padding: 5px;" class="counter">' + counter + ' выбрано</div>');
+        let counter = document.getElementById('select2-' + selectClassBrand + '-container').children.length;
+        if (counter > 0) {
+            $('#select2-' + selectClassBrand + '-container').after('<div style="line-height: 28px; padding: 5px;" class="counter">' + counter + ' выбрано</div>');
+        }
     });
 
     let options = '';

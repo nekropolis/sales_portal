@@ -144,7 +144,7 @@ function queryParams(params) {
 
     if ( params.sort === undefined || params.order === undefined) {
          params.sort = 'id'
-         params.order = 'desc'
+         params.order = 'asc'
     }
 
     params.id = parseTable.getAttribute('data-id')
