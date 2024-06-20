@@ -26,8 +26,6 @@ function ajaxRequest(params) {
 }
 
 function queryParams(params) {
-    const parseTable = document.getElementById('tablePriceParse');
-
     delete params.sort
     delete params.order
 
@@ -71,13 +69,13 @@ window.operateEvents = {
 
         axios.post("/update-product", {product_id},
             {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
-            sku.value = data.sku ? data.sku : ''
-            category_id.value = data.category_id
-            brand_id.value = data.brand_id
-            model.value = data.model
-            localization.value = data.localization ? data.localization : ''
-            package.value = data.package ? data.package : ''
-            condition.value = data.condition ? data.condition : ''
+            sku.value = data.product.sku ? data.product.sku : ''
+            category_id.value = data.product.category_id
+            brand_id.value = data.product.brand_id
+            model.value = data.product.model
+            localization.value = data.product.localization ? data.product.localization : ''
+            package.value = data.product.package ? data.product.package : ''
+            condition.value = data.product.condition ? data.product.condition : ''
         }).catch((error) => {
             console.log(error)
         });
@@ -94,9 +92,16 @@ window.operateEvents = {
                     condition: condition.value
                 },
                 {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
+                if (data.success) {
+                    let success = (`<div class="alert alert-success alert-dismissible fade show">
+                    ${data.message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>`)
+                    $('#flash-message-response').after(success);
+                }
                 $table.bootstrapTable('updateByUniqueId', {
-                    id: data.id,
-                    row: data
+                    id: data.product.id,
+                    row: data.product
                 })
                 $('#updateProduct').modal('hide');
             }).catch((error) => {
@@ -115,6 +120,7 @@ window.operateEvents = {
                     field: 'id',
                     values: [row.id]
                 })
+                location.reload();
             }).catch((error) => {
                 console.log(error)
             });

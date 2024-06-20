@@ -2,9 +2,15 @@ function formPriceTrade() {
     $('#modalWait').modal('show');
 
     axios.post("/form-trade-price", {},
-        {'content-type': 'application/x-www-form-urlencoded'}).then(({}) => {
+        {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
         $('#modalWait').modal('hide');
-        //location.reload();
+        if (data.success) {
+            let success = (`<div class="alert alert-success alert-dismissible fade show">
+                    ${data.message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>`)
+            $('#flash-message-response').after(success);
+        }
     }).catch((error) => {
         //$('#modalWaitParse').modal('hide');
         console.log(error)

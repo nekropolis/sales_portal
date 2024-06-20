@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Modules\Catalog\Models\Brands;
-use Modules\Catalog\Models\Categories;
+use Modules\Brands\Models\Brands;
+use Modules\Categories\Models\Categories;
 use Modules\Prices\Models\Inventories;
 use Modules\Prices\Models\PricesUploaded;
 

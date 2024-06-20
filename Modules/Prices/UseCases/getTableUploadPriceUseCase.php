@@ -4,8 +4,6 @@ namespace Modules\Prices\UseCases;
 
 use App\Traits\Makeable;
 use Illuminate\Http\Request;
-use Modules\Catalog\Models\Currency;
-use Modules\Prices\Models\LinkPrices;
 use Modules\Prices\Models\PricesUploaded;
 
 class getTableUploadPriceUseCase

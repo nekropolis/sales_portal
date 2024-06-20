@@ -5,9 +5,9 @@ namespace Modules\Prices\UseCases;
 
 use App\Traits\Makeable;
 use Illuminate\Http\Request;
-use Modules\Catalog\Models\Currency;
-use Modules\Catalog\Models\Products;
+use Modules\Currency\Models\Currency;
 use Modules\Prices\Models\PricesUploaded;
+use Modules\Products\Models\Products;
 
 class getPriceParseUseCase
 {

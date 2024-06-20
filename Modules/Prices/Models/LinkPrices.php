@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
-use Modules\Catalog\Models\Brands;
-use Modules\Catalog\Models\Categories;
-use Modules\Catalog\Models\Products;
+use Modules\Brands\Models\Brands;
+use Modules\Categories\Models\Categories;
+use Modules\Products\Models\Products;
 
 class LinkPrices extends Model
 {

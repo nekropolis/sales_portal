@@ -5,7 +5,7 @@ namespace Modules\TradeZone\UseCases;
 
 use App\Traits\Makeable;
 use Illuminate\Http\Request;
-use Modules\Catalog\Models\Currency;
+use Modules\Currency\Models\Currency;
 
 class getTradePriceUseCase
 {

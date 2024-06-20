@@ -2,14 +2,14 @@
 
 namespace Modules\Prices\UseCases;
 
+use Elasticsearch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Modules\Catalog\Models\Products;
 use Modules\Prices\Models\LinkPrices;
 use Modules\Prices\Models\PriceParse;
 use Modules\Prices\Models\PricesUploaded;
+use Modules\Products\Models\Products;
 use Shuchkin\SimpleXLSX;
-use Elasticsearch;
 
 class parsePriceUseCase
 {

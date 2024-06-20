@@ -6,7 +6,6 @@ namespace Modules\TradeZone\UseCases;
 use App\Traits\Makeable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Modules\Catalog\Models\Products;
 use Modules\Prices\Models\Inventories;
 
 class getTableTradePriceUseCase

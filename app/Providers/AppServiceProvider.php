@@ -13,7 +13,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        \Spatie\Flash\Flash::levels([
+            'success' => 'alert-success',
+            'warning' => 'alert-warning',
+            'error'   => 'alert-error',
+            'info'    => 'alert-info',
+        ]);
     }
 
     /**

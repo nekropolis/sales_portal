@@ -2,7 +2,7 @@
 
 namespace Modules\Prices\UseCases;
 
-use Modules\Catalog\Models\Currency;
+use Modules\Currency\Models\Currency;
 use Modules\Prices\Http\Requests\CreateUploadPriceRequest;
 use Modules\Prices\Models\PricesUploaded;
 

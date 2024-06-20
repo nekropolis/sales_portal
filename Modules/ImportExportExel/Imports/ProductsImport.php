@@ -5,9 +5,9 @@ namespace Modules\ImportExportExel\Imports;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
-use Modules\Catalog\Models\Brands;
-use Modules\Catalog\Models\Categories;
-use Modules\Catalog\Models\Products;
+use Modules\Brands\Models\Brands;
+use Modules\Categories\Models\Categories;
+use Modules\Products\Models\Products;
 
 class ProductsImport implements ToModel, WithHeadingRow, WithValidation
 {

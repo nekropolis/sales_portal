@@ -62,6 +62,9 @@ class formTradePriceUseCase
 
         Inventories::whereNotIn('price_model_id', $existingModelIds)->delete();
 
-        return back()->with('info', 'Готово!');
+        return response()->json([
+            'success'  => true,
+            'message'  => 'Готово!',
+        ]);
     }
 }

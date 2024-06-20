@@ -3,9 +3,9 @@
 namespace Modules\Prices\UseCases;
 
 
-use Illuminate\Http\Request;
-use Modules\Catalog\Models\Products;
 use Elasticsearch;
+use Illuminate\Http\Request;
+use Modules\Products\Models\Products;
 
 class searchProductForPriceUseCase
 {

@@ -2,10 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-
-use Modules\Catalog\Models\Products;
 use Elasticsearch;
+use Illuminate\Console\Command;
+use Modules\Products\Models\Products;
 
 class IndexProducts extends Command
 {

@@ -2,9 +2,9 @@
 
 namespace Modules\ImportExportExel\Exports;
 
-use Modules\Catalog\Models\Products;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Modules\Products\Models\Products;
 
 class ProductsExport implements FromCollection, WithHeadings
 {
