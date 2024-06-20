@@ -9,6 +9,7 @@
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 
 @import "select2/src/scss/core";
+$s2bs5-border-color: $border-color;
 @import "select2-bootstrap-5-theme/src/include-all";
 
 @import "bootstrap-table/dist/bootstrap-table.css";
