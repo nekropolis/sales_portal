@@ -132,8 +132,26 @@ window.operateEvents = {
 
         if (retVal === true) {
             axios.post("/delete-upload-price", {price_id},
-                {'content-type': 'application/x-www-form-urlencoded'}).then(({}) => {
-                location.reload();
+                {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
+                let type = data.type;
+                switch (type) {
+                    case "info":
+                        toastr.info(data.message)
+                        break;
+                    case "success":
+                        toastr.success(data.message)
+                        $table.bootstrapTable('remove', {
+                            field: 'id',
+                            values: [row.id]
+                        })
+                        break;
+                    case "warning":
+                        toastr.warning(data.message)
+                        break;
+                    case "error":
+                        toastr.error(data.message)
+                        break;
+                }
             }).catch((error) => {
                 console.log(error)
             });

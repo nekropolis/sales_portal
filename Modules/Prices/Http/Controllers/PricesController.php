@@ -57,7 +57,7 @@ class PricesController extends Controller
     public function deleteUploadPrice(Request $request, deleteUploadedPriceUseCase $useCase)
     {
         try {
-            $useCase->execute($request);
+            return $useCase->execute($request);
 
         } catch (\Exception $e) {
             return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
@@ -67,9 +67,7 @@ class PricesController extends Controller
     public function fileUpdateUpload(UpdatePriceFileRequest $request, updateUploadPriceFileUseCase $useCase)
     {
         try {
-            $useCase->execute($request);
-            
-            return back()->with('success', 'File has been update.');
+            return $useCase->execute($request);
         } catch (\Exception $e) {
             return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
         }

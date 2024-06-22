@@ -9,22 +9,28 @@ class updateSellerUseCase
 {
     public function execute(UpdateSellerRequest $request)
     {
-        $data = $request->all();
+        $data    = $request->all();
+        $seller  = Sellers::findOrFail($data['seller_id']);
+        $message = '';
 
-        $seller = Sellers::find($data['seller_id']);
         if (!$seller) {
-            throw new \Exception('Не найден!');
+            throw new \Exception('Not found');
         }
 
         if (isset($data['name'])) {
             $seller->name = $data['name'];
-            $seller->save();
+            $seller->update();
 
-            return Sellers::where('id', $data['seller_id'])->first();
-        } else {
-            $seller->get()->toArray();
-
-            return $seller;
+            $message = 'Поставщик обновлен!';
         }
+
+        $seller->get()->toArray();
+
+
+        return response()->json([
+            'type'    => 'success',
+            'message' => $message,
+            'seller'  => $seller,
+        ]);
     }
 }

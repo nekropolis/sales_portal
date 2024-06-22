@@ -33,6 +33,9 @@ class deleteProductUseCase
         $product = Products::findOrFail($data['product_id']);
         $product->delete();
 
-        return flash()->success('Продукт удален!');
+        return response()->json([
+            'type'    => 'success',
+            'message' => 'Продукт удален!',
+        ]);
     }
 }

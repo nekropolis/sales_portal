@@ -15,13 +15,17 @@ class deleteSellerUseCase
         $is_prices_exist = PricesUploaded::where('seller_id', $data['seller_id'])->first();
 
         if ($is_prices_exist) {
-
-            return redirect()->back()->with('error', 'Нельзя удалить, есть загруженные прайс-листы!');
-        } else {
-            $seller = Sellers::findOrFail($data['seller_id']);
-            $seller->delete();
-
-            return redirect()->back()->with('success', 'Поставщик удален!');
+            return response()->json([
+                'type'    => 'error',
+                'message' => 'Нельзя удалить, есть загруженные прайс-листы!',
+            ]);
         }
+        $seller = Sellers::findOrFail($data['seller_id']);
+        $seller->delete();
+
+        return response()->json([
+            'type'    => 'success',
+            'message' => 'Поставщик удален!',
+        ]);
     }
 }

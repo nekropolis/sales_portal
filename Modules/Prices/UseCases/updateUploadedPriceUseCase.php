@@ -29,7 +29,9 @@ class updateUploadedPriceUseCase
             $price->currency_id        = $data['currency_id'] ?? 0;
             $price->save();
 
-            return redirect()->back()->with('success', 'Настройки обновлены!');
+            flash()->success('Настройки обновлены!');
+
+            return redirect()->back();
         } else {
             $price->get()->toArray();
 

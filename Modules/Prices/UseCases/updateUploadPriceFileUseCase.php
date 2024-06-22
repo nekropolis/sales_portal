@@ -22,5 +22,9 @@ class updateUploadPriceFileUseCase
         $priceUpload->file_path  = '/storage/'.$filePath;
         $priceUpload->updated_at = $timestamp;
         $priceUpload->update();
+
+        flash()->success('Прайс-лист обновлен!');
+
+        return redirect()->back();
     }
 }

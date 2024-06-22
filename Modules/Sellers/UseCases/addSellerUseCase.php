@@ -5,7 +5,7 @@ namespace Modules\Sellers\UseCases;
 use Modules\Sellers\Http\Requests\CreateSellerRequest;
 use Modules\Sellers\Models\Sellers;
 
-class createSellerUseCase
+class addSellerUseCase
 {
     public function execute(CreateSellerRequest $request)
     {
@@ -14,6 +14,8 @@ class createSellerUseCase
         $seller->name = $request->name;
         $seller->save();
 
-        return back()->with('success', 'Поставщик создан!');
+        flash()->success('Поставщик создан!');
+
+        return redirect()->back();
     }
 }

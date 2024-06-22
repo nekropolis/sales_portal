@@ -16,6 +16,9 @@ class deleteUploadedPriceUseCase
         PriceParse::where('price_uploaded_id', $data['price_id'])->delete();
         PricesUploaded::where('id', $data['price_id'])->delete();
 
-        return redirect()->back()->with('success', 'Прайс удален!');
+        return response()->json([
+            'type'    => 'success',
+            'message' => 'Прайс-лист удален!',
+        ]);
     }
 }

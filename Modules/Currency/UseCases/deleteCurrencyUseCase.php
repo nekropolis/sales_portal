@@ -3,12 +3,9 @@
 namespace Modules\Currency\UseCases;
 
 use App\Traits\Makeable;
-use Doctrine\Inflector\Rules\French\Rules;
 use Illuminate\Http\Request;
-use Modules\Categories\Models\Categories;
 use Modules\Currency\Models\Currency;
 use Modules\Prices\Models\PricesUploaded;
-use Modules\Products\Models\Products;
 use Modules\TradeZone\Models\PriceTradeSettings;
 
 class deleteCurrencyUseCase
@@ -19,9 +16,9 @@ class deleteCurrencyUseCase
     {
         $data = $request->all();
 
-        $category                = Currency::findOrFail($data['currency_id']);
-        $checkCurrencyInSettings = PriceTradeSettings::where('category_id', $data['category_id'])->get()->count();
-        $checkCurrencyInPrice    = PricesUploaded::where('category_id', $data['category_id'])->get()->count();
+        $currency                = Currency::findOrFail($data['currency_id']);
+        $checkCurrencyInSettings = PriceTradeSettings::where('currency_id', $data['currency_id'])->get()->count();
+        $checkCurrencyInPrice    = PricesUploaded::where('currency_id', $data['currency_id'])->get()->count();
 
         if ($checkCurrencyInSettings && $checkCurrencyInPrice) {
             return response()->json([
@@ -30,7 +27,7 @@ class deleteCurrencyUseCase
             ]);
         }
 
-        $category->delete();
+        $currency->delete();
 
         return response()->json([
             'type'    => 'success',

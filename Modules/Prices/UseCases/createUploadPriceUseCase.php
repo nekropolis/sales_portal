@@ -22,5 +22,9 @@ class createUploadPriceUseCase
         $fileModel->file_path   = '/storage/'.$filePath;
         $fileModel->currency_id = $currencyId;
         $fileModel->save();
+
+        flash()->success('Прайс-лист добавлен!');
+
+        return redirect()->back();
     }
 }

@@ -7,7 +7,7 @@ use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use Modules\Sellers\Http\Requests\CreateSellerRequest;
 use Modules\Sellers\Http\Requests\UpdateSellerRequest;
-use Modules\Sellers\UseCases\createSellerUseCase;
+use Modules\Sellers\UseCases\addSellerUseCase;
 use Modules\Sellers\UseCases\deleteSellerUseCase;
 use Modules\Sellers\UseCases\getTableSellersUseCase;
 use Modules\Sellers\UseCases\updateSellerUseCase;
@@ -15,7 +15,7 @@ use Modules\Sellers\UseCases\updateSellerUseCase;
 class SellersController extends Controller
 {
     use ResponseTrait;
-    public function addSeller(CreateSellerRequest $request,createSellerUseCase $useCase){
+    public function addSeller(CreateSellerRequest $request,addSellerUseCase $useCase){
         try {
             return $useCase->execute($request);
         } catch (\Exception $e) {
@@ -48,8 +48,7 @@ class SellersController extends Controller
     public function deleteSeller(Request $request, deleteSellerUseCase $useCase)
     {
         try {
-            $useCase->execute($request);
-
+            return $useCase->execute($request);
         } catch (\Exception $e) {
             return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
         }

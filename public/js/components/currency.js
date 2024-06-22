@@ -65,14 +65,26 @@ window.operateEvents = {
                     code
                 },
                 {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
-                if (data.success) {
-                    toastr.success(data.message)
+                let type = data.type;
+                switch (type) {
+                    case "info":
+                        toastr.info(data.message)
+                        break;
+                    case "success":
+                        toastr.success(data.message)
+                        $table.bootstrapTable('updateByUniqueId', {
+                            id: data.currency.id,
+                            row: data.currency
+                        })
+                        $('#updateCurrency').modal('hide');
+                        break;
+                    case "warning":
+                        toastr.warning(data.message)
+                        break;
+                    case "error":
+                        toastr.error(data.message)
+                        break;
                 }
-                $table.bootstrapTable('updateByUniqueId', {
-                    id: data.currency.id,
-                    row: data.currency
-                })
-                $('#updateCurrency').modal('hide');
             }).catch((error) => {
                 console.log(error)
             });
@@ -84,8 +96,26 @@ window.operateEvents = {
 
         if (retVal === true) {
             axios.post("/delete-currency", {currency_id},
-                {'content-type': 'application/x-www-form-urlencoded'}).then(({}) => {
-                location.reload();
+                {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
+                let type = data.type;
+                switch (type) {
+                    case "info":
+                        toastr.info(data.message)
+                        break;
+                    case "success":
+                        toastr.success(data.message)
+                        $table.bootstrapTable('remove', {
+                            field: 'id',
+                            values: [row.id]
+                        })
+                        break;
+                    case "warning":
+                        toastr.warning(data.message)
+                        break;
+                    case "error":
+                        toastr.error(data.message)
+                        break;
+                }
             }).catch((error) => {
                 console.log(error)
             });

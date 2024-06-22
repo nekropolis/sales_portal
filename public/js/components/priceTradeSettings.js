@@ -22,8 +22,22 @@ $('#currencySelect').on('change', function (e) {
     let id = $(this).val();
 
     axios.post("/set-currency-trade-price", {id},
-        {'content-type': 'application/x-www-form-urlencoded'}).then(({}) => {
-
+        {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
+        let type = data.type;
+        switch (type) {
+            case "info":
+                toastr.info(data.message)
+                break;
+            case "success":
+                toastr.success(data.message)
+                break;
+            case "warning":
+                toastr.warning(data.message)
+                break;
+            case "error":
+                toastr.error(data.message)
+                break;
+        }
     }).catch((error) => {
         console.log(error)
     });

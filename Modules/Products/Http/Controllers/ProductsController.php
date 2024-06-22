@@ -12,6 +12,7 @@ use Modules\Products\Http\Requests\CreateProductRequest;
 use Modules\Products\Http\Requests\DeleteProductRequest;
 use Modules\Products\Http\Requests\UpdateProductRequest;
 use Modules\Products\Models\Products;
+use Modules\Products\UseCases\addProductUseCase;
 use Modules\Products\UseCases\deleteProductUseCase;
 use Modules\Products\UseCases\getProductsTableUseCase;
 use Modules\Products\UseCases\updateProductUseCase;
@@ -55,28 +56,13 @@ class ProductsController extends Controller
         ]);
     }
 
-    public function create(CreateProductRequest $request)
+    public function create(CreateProductRequest $request, addProductUseCase $useCase)
     {
-        $data = $request->all();
-
-        $products               = new Products();
-        $products->sku          = $data['sku'];
-        $products->brand_id     = $data['brand'];
-        $products->category_id  = $data['category'];
-        $products->model        = $data['model'];
-        $products->localization = $data['localization'];
-        $products->package      = $data['package'];
-        $products->condition    = $data['condition'];
-        $products->save();
-
-        flash()->success('Продукт добавлен!');
-
-        return redirect()->back();
-    }
-
-    public function show(Products $products)
-    {
-        //
+        try {
+            return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
     }
 
     /**
@@ -94,9 +80,7 @@ class ProductsController extends Controller
     public function delete(DeleteProductRequest $request, deleteProductUseCase $useCase)
     {
         try {
-            $useCase->execute($request);
-
-            //return back()->with('success', 'Продукт удален!');
+            return $useCase->execute($request);
         } catch (\Exception $e) {
             return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
         }

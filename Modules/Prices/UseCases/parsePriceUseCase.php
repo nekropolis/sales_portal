@@ -159,6 +159,8 @@ class parsePriceUseCase
             ->whereNotIn('price_model_name', $existingNames)
             ->update(['is_exist' => 0]);
 
-        return back()->with('success', 'Готово!');
+        flash()->success('Прайс-лист распаршен!');
+
+        return redirect()->back();
     }
 }

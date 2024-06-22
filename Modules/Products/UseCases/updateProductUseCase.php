@@ -37,7 +37,7 @@ class updateProductUseCase
         $product->get()->toArray();
 
         return response()->json([
-            'success' => true,
+            'type'    => 'success',
             'message' => $message,
             'product' => $product,
         ]);

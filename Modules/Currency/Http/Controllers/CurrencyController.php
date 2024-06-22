@@ -11,6 +11,7 @@ use Modules\Currency\Http\Requests\DeleteCurrencyRequest;
 use Modules\Currency\Http\Requests\UpdateCurrencyRequest;
 use Modules\Currency\Models\Currency;
 use Modules\Currency\UseCases\addCurrencyUseCase;
+use Modules\Currency\UseCases\deleteCurrencyUseCase;
 use Modules\Currency\UseCases\getCurrencyTableUseCase;
 use Modules\Currency\UseCases\updateCurrencyUseCase;
 
@@ -43,14 +44,13 @@ class CurrencyController extends Controller
         }
     }
 
-    public function delete(DeleteCurrencyRequest $request)
+    public function delete(DeleteCurrencyRequest $request, deleteCurrencyUseCase $useCase)
     {
-        $data = $request->all();
-
-        $currency = Currency::findOrFail($data['currency_id']);
-        $currency->delete();
-
-        //return redirect()->back()->with('success', 'Бренд удален!');
+        try {
+            return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
     }
 
     public function uploadCurrency()
