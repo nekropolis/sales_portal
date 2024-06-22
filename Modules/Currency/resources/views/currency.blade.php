@@ -42,37 +42,34 @@
             </form>
 
             <!-- Update Currency -->
-            <form action="{{route('updateCurrency')}}" method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="modal fade" id="updateCurrency" tabindex="-1" aria-labelledby="updateCurrency"
-                     aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="updateCurrency">Обновить</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+            <div class="modal fade" id="updateCurrency" tabindex="-1" aria-labelledby="updateCurrency"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="updateCurrency">Обновить</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" class="form-control currency_id" id="currency_id"
+                                   name="currency_id" value="currency_id" hidden>
+                            <div>
+                                <label for="name" class="col-form-label">Валюта</label>
+                                <input type="text" class="form-control name" id="name" name="name" required>
                             </div>
-                            <div class="modal-body">
-                                <input type="text" class="form-control currency_id" id="currency_id"
-                                       name="currency_id" value="currency_id" hidden>
-                                <div>
-                                    <label for="name" class="col-form-label">Валюта</label>
-                                    <input type="text" class="form-control name" id="name" name="name" required>
-                                </div>
-                                <div>
-                                    <label for="code" class="col-form-label">Код Валюты</label>
-                                    <input type="text" class="form-control code" id="code" name="code" required>
-                                </div>
+                            <div>
+                                <label for="code" class="col-form-label">Код Валюты</label>
+                                <input type="text" class="form-control code" id="code" name="code" required>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                <button type="submit" class="btn btn-primary">Обновить</button>
-                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                            <button type="submit" class="btn btn-primary buttonUpdateCurrency">Обновить</button>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
 
         </div>
     </div>

@@ -9,6 +9,8 @@ use Modules\Brands\Http\Requests\CreateBrandRequest;
 use Modules\Brands\Http\Requests\DeleteBrandRequest;
 use Modules\Brands\Http\Requests\UpdateBrandRequest;
 use Modules\Brands\Models\Brands;
+use Modules\Brands\UseCases\addBrandUseCase;
+use Modules\Brands\UseCases\deleteBrandUseCase;
 use Modules\Brands\UseCases\getBrandsTableUseCase;
 use Modules\Brands\UseCases\updateBrandsUseCase;
 use Modules\Products\Models\Products;
@@ -26,23 +28,13 @@ class BrandsController extends Controller
         return view('brands::brands', ['brands' => $brands,]);
     }
 
-    public function create(CreateBrandRequest $request)
+    public function create(CreateBrandRequest $request, addBrandUseCase $useCase)
     {
-        $data = $request->all();
-        //dd($data);
-
-        $brands       = new Brands();
-        $brands->name = $data['name'];
-        $brands->save();
-
-        flash()->success('Бренд добавлен!');
-
-        return redirect()->back();
-    }
-
-    public function show(Brands $brands)
-    {
-        //
+        try {
+            return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
+        }
     }
 
     public function update(UpdateBrandRequest $request, updateBrandsUseCase $useCase)
@@ -54,21 +46,13 @@ class BrandsController extends Controller
          }
     }
 
-    public function delete(DeleteBrandRequest $request)
+    public function delete(DeleteBrandRequest $request, deleteBrandUseCase $useCase)
     {
-        $data = $request->all();
-
-        $brand            = Brands::findOrFail($data['brand_id']);
-        $checkDeleteBrand = Products::where('brand_id', $data['brand_id'])->get()->count();
-
-        if ($checkDeleteBrand) {
-
-            return flash()->error('Бренд присутсвует в каталоге, нельзя удлить.');
+        try {
+            return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
         }
-
-        $brand->delete();
-
-        return flash()->success('Бренд удален!');
     }
 
     public function getBrandsTable(Request $request, getBrandsTableUseCase $useCase)

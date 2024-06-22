@@ -30,7 +30,7 @@ class updateBrandsUseCase
         $brand->get()->toArray();
 
         return response()->json([
-            'success' => true,
+            'type' => 'success',
             'message' => $message,
             'brand'   => $brand,
         ]);

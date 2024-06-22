@@ -14,7 +14,7 @@ class updateCategoryUseCase
     {
         $data     = $request->all();
         $category = Categories::findOrFail($data['category_id']);
-        $message = '';
+        $message  = '';
 
         if (!$category) {
             throw new \Exception('Not found');
@@ -31,7 +31,7 @@ class updateCategoryUseCase
 
 
         return response()->json([
-            'success'  => true,
+            'type'     => 'success',
             'message'  => $message,
             'category' => $category,
         ]);

@@ -61,18 +61,26 @@ window.operateEvents = {
                     name,
                 },
                 {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
-                if (data.success) {
-                    let success = (`<div class="alert alert-success alert-dismissible fade show">
-                    ${data.message}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>`)
-                    $('#flash-message-response').after(success);
+                let type = data.type;
+                switch (type) {
+                    case "info":
+                        toastr.info(data.message)
+                        break;
+                    case "success":
+                        toastr.success(data.message)
+                        $table.bootstrapTable('updateByUniqueId', {
+                            id: data.brand.id,
+                            row: data.brand
+                        })
+                        $('#updateBrand').modal('hide');
+                        break;
+                    case "warning":
+                        toastr.warning(data.message)
+                        break;
+                    case "error":
+                        toastr.error(data.message)
+                        break;
                 }
-                $table.bootstrapTable('updateByUniqueId', {
-                    id: data.brand.id,
-                    row: data.brand
-                })
-                $('#updateBrand').modal('hide');
             }).catch((error) => {
                 console.log(error)
             });
@@ -84,8 +92,26 @@ window.operateEvents = {
 
         if (retVal === true) {
             axios.post("/delete-brand", {brand_id},
-                {'content-type': 'application/x-www-form-urlencoded'}).then(({}) => {
-                location.reload();
+                {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
+                let type = data.type;
+                switch (type) {
+                    case "info":
+                        toastr.info(data.message)
+                        break;
+                    case "success":
+                        toastr.success(data.message)
+                        $table.bootstrapTable('remove', {
+                            field: 'id',
+                            values: [row.id]
+                        })
+                        break;
+                    case "warning":
+                        toastr.warning(data.message)
+                        break;
+                    case "error":
+                        toastr.error(data.message)
+                        break;
+                }
             }).catch((error) => {
                 console.log(error)
             });

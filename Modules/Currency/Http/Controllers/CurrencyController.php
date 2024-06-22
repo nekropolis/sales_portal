@@ -10,7 +10,9 @@ use Modules\Currency\Http\Requests\CreateCurrencyRequest;
 use Modules\Currency\Http\Requests\DeleteCurrencyRequest;
 use Modules\Currency\Http\Requests\UpdateCurrencyRequest;
 use Modules\Currency\Models\Currency;
+use Modules\Currency\UseCases\addCurrencyUseCase;
 use Modules\Currency\UseCases\getCurrencyTableUseCase;
+use Modules\Currency\UseCases\updateCurrencyUseCase;
 
 class CurrencyController extends Controller
 {
@@ -23,44 +25,21 @@ class CurrencyController extends Controller
         return view('currency::currency', ['currencies' => $currencies,]);
     }
 
-    public function create(CreateCurrencyRequest $request)
+    public function create(CreateCurrencyRequest $request, addCurrencyUseCase $useCase)
     {
-        $data = $request->all();
-        //dd($data);
-
-        $currency       = new Currency();
-        $currency->name = $data['name'];
-        $currency->code = $data['code'];
-        $currency->save();
-
-        return redirect()->back()->with('success', 'Валюта добавлена!');
-    }
-
-    public function show(Currency $currency)
-    {
-        //
-    }
-
-    public function update(UpdateCurrencyRequest $request)
-    {
-        $data = $request->all();
-
-        //dd($data);
-        $currency = Currency::findOrFail($data['currency_id']);
-        if (!$currency) {
-            throw new \Exception('Not found');
+        try {
+            return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
         }
+    }
 
-        if (isset($data['name'])) {
-            $currency->name = $data['name'];
-            $currency->code = $data['code'];
-            $currency->update();
-
-        return redirect()->back()->with('success', 'Валюта обновлена!');
-        } else {
-            $currency->get()->toArray();
-
-            return $currency;
+    public function update(UpdateCurrencyRequest $request, updateCurrencyUseCase $useCase)
+    {
+        try {
+            return $useCase->execute($request);
+        } catch (\Exception $e) {
+            return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
         }
     }
 

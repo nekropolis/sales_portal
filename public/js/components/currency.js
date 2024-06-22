@@ -49,8 +49,8 @@ window.operateEvents = {
 
         axios.post("/update-currency", {currency_id},
             {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
-            name.value = data.name;
-            code.value = data.code;
+            name.value = data.currency.name;
+            code.value = data.currency.code;
         }).catch((error) => {
             console.log(error)
         });
@@ -65,10 +65,12 @@ window.operateEvents = {
                     code
                 },
                 {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
-                console.log(data)
+                if (data.success) {
+                    toastr.success(data.message)
+                }
                 $table.bootstrapTable('updateByUniqueId', {
-                    id: data.id,
-                    row: data
+                    id: data.currency.id,
+                    row: data.currency
                 })
                 $('#updateCurrency').modal('hide');
             }).catch((error) => {
