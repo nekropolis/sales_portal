@@ -7,6 +7,7 @@ use App\Traits\Makeable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Modules\Prices\Models\Inventories;
+use Modules\TradeZone\Models\RulesProcessor;
 
 class getTableTradePriceUseCase
 {
@@ -43,8 +44,17 @@ class getTableTradePriceUseCase
                 ->with('product.category');
         }
 
+
+
         $count      = $table->get()->count();
         $priceTrade = $table->limit($data['limit'])->offset($data['offset'])->get();
+
+        foreach ($priceTrade as $item) {
+            $newPrice = RulesProcessor::processed([
+                'price' =>$item->price,
+            ]);
+            $item->price = $item->price.'('.$newPrice.')';
+        }
 
         return response()->json([
             'total'            => $count,
