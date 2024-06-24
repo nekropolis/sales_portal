@@ -49,7 +49,7 @@ class TradeZoneController extends Controller
     public function formTradePrice(Request $request, formTradePriceUseCase $useCase)
     {
         try {
-            $useCase->execute($request);
+            return $useCase->execute($request);
         } catch (\Exception $e) {
             return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
         }

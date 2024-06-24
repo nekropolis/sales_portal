@@ -17,9 +17,24 @@ function formPriceTrade() {
     $('#modalWait').modal('show');
 
     axios.post("/form-trade-price", {},
-        {'content-type': 'application/x-www-form-urlencoded'}).then(({response}) => {
-        $('#modalWait').modal('hide');
-        toastr.success('Прайс сформирован!')
+        {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
+            setTimeout(() => $('#modalWait').modal('hide'), 500)
+        //$('#modalWait').modal('hide');
+        let type = data.type;
+        switch (type) {
+            case "info":
+                toastr.info(data.message)
+                break;
+            case "success":
+                toastr.success(data.message)
+                break;
+            case "warning":
+                toastr.warning(data.message)
+                break;
+            case "error":
+                toastr.error(data.message)
+                break;
+        }
     }).catch((error) => {
         console.log(error)
     });
@@ -232,7 +247,7 @@ function selectFormatterPriceUploaded(value, row, index) {
             //closeOnSelect: false,
         });
         $('.select2-selection__rendered li:not(.select2-search--inline)').hide();
-        let counter = document.getElementById('select2-'+ selectClassPriceUploaded + '-container').children.length;
+        let counter = document.getElementById('select2-' + selectClassPriceUploaded + '-container').children.length;
         if (counter > 0) {
             $('#select2-' + selectClassPriceUploaded + '-container').after('<div style="line-height: 28px; padding: 5px;" class="counter">' + counter + ' выбрано</div>');
         }

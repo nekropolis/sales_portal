@@ -59,5 +59,17 @@ class formTradePriceUseCase
         }
 
         Inventories::whereNotIn('price_model_id', $existingModelIds)->delete();
+
+        if (!Inventories::all()->count() > 0) {
+            return response()->json([
+                'type'    => 'error',
+                'message' => 'Не звязан ни один товар или не активирован прайс-лист!',
+            ]);
+        }
+
+        return response()->json([
+            'type'    => 'success',
+            'message' => 'Прайс сформирован!',
+        ]);
     }
 }
