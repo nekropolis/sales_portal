@@ -12,91 +12,75 @@ class editRuleTradePriceUseCase
 
     public function execute(Request $request)
     {
-        $data = $request->all();
-        //dd($data);
+        $data       = $request->all();
+        $rulesTrade = Rules::find($data['id']);
 
-        $rulesTrade = [];
         if (isset($data['is_active'])) {
-            Rules::where('id', $data['id'][0])->update(['is_active' => $data['is_active']]);
-            $rulesTrade = Rules::where('id', $data['id'])
-                ->with('priceUploaded')
-                ->with('price_uploaded')
-                ->first();
+            $rulesTrade->is_active = $data['is_active'];
+            $rulesTrade->update();
         }
         if (isset($data['price_min'])) {
-            Rules::where('id', $data['id'])->update(['price_min' => $data['price_min']]);
-            $rulesTrade = Rules::where('id', $data['id'])
-                ->with('priceUploaded')
-                ->with('price_uploaded')
-                ->first();
+            $rulesTrade->price_min = $data['price_min'];
+            $rulesTrade->update();
         }
         if (isset($data['price_max'])) {
-            Rules::where('id', $data['id'])->update(['price_max' => $data['price_max']]);
-            $rulesTrade = Rules::where('id', $data['id'])
-                ->with('priceUploaded')
-                ->with('price_uploaded')
-                ->first();
+            $rulesTrade->price_max = $data['price_max'];
+            $rulesTrade->update();
         }
         if (isset($data['trade_margin'])) {
-            Rules::where('id', $data['id'])->update(['trade_margin' => $data['trade_margin']]);
-            $rulesTrade = Rules::where('id', $data['id'])
-                ->with('priceUploaded')
-                ->with('price_uploaded')
-                ->first();
+            if (!preg_match("#^[\d./%]+$#", $data['trade_margin'])) {
+
+                return response()->json([
+                    'type'    => 'error',
+                    'message' => 'Только число или число%',
+                ]);
+            }
+
+            $rulesTrade->trade_margin = $data['trade_margin'];
+            $rulesTrade->update();
         }
         if (isset($data['sort'])) {
-            Rules::where('id', $data['id'])->update(['sort' => $data['sort']]);
-            $rulesTrade = Rules::where('id', $data['id'])
-                ->with('priceUploaded')
-                ->with('price_uploaded')
-                ->first();
+            $rulesTrade->sort = $data['sort'];
+            $rulesTrade->update();
         }
-        if (isset($data['pricesIds'])) {
-            $rule =  Rules::find($data['id']);
 
-            $rule
+        if (isset($data['pricesIds'])) {
+            $rulesTrade
                 ->price_uploaded()
                 ->sync($data['pricesIds']);
-
-            $rulesTrade = Rules::where('id', $data['id'])
-                ->with('priceUploaded')
-                ->with('price_uploaded')
-                ->first();
         }
         if (isset($data['categoriesIds'])) {
-            $rule =  Rules::find($data['id']);
-
-            $rule
+            $rulesTrade
                 ->categories()
                 ->sync($data['categoriesIds']);
-
-            $rulesTrade = Rules::where('id', $data['id'])
-                ->with('priceUploaded')
-                ->with('categories')
-                ->first();
         }
         if (isset($data['brandsIds'])) {
-            $rule =  Rules::find($data['id']);
-
-            $rule
+            $rulesTrade
                 ->brands()
                 ->sync($data['brandsIds']);
-
-            $rulesTrade = Rules::where('id', $data['id'])
-                ->with('priceUploaded')
-                ->with('brands')
-                ->first();
         }
         if (isset($data['copy'])) {
-            $copy = Rules::findOrFail($data['id'])->replicate()->fill(['is_active' => 0]);
+            $copy = $rulesTrade->replicate()->fill(['is_active' => 0]);
             $copy->save();
 
-            $rulesTrade = Rules::where('id', $copy->id)
-                ->with('priceUploaded')
-                ->with('price_uploaded')
-                ->first();
+            return response()->json([
+                'type'       => 'success',
+                'message'    => 'Правило скопировано!',
+            ]);
         }
 
-        return $rulesTrade;
+        $rulesTrade = $rulesTrade
+            ->where('id', $data['id'])
+            ->with('priceUploaded')
+            ->with('price_uploaded')
+            ->with('categories')
+            ->with('brands')
+            ->get();
+
+        return response()->json([
+            'type'       => 'success',
+            'message'    => 'Запись обновлена',
+            'rulesTrade' => $rulesTrade,
+        ]);
     }
 }

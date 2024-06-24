@@ -1,18 +1,26 @@
+$(document).ready(function () {
+    let input = document.getElementsByTagName("INPUT");
+    for (let i = 0; i < input.length; i++) {
+        input[i].oninvalid = function (e) {
+            e.target.setCustomValidity("");
+            if (!e.target.validity.valid) {
+                e.target.setCustomValidity("Это поле обязательное!");
+            }
+        };
+        input[i].oninput = function (e) {
+            e.target.setCustomValidity("");
+        };
+    }
+});
+
 function formPriceTrade() {
     $('#modalWait').modal('show');
 
     axios.post("/form-trade-price", {},
-        {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
+        {'content-type': 'application/x-www-form-urlencoded'}).then(({response}) => {
         $('#modalWait').modal('hide');
-        if (data.success) {
-            let success = (`<div class="alert alert-success alert-dismissible fade show">
-                    ${data.message}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>`)
-            $('#flash-message-response').after(success);
-        }
+        toastr.success('Прайс сформирован!')
     }).catch((error) => {
-        //$('#modalWaitParse').modal('hide');
         console.log(error)
     });
 
@@ -81,10 +89,25 @@ window.price_minEvents = {
 
         axios.post("/edit-rule-trade-price", {id, price_min},
             {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
-            $table.bootstrapTable('updateByUniqueId', {
-                id: data.id,
-                row: data
-            })
+            let type = data.type;
+            switch (type) {
+                case "info":
+                    toastr.info(data.message)
+                    break;
+                case "success":
+                    toastr.success(data.message)
+                    $table.bootstrapTable('updateByUniqueId', {
+                        id: data.rulesTrade[0].id,
+                        row: data.rulesTrade[0]
+                    })
+                    break;
+                case "warning":
+                    toastr.warning(data.message)
+                    break;
+                case "error":
+                    toastr.error(data.message)
+                    break;
+            }
         }).catch((error) => {
             console.log(error)
         });
@@ -102,10 +125,25 @@ window.price_maxEvents = {
 
         axios.post("/edit-rule-trade-price", {id, price_max},
             {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
-            $table.bootstrapTable('updateByUniqueId', {
-                id: data.id,
-                row: data
-            })
+            let type = data.type;
+            switch (type) {
+                case "info":
+                    toastr.info(data.message)
+                    break;
+                case "success":
+                    toastr.success(data.message)
+                    $table.bootstrapTable('updateByUniqueId', {
+                        id: data.rulesTrade[0].id,
+                        row: data.rulesTrade[0]
+                    })
+                    break;
+                case "warning":
+                    toastr.warning(data.message)
+                    break;
+                case "error":
+                    toastr.error(data.message)
+                    break;
+            }
         }).catch((error) => {
             console.log(error)
         });
@@ -113,7 +151,7 @@ window.price_maxEvents = {
 }
 
 function trade_marginFormatter(value) {
-    return '<input type="number" class="input-text-table" value="' + value + '" >' + '<i class="bi bi-pencil"></i>' + '</input>'
+    return '<input type="text" class="input-text-table" value="' + value + '" >' + '<i class="bi bi-pencil"></i>' + '</input>'
 }
 
 window.trade_marginEvents = {
@@ -123,10 +161,25 @@ window.trade_marginEvents = {
 
         axios.post("/edit-rule-trade-price", {id, trade_margin},
             {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
-            $table.bootstrapTable('updateByUniqueId', {
-                id: data.id,
-                row: data
-            })
+            let type = data.type;
+            switch (type) {
+                case "info":
+                    toastr.info(data.message)
+                    break;
+                case "success":
+                    toastr.success(data.message)
+                    $table.bootstrapTable('updateByUniqueId', {
+                        id: data.rulesTrade[0].id,
+                        row: data.rulesTrade[0]
+                    })
+                    break;
+                case "warning":
+                    toastr.warning(data.message)
+                    break;
+                case "error":
+                    toastr.error(data.message)
+                    break;
+            }
         }).catch((error) => {
             console.log(error)
         });
@@ -144,10 +197,25 @@ window.sortEvents = {
 
         axios.post("/edit-rule-trade-price", {id, sort},
             {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
-            $table.bootstrapTable('updateByUniqueId', {
-                id: data.id,
-                row: data
-            })
+            let type = data.type;
+            switch (type) {
+                case "info":
+                    toastr.info(data.message)
+                    break;
+                case "success":
+                    toastr.success(data.message)
+                    $table.bootstrapTable('updateByUniqueId', {
+                        id: data.rulesTrade[0].id,
+                        row: data.rulesTrade[0]
+                    })
+                    break;
+                case "warning":
+                    toastr.warning(data.message)
+                    break;
+                case "error":
+                    toastr.error(data.message)
+                    break;
+            }
         }).catch((error) => {
             console.log(error)
         });
@@ -185,8 +253,26 @@ window.selectEventsPriceUploaded = {
         let id = row.id;
 
         axios.post("/edit-rule-trade-price", {id, pricesIds},
-            {'content-type': 'application/x-www-form-urlencoded'}).then(({}) => {
-            $table.bootstrapTable('refresh')
+            {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
+            let type = data.type;
+            switch (type) {
+                case "info":
+                    toastr.info(data.message)
+                    break;
+                case "success":
+                    toastr.success(data.message)
+                    $table.bootstrapTable('updateByUniqueId', {
+                        id: data.rulesTrade[0].id,
+                        row: data.rulesTrade[0]
+                    })
+                    break;
+                case "warning":
+                    toastr.warning(data.message)
+                    break;
+                case "error":
+                    toastr.error(data.message)
+                    break;
+            }
         }).catch((error) => {
             console.log(error)
         });
@@ -208,7 +294,6 @@ function selectFormatterCategory(value, row, index) {
             $('#select2-' + selectClassCategory + '-container').after('<div style="line-height: 28px; padding: 5px;" class="counter">' + counter + ' выбрано</div>');
         }
     });
-    //console.log(value, row, window.categories)
     let options = '';
     options += window.categories.map(item => {
         let selectCategories = value.find(o => o.id === item.id);
@@ -224,8 +309,26 @@ window.selectEventsCategory = {
         let id = row.id;
 
         axios.post("/edit-rule-trade-price", {id, categoriesIds},
-            {'content-type': 'application/x-www-form-urlencoded'}).then(({}) => {
-            $table.bootstrapTable('refresh')
+            {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
+            let type = data.type;
+            switch (type) {
+                case "info":
+                    toastr.info(data.message)
+                    break;
+                case "success":
+                    toastr.success(data.message)
+                    $table.bootstrapTable('updateByUniqueId', {
+                        id: data.rulesTrade[0].id,
+                        row: data.rulesTrade[0]
+                    })
+                    break;
+                case "warning":
+                    toastr.warning(data.message)
+                    break;
+                case "error":
+                    toastr.error(data.message)
+                    break;
+            }
         }).catch((error) => {
             console.log(error)
         });
@@ -235,7 +338,6 @@ window.selectEventsCategory = {
 function selectFormatterBrand(value, row, index) {
     let selectClassBrand = "multiple-select-brands-" + row.id
     $(document).ready(function () {
-        console.log(value, row)
         $('#' + selectClassBrand).select2({
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
@@ -264,8 +366,26 @@ window.selectEventsBrand = {
         let id = row.id;
 
         axios.post("/edit-rule-trade-price", {id, brandsIds},
-            {'content-type': 'application/x-www-form-urlencoded'}).then(({}) => {
-            $table.bootstrapTable('refresh')
+            {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
+            let type = data.type;
+            switch (type) {
+                case "info":
+                    toastr.info(data.message)
+                    break;
+                case "success":
+                    toastr.success(data.message)
+                    $table.bootstrapTable('updateByUniqueId', {
+                        id: data.rulesTrade[0].id,
+                        row: data.rulesTrade[0]
+                    })
+                    break;
+                case "warning":
+                    toastr.warning(data.message)
+                    break;
+                case "error":
+                    toastr.error(data.message)
+                    break;
+            }
         }).catch((error) => {
             console.log(error)
         });
@@ -280,17 +400,33 @@ $(function () {
             if (e.type === 'uncheck-all') {
                 rows = rowsBefore
             }
-            let id = $.map(!$.isArray(rows) ? [rows] : rows, function (row) {
+            let ids = $.map(!$.isArray(rows) ? [rows] : rows, function (row) {
                 return row.id
             })
+            let id = ids[0];
             let is_active = $.inArray(e.type, ['check', 'check-all']) > -1 ? 1 : 0
 
             axios.post("/edit-rule-trade-price", {id, is_active},
                 {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
-                $table.bootstrapTable('updateByUniqueId', {
-                    id: data.id,
-                    row: data
-                })
+                let type = data.type;
+                switch (type) {
+                    case "info":
+                        toastr.info(data.message)
+                        break;
+                    case "success":
+                        toastr.success(data.message)
+                        $table.bootstrapTable('updateByUniqueId', {
+                            id: data.rulesTrade[0].id,
+                            row: data.rulesTrade[0]
+                        })
+                        break;
+                    case "warning":
+                        toastr.warning(data.message)
+                        break;
+                    case "error":
+                        toastr.error(data.message)
+                        break;
+                }
             }).catch((error) => {
                 console.log(error)
             });
@@ -315,6 +451,22 @@ window.deleteEvents = {
 
         axios.post("/edit-rule-trade-price", {copy, id},
             {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
+            let type = data.type;
+            switch (type) {
+                case "info":
+                    toastr.info(data.message)
+                    break;
+                case "success":
+                    toastr.success(data.message)
+                    $table.bootstrapTable('refresh')
+                    break;
+                case "warning":
+                    toastr.warning(data.message)
+                    break;
+                case "error":
+                    toastr.error(data.message)
+                    break;
+            }
             $table.bootstrapTable('refresh')
         }).catch((error) => {
             console.log(error)
@@ -326,11 +478,26 @@ window.deleteEvents = {
 
         if (retVal === true) {
             axios.post("/delete-rule-trade-price", {rule_id},
-                {'content-type': 'application/x-www-form-urlencoded'}).then(({}) => {
-                $table.bootstrapTable('remove', {
-                    field: 'id',
-                    values: [row.id],
-                })
+                {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
+                let type = data.type;
+                switch (type) {
+                    case "info":
+                        toastr.info(data.message)
+                        break;
+                    case "success":
+                        toastr.success(data.message)
+                        $table.bootstrapTable('remove', {
+                            field: 'id',
+                            values: [row.id]
+                        })
+                        break;
+                    case "warning":
+                        toastr.warning(data.message)
+                        break;
+                    case "error":
+                        toastr.error(data.message)
+                        break;
+                }
             }).catch((error) => {
                 console.log(error)
             });

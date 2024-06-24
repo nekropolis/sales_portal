@@ -13,7 +13,6 @@ class searchProductForPriceUseCase
     {
         $q = $request->get('q');
 
-        //dd($q);
         $response = Elasticsearch::search([
             'index' => 'products',
             "size"  => 5,
@@ -33,8 +32,6 @@ class searchProductForPriceUseCase
         ]);
 
         $productIds = array_column($response['hits']['hits'], '_id');
-
-        //dd($response, $productIds);
 
         if (!empty($productIds)) {
             return Products::with('brand')->whereIn('id', $productIds)

@@ -23,8 +23,6 @@ class BrandsController extends Controller
     {
         $brands = Brands::paginate(15);
 
-        //dd($products);
-
         return view('brands::brands', ['brands' => $brands,]);
     }
 

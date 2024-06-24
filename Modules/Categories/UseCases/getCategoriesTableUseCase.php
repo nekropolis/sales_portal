@@ -13,7 +13,6 @@ class getCategoriesTableUseCase
     public function execute(Request $request)
     {
         $data = $request->all();
-        //dd($request->all());
 
         $categories = Categories::query();
 

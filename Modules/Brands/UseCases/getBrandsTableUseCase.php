@@ -13,7 +13,6 @@ class getBrandsTableUseCase
     public function execute(Request $request)
     {
         $data = $request->all();
-        //dd($request->all());
 
         $brands = Brands::query();
 

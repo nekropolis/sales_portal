@@ -44,15 +44,22 @@ class getTableTradePriceUseCase
                 ->with('product.category');
         }
 
-
-
         $count      = $table->get()->count();
         $priceTrade = $table->limit($data['limit'])->offset($data['offset'])->get();
 
         foreach ($priceTrade as $item) {
-            $newPrice = RulesProcessor::processed([
-                'price' =>$item->price,
+            $newPrice    = RulesProcessor::processed([
+                'price'             => $item->price,
+                'price_uploaded_id' => $item->priceParse->price_uploaded_id,
+                'category_id'       => $item->product->category->id,
+                'brand_id'          => $item->product->brand->id,
             ]);
+            if (!$newPrice) {
+                return response()->json([
+                    'type'    => 'error',
+                    'message' => 'Не активировано или не созданно ни одно правило наценки!',
+                ]);
+            }
             $item->price = $item->price.'('.$newPrice.')';
         }
 

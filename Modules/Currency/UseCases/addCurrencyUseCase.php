@@ -13,7 +13,6 @@ class addCurrencyUseCase
     public function execute(Request $request)
     {
         $data = $request->all();
-        //dd($data);
 
         $currency       = new Currency();
         $currency->name = $data['name'];

@@ -6,6 +6,21 @@ function ajaxRequest(params) {
     $.get(url + '?' + $.param(params.data)).then(function (res) {
         params.success(res)
         console.log(res, params)
+        let type = res.type;
+        switch (type) {
+            case "info":
+                toastr.info(res.message)
+                break;
+            case "success":
+                toastr.success(res.message)
+                break;
+            case "warning":
+                toastr.warning(res.message)
+                break;
+            case "error":
+                toastr.error(res.message)
+                break;
+        }
     })
 }
 

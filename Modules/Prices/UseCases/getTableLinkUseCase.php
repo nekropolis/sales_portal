@@ -13,7 +13,6 @@ class getTableLinkUseCase
     public function execute(Request $request)
     {
         $data = $request->all();
-        //dd($request->all());
 
         $priceParse = LinkPrices::query()
             ->whereHas('priceParse', function ($query) use ($data) {

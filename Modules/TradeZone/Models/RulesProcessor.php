@@ -2,22 +2,17 @@
 
 namespace Modules\TradeZone\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Modules\Brands\Models\Brands;
-use Modules\Categories\Models\Categories;
-use Modules\Prices\Models\Inventories;
-use Modules\Prices\Models\PricesUploaded;
-
 class RulesProcessor
 {
-    static $_instance = null;
+    static    $_instance       = null;
     protected $_rules;
-    protected $_affectedFields =[
+    protected $_fieldCache     = [];
+    protected $_affectedFields = [
         'price_min',
-        'price_max'
+        'price_max',
+        'categories',
+        'brands',
+        'price_uploaded',
     ];
 
     public function __construct()
@@ -28,52 +23,126 @@ class RulesProcessor
     protected function prepareRules()
     {
         $this->_rules = Rules::where('is_active', 1)
+            ->with('categories')
+            ->with('brands')
+            ->with('price_uploaded')
             ->orderBy('sort')
             ->orderBy('id')
             ->get();
     }
 
+
+    protected function cacheField($rule, $field)
+    {
+        if (!$rule->$field) {
+            return [];
+        }
+        if (!isset($this->_fieldCache[$field][$rule->id])) {
+            foreach ($rule->$field as $item) {
+                $this->_fieldCache[$field][$rule->id][] = $item->id;
+            }
+        }
+
+        return $this->_fieldCache[$field][$rule->id] ?? [];
+    }
+
     public function calculatePrice($product)
     {
-        foreach ($this->_rules as $rule){
+        foreach ($this->_rules as $rule) {
             $ruleApplied = true;
             foreach ($this->_affectedFields as $affectedField) {
-                $methodName = 'validate' . implode('', array_map('ucfirst', explode('_', $affectedField)));
+                $methodName = 'validate'.implode('', array_map('ucfirst', explode('_', $affectedField)));
                 if (is_callable([$this, $methodName])) {
+                    switch ($affectedField) {
+                        case 'categories':
+                        case 'brands':
+                        case 'price_uploaded':
+                            $value = $this->cacheField($rule, $affectedField);
+                            break;
+                        default:
+                            $value = $rule->$affectedField;
+                    }
                     if (!call_user_func_array([$this, $methodName],
-                        [$product, $rule->$affectedField]
+                        [$product, $value]
                     )) {
-                        $ruleApplied  = false;
-                      break;
+                        $ruleApplied = false;
+                        break;
                     }
                 }
             }
-            if($ruleApplied){
-                return $product['price'] + $rule->trade_margin;
+            if ($ruleApplied) {
+                if (strpos($rule->trade_margin, '%')) {
+                    $percent = str_replace('%', '', $rule->trade_margin);
+                    return round($product['price'] + $product['price'] / 100 * $percent);
+                } else {
+                    return $product['price'] + $rule->trade_margin;
+                }
             }
         }
-        return $product['price'];
+        if ($this->_rules->count() == 0) {
+            return false;
+        } else {
+            return $product['price'];
+        }
     }
 
     public function validatePriceMin($product, $value)
     {
-        if($value==0){
+        if ($value == 0) {
             return true;
         }
-        if($product['price']>=$value){
+        if ($product['price'] >= $value) {
             return true;
         }
+
         return false;
     }
 
     public function validatePriceMax($product, $value)
     {
-        if($value==0){
+        if ($value == 0) {
             return true;
         }
-        if($product['price']<=$value){
+        if ($product['price'] <= $value) {
             return true;
         }
+
+        return false;
+    }
+
+    public function validateCategories($product, $categoryIds)
+    {
+        if (!count($categoryIds)) {
+            return true;
+        }
+        if (in_array($product['category_id'], $categoryIds)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function validateBrands($product, $brandsIds)
+    {
+        if (!count($brandsIds)) {
+            return true;
+        }
+        if (in_array($product['brands_id'], $brandsIds)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function validatePriceUploaded($product, $priceUploadedIds)
+    {
+        if (!count($priceUploadedIds)) {
+            return true;
+        }
+        if (in_array($product['price_uploaded_id'], $priceUploadedIds)) {
+            return true;
+        }
+
         return false;
     }
 
@@ -82,6 +151,7 @@ class RulesProcessor
         if (self::$_instance === null) {
             $_instance = new self();
         }
+
         return $_instance->calculatePrice($product);
     }
 }

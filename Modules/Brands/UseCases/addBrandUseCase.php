@@ -13,7 +13,6 @@ class addBrandUseCase
     public function execute(Request $request)
     {
         $data = $request->all();
-        //dd($data);
 
         $brand       = new Brands();
         $brand->name = $data['name'];

@@ -13,7 +13,6 @@ class rulesTableTradePriceUseCase
     public function execute(Request $request)
     {
         $data = $request->all();
-        //dd($data);
 
         $rulesTrade = Rules::with('priceUploaded')
             ->with('price_uploaded')
@@ -24,8 +23,6 @@ class rulesTableTradePriceUseCase
             ->get();
 
         $count = Rules::all()->count();
-
-        //dd($rulesTrade);
 
         return response()->json([
             'total'            => $count,

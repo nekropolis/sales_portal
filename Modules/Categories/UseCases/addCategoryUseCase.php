@@ -13,7 +13,6 @@ class addCategoryUseCase
     public function execute(Request $request)
     {
         $data = $request->all();
-        //dd($data);
 
         $categories       = new Categories();
         $categories->name = $data['name'];

@@ -13,7 +13,7 @@ class getProductsTableUseCase
     public function execute(Request $request)
     {
         $data = $request->all();
-        //dd($request->all());
+
         if ($data['search'] == '') {
             $products = Products::with('category')
                 ->with('brand')

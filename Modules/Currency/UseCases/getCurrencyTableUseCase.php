@@ -14,7 +14,6 @@ class getCurrencyTableUseCase
     public function execute(Request $request)
     {
         $data = $request->all();
-        //dd($request->all());
 
         $currency = Currency::query();
 

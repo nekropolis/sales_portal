@@ -11,8 +11,6 @@ class IsLinkUseCase
     {
         $data = $request->param;
 
-        //dd($data, isset($data['checkbox']), isset($data['product_id']), !empty($data['checkbox']), !empty($data['product_id']));
-
         $isLinkData = [];
         if (isset($data['checkbox'])) {
             LinkPrices::where('id', $data['price_id'])->update([
@@ -40,7 +38,6 @@ class IsLinkUseCase
                 ->first();
         }
 
-        //dd($isLinkData);
         return $isLinkData;
     }
 }

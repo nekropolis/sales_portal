@@ -36,8 +36,6 @@ class formTradePriceUseCase
             ->with('product.brand')
             ->get();
 
-        //dd($collections);
-
         $setCurrency = PriceTradeSettings::with('currency')->first();
 
         $existingModelIds = [];
@@ -61,10 +59,5 @@ class formTradePriceUseCase
         }
 
         Inventories::whereNotIn('price_model_id', $existingModelIds)->delete();
-
-        return response()->json([
-            'success'  => true,
-            'message'  => 'Готово!',
-        ]);
     }
 }

@@ -11,8 +11,6 @@ class updateUploadedPriceUseCase
     {
         $data = $request->all();
 
-        //dd($data);
-
         $price = PricesUploaded::with('currency')->find($data['price_id']);
         if (!$price) {
             throw new \Exception('Not found');
