@@ -18,8 +18,7 @@ function formPriceTrade() {
 
     axios.post("/form-trade-price", {},
         {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
-            setTimeout(() => $('#modalWait').modal('hide'), 500)
-        //$('#modalWait').modal('hide');
+        setTimeout(() => $('#modalWait').modal('hide'), 500)
         let type = data.type;
         switch (type) {
             case "info":
