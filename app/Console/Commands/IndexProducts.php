@@ -35,9 +35,9 @@ class IndexProducts extends Command
                     'id'    => $product->id,
                     'index' => 'products',
                     'body'  => [
-                        'brand' => $product->brand->name,
+                        'brand' => $product->brand ? $product->brand->name : '',
                         'model' => $product->model,
-                        ],
+                    ],
                 ]);
             } catch (\Exception $e) {
                 $this->info($e->getMessage());

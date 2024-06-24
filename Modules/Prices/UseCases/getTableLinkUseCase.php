@@ -14,6 +14,8 @@ class getTableLinkUseCase
     {
         $data = $request->all();
 
+        //dd($data);
+
         $priceParse = LinkPrices::query()
             ->whereHas('priceParse', function ($query) use ($data) {
                 $query->where('price_uploaded_id', $data['id']);
@@ -24,8 +26,8 @@ class getTableLinkUseCase
             ->with('product.brand')
             ->limit($data['limit'])
             ->offset($data['offset'])
-            ->orderBy('is_link', 'ASC')
-            ->orderBy($data['sort'], $data['order']);
+            ->orderBy($data['sort'] !== 'is_link' ? 'is_link' : $data['sort'],
+                $data['sort'] !== 'is_link' ? 'ASC' : $data['order']);
 
         $count = LinkPrices::query()
             ->whereHas('priceParse', function ($query) use ($data) {
