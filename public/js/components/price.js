@@ -118,7 +118,6 @@ function getIdOfDatalist() {
 
     axios.post("/is-link", {param},
         {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
-        console.log(data)
         $table.bootstrapTable('updateByUniqueId', {
             id: data.id,
             row: data
@@ -132,7 +131,6 @@ function getIdOfDatalist() {
 function ajaxRequest(params) {
     let url = '/link-table'
 
-    //console.log(params.data)
     $.get(url + '?' + $.param(params.data)).then(function (res) {
         params.success(res)
         console.log(res)
