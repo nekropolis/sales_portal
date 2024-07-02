@@ -28,7 +28,7 @@ class parsePriceUseCase
 
         $xlsx = SimpleXLSX::parseData($dataFile);
 
-        //dd($xlsx && $xlsx->rows() !== []);
+        //dd($xlsx, $xlsx->rows());
 
         $header_values = $rows = [];
         if ($xlsx && $xlsx->rows() !== []) {
@@ -51,7 +51,7 @@ class parsePriceUseCase
                     if ($qty_name && in_array($qty_name, $r)) {
                         $validate_qty_name = true;
                     }
-                    if ($additional && in_array($additional, $r)) {
+                    if ($additional === null || ($additional && in_array($additional, $r))) {
                         $validate_additional = true;
                     }
                 }
@@ -72,12 +72,14 @@ class parsePriceUseCase
                     $rows[] = array_combine($header_values, $r);
                 }
             } else {
-                return back()->with('error',
-                    'Ошибка, проверьте правильность поля - "'.$valid.'". Или номер строки, где размещено наименование');
+                flash()->error('Ошибка, проверьте правильность поля - "'.$valid.'". Или номер строки, где размещено наименование');
+
+                return back();
             }
         } else {
-            return back()->with('error',
-                'Ошибка, не верный формат прайс-листа, попробуйте пересохранить в другом формате.');
+            flash()->error('Ошибка, не верный формат прайс-листа, попробуйте пересохранить в другом формате.');
+
+            return back();
         }
 
         $existingNamesRows = [];
@@ -90,7 +92,7 @@ class parsePriceUseCase
                 [
                     'price'      => $item[$price_name],
                     'quantity'   => $item[$qty_name],
-                    'additional' => $item[$additional],
+                    'additional' => $additional !== null ? $item[$additional] : $additional,
                 ]);
         }
 
