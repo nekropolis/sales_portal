@@ -127,7 +127,7 @@ class RulesProcessor
         if (!count($brandsIds)) {
             return true;
         }
-        if (in_array($product['brands_id'], $brandsIds)) {
+        if (in_array($product['brand_id'], $brandsIds)) {
             return true;
         }
 
