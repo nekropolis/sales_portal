@@ -51,8 +51,8 @@ class getTableTradePriceUseCase
             $newPrice    = RulesProcessor::processed([
                 'price'             => $item->price,
                 'price_uploaded_id' => $item->priceParse->price_uploaded_id,
-                'category_id'       => $item->product->category->id,
-                'brand_id'          => $item->product->brand->id,
+                'category_id'       => $item->product->category !== null ? $item->product->category->id : 0,
+                'brand_id'          => $item->product->brand !== null ? $item->product->brand->id : 0,
             ]);
             if (!$newPrice) {
                 return response()->json([
