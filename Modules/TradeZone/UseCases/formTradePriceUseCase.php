@@ -50,10 +50,10 @@ class formTradePriceUseCase
                 'rule_id'     => 1,
                 'currency_id' => $setCurrency->currency_id,
                 'qty'         => $item->priceParse->quantity,
+                'product_id'  => $item->product_id,
             ];
             $existingModelIds[] = $item->price_model_id;
             Inventories::query()->updateOrCreate([
-                'product_id'     => $item->product_id,
                 'price_model_id' => $item->price_model_id,
             ], $dataToUpdate);
         }

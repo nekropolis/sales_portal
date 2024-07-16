@@ -37,7 +37,7 @@ class parsePriceUseCase
             $validate_qty_name   = false;
             $validate_additional = false;
 
-            $nameRow =[];
+            $nameRow = [];
             foreach (array_slice($xlsx->rows(), $numeration_started - 1) as $k => $r) {
                 if ($k === 0) {
                     $nameRow = $r;
@@ -48,7 +48,7 @@ class parsePriceUseCase
                     if ($price_name && in_array($price_name, $r)) {
                         $validate_price_name = true;
                     }
-                    if ($qty_name && in_array($qty_name, $r)) {
+                    if ($qty_name === null || ($qty_name && in_array($qty_name, $r))) {
                         $validate_qty_name = true;
                     }
                     if ($additional === null || ($additional && in_array($additional, $r))) {
@@ -84,16 +84,31 @@ class parsePriceUseCase
 
         $existingNamesRows = [];
         foreach ($rows as $item) {
-            $existingNamesRows[] = $item[$model_name];
-            PriceParse::query()->updateOrCreate([
-                'model'             => $item[$model_name],
-                'price_uploaded_id' => $id,
-            ],
-                [
-                    'price'      => $item[$price_name],
-                    'quantity'   => $item[$qty_name],
-                    'additional' => $additional !== null ? $item[$additional] : $additional,
-                ]);
+            $existingNamesRows[] = ltrim($item[$model_name]);
+
+            if (isset($item[$qty_name])) {
+                if ($item[$price_name] !== '' && $item[$qty_name] !== '') {
+                    PriceParse::query()->updateOrCreate([
+                        'model'             => ltrim($item[$model_name]),
+                        'price_uploaded_id' => $id,
+                    ],
+                        [
+                            'price'      => $item[$price_name],
+                            'quantity'   => $item[$qty_name],
+                            'additional' => $additional !== null ? $item[$additional] : $additional,
+                        ]);
+                }
+            } elseif ($item[$price_name] !== '') {
+                PriceParse::query()->updateOrCreate([
+                    'model'             => ltrim($item[$model_name]),
+                    'price_uploaded_id' => $id,
+                ],
+                    [
+                        'price'      => $item[$price_name],
+                        'quantity'   => 5,
+                        'additional' => $additional !== null ? $item[$additional] : $additional,
+                    ]);
+            }
         }
 
         PriceParse::where(['price_uploaded_id' => $id])->whereNotIn('model',

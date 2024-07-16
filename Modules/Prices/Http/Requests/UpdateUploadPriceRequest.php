@@ -21,7 +21,6 @@ class UpdateUploadPriceRequest extends FormRequest
                 'name'        => 'required|string',
                 'model_name'  => 'required|string',
                 'price_name'  => 'required|string',
-                'qty_name'    => 'required|string',
                 'currency_id' => 'required|integer|gt:0',
             ];
         } else {
@@ -36,7 +35,6 @@ class UpdateUploadPriceRequest extends FormRequest
             'name.required'        => 'Название прайс-листа обязательное поле!',
             'model_name.required'  => 'Название колонки с наименованием обязательное поле!',
             'price_name.required'  => 'Название колонки с ценой обязательное поле!',
-            'qty_name.required'    => 'Название колонки с колличеством обязательное поле!',
             'currency_id.required' => 'Выбирите валюту!',
         ];
     }

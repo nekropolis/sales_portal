@@ -81,8 +81,8 @@
                             <div class="col mb-3">
                                 <input type="text" class="form-control qty_name" id="qty_name"
                                        name="qty_name" aria-label=".form-control-sm"
-                                       aria-describedby="qty_name" required>
-                                <div id="qty_name" class="form-text">Название колонки с колличеством *</div>
+                                       aria-describedby="qty_name">
+                                <div id="qty_name" class="form-text">Название колонки с колличеством (если пустое, то кол-во меньше 5)</div>
                             </div>
                         </div>
                         <div><h5>Дополнительное поле:</h5></div>
