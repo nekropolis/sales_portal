@@ -1,22 +1,7 @@
-$(document).ready(function () {
-    let input = document.getElementsByTagName("INPUT");
-    for (let i = 0; i < input.length; i++) {
-        input[i].oninvalid = function (e) {
-            e.target.setCustomValidity("");
-            if (!e.target.validity.valid) {
-                e.target.setCustomValidity("Это поле обязательное!");
-            }
-        };
-        input[i].oninput = function (e) {
-            e.target.setCustomValidity("");
-        };
-    }
-});
-
-let $table = $('#tableProducts')
+let $table = $('#tableLocalizations')
 
 function ajaxRequest(params) {
-    let url = '/products-table'
+    let url = '/localizations-table'
 
     console.log(params.data)
     $.get(url + '?' + $.param(params.data)).then(function (res) {
@@ -52,44 +37,28 @@ function operateFormatter(value, row, index) {
 
 window.operateEvents = {
     'click .edit': function (e, value, row, index) {
-        let $modal = $('#updateProduct')
+        let $modal = $('#updateLocalization')
         let modalMarkup = $modal.html()
 
         $modal.html(modalMarkup).modal('show')
-        const product_id = row.id;
-        $(".modal-body #product_id").val(product_id);
-        const updateProductModal = document.getElementById('updateProduct');
-        const sku = updateProductModal.querySelector('.modal-body .sku');
-        const category_id = updateProductModal.querySelector('.modal-body .category_id');
-        const brand_id = updateProductModal.querySelector('.modal-body .brand_id');
-        const model = updateProductModal.querySelector('.modal-body .model');
-        const localization_id = updateProductModal.querySelector('.modal-body .localization_id');
-        const package = updateProductModal.querySelector('.modal-body .package');
-        const condition = updateProductModal.querySelector('.modal-body .condition');
+        const localization_id = row.id;
+        $(".modal-body #localization_id").val(localization_id);
+        const updateLocalizationModal = document.getElementById('updateLocalization');
+        const name = updateLocalizationModal.querySelector('.modal-body .name');
 
-        axios.post("/update-product", {product_id},
+        axios.post("/update-localization", {localization_id},
             {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
-            sku.value = data.product.sku ? data.product.sku : ''
-            category_id.value = data.product.category_id
-            brand_id.value = data.product.brand_id
-            model.value = data.product.model
-            localization_id.value = data.product.localization_id
-            package.value = data.product.package ? data.product.package : ''
-            condition.value = data.product.condition ? data.product.condition : ''
+            name.value = data.localization.name
         }).catch((error) => {
             console.log(error)
         });
 
-        $(".buttonUpdateProduct").on('click', function () {
-            axios.post("/update-product", {
-                    product_id,
-                    sku: sku.value,
-                    category_id: category_id.value,
-                    brand_id: brand_id.value,
-                    model: model.value,
-                    localization_id: localization_id.value,
-                    package: package.value,
-                    condition: condition.value
+        $(".buttonUpdateLocalization").on('click', function () {
+            const name = updateLocalizationModal.querySelector('.modal-body .name').value;
+
+            axios.post("/update-localization", {
+                    localization_id,
+                    name,
                 },
                 {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
                 let type = data.type;
@@ -100,10 +69,10 @@ window.operateEvents = {
                     case "success":
                         toastr.success(data.message)
                         $table.bootstrapTable('updateByUniqueId', {
-                            id: data.product.id,
-                            row: data.product
+                            id: data.localization.id,
+                            row: data.localization
                         })
-                        $('#updateProduct').modal('hide');
+                        $('#updateLocalization').modal('hide');
                         break;
                     case "warning":
                         toastr.warning(data.message)
@@ -119,10 +88,10 @@ window.operateEvents = {
     },
     'click .remove': function (e, value, row, index) {
         let retVal = confirm('Подтвердить удаление?')
-        let product_id = row.id;
+        let localization_id = row.id;
 
         if (retVal === true) {
-            axios.post("/delete-product", {product_id},
+            axios.post("/delete-localization", {localization_id},
                 {'content-type': 'application/x-www-form-urlencoded'}).then(({data}) => {
                 let type = data.type;
                 switch (type) {
@@ -154,4 +123,10 @@ window.operateEvents = {
 
 function checkIcon() {
     $table.bootstrapTable('resetSearch');
+}
+
+function formDateValueTable(value) {
+    if (value !== null) {
+        return new Date(value).toLocaleDateString()
+    }
 }

@@ -135,7 +135,7 @@
     </form>
 
     <!-- Canvas -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="linkProductCanvas" aria-labelledby="linkProduct">
+    <div class="offcanvas offcanvas-end w-75" tabindex="-1" id="linkProductCanvas" aria-labelledby="linkProduct">
         <input type="text" class="offcanvas price_model_id" id="price_model_id"
                name="price_model_id" value="price_model_id" hidden>
         <div class="offcanvas-header">
@@ -148,7 +148,10 @@
                 <div class="m-3">
                     <table class="table table-sm table-hover table-bordered" id="linkProductTable">
                         <thead>
+                        <td>Бренд</td>
                         <td>Похожие модели</td>
+                        <td>Локализация</td>
+                        <td>Действие</td>
                         </thead>
                         <tbody id="linkProductName"></tbody>
                     </table>

@@ -12,17 +12,16 @@ class addProductUseCase
 
     public function execute(Request $request)
     {
-
         $data = $request->all();
 
-        $products               = new Products();
-        $products->sku          = $data['sku'];
-        $products->brand_id     = $data['brand'];
-        $products->category_id  = $data['category'];
-        $products->model        = $data['model'];
-        $products->localization = $data['localization'];
-        $products->package      = $data['package'];
-        $products->condition    = $data['condition'];
+        $products                  = new Products();
+        $products->sku             = $data['sku'];
+        $products->brand_id        = $data['brand_id'];
+        $products->category_id     = $data['category_id'];
+        $products->model           = $data['model'];
+        $products->localization_id = $data['localization_id'];
+        $products->package         = $data['package'];
+        $products->condition       = $data['condition'];
         $products->save();
 
         flash()->success('Продукт добавлен!');

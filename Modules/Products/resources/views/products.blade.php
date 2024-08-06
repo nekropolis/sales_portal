@@ -54,23 +54,24 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col">
-                                    <select name="brand" class="form-select mb-3" aria-label="Default select example">
+                                    <select id="brand_id" name="brand_id" class="form-select mb-3"
+                                            aria-label="Default select example">
                                         <option value="0" selected>Любой</option>
                                         @foreach($brands as $brand)
                                             <option data-val={{ $brand['id'] }} value="{{ $brand['id'] }}">{{ $brand['name'] }} </option>
                                         @endforeach
                                     </select>
-                                    <div id="brand" class="form-text">Бренд</div>
+                                    <div id="brand_id" class="form-text">Бренд</div>
                                 </div>
                                 <div class="col">
-                                    <select id="category" name="category" class="form-select mb-3"
+                                    <select id="category_id" name="category_id" class="form-select mb-3"
                                             aria-label="Default select example">
                                         <option value="0" selected>Любая</option>
                                         @foreach($categories as $category)
                                             <option data-val={{ $category['id'] }} value="{{ $category['id'] }}">{{ $category['name'] }} </option>
                                         @endforeach
                                     </select>
-                                    <div id="category" class="form-text">Категория</div>
+                                    <div id="category_id" class="form-text">Категория</div>
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -87,10 +88,14 @@
                                     <div id="sku" class="form-text">sku/серийный номер</div>
                                 </div>
                                 <div class="col mb-1">
-                                    <input type="text" class="form-control model_name" id="localization"
-                                           name="localization" aria-label=".form-control-sm"
-                                           aria-describedby="localization">
-                                    <div id="localization" class="form-text">Локализация</div>
+                                    <select id="localization_id" name="localization_id" class="form-select mb-3 localization_id"
+                                            aria-label="Default select example">
+                                        <option value="0" selected>Любая</option>
+                                        @foreach($localizations as $localization)
+                                            <option data-val={{ $localization['id'] }} value="{{ $localization['id'] }}">{{ $localization['name'] }} </option>
+                                        @endforeach
+                                    </select>
+                                    <div id="localization_id" class="form-text">Локализация</div>
                                 </div>
                                 <div class="col mb-1">
                                     <input type="text" class="form-control condition" id="condition"
@@ -161,9 +166,13 @@
                                 <div id="sku" class="form-text">sku/серийный номер</div>
                             </div>
                             <div class="col mb-1">
-                                <input type="text" class="form-control localization" id="localization"
-                                       name="localization" aria-label=".form-control-sm"
-                                       aria-describedby="localization">
+                                <select id="localization_id" name="localization_id" class="form-select mb-3 localization_id"
+                                        aria-label="Default select example">
+                                    <option value="0" selected>Любая</option>
+                                    @foreach($localizations as $localization)
+                                        <option data-val={{ $localization['id'] }} value="{{ $localization['id'] }}">{{ $localization['name'] }} </option>
+                                    @endforeach
+                                </select>
                                 <div id="localization" class="form-text">Локализация</div>
                             </div>
                             <div class="col mb-1">
@@ -214,7 +223,7 @@
                     <th data-field="category.name" data-sortable="true">Категория</th>
                     <th data-field="brand.name" data-sortable="true">Бренд</th>
                     <th data-field="model" data-sortable="true">Модель</th>
-                    <th data-field="localization">Локализация</th>
+                    <th data-field="localization.name">Локализация</th>
                     <th data-field="package">Комплектация</th>
                     <th data-field="condition">Состояние</th>
                     <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">Действие</th>

@@ -22,13 +22,13 @@ class updateProductUseCase
         }
 
         if (isset($data['model'])) {
-            $product->sku          = $data['sku'];
-            $product->category_id  = $data['category_id'];
-            $product->brand_id     = $data['brand_id'];
-            $product->model        = $data['model'];
-            $product->localization = $data['localization'];
-            $product->package      = $data['package'];
-            $product->condition    = $data['condition'];
+            $product->sku             = $data['sku'];
+            $product->category_id     = $data['category_id'];
+            $product->brand_id        = $data['brand_id'];
+            $product->model           = $data['model'];
+            $product->localization_id = $data['localization_id'];
+            $product->package         = $data['package'];
+            $product->condition       = $data['condition'];
             $product->update();
 
             $message = 'Продукт обновлен!';

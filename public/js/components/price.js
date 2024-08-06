@@ -195,7 +195,10 @@ $(function () {
                 let linkProductName = document.getElementById("linkProductName");
                 searchProduct.forEach((e) => {
                     linkProductName.innerHTML +=
-                        `<td class="cursor-table" onclick="return addProductToLink('${row.price_model_id}', '${e.id}')"> ${e.brand ? e.brand.name : ''} ${e.model} ${e.localization !== null ? e.localization : ''} ${e.condition !== null ? e.condition : ''} <input type="text" id="searchProductId" value="${e.id}" hidden></td>`;
+                        `<td>${e.brand ? e.brand.name : ''}</td>
+                         <td>${e.model} ${e.condition !== null ? e.condition : ''} <input type="text" id="searchProductId" value="${e.id}" hidden></td>
+                         <td>${e.localization ? e.localization.name : ''}</td>
+                         <td><button type="button" class="btn btn-outline-secondary btn-sm" onclick="return addProductToLink('${row.price_model_id}', '${e.id}')">Связать</button></td>`;
                 });
             });
         }

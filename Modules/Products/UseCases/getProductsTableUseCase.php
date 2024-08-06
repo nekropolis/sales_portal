@@ -17,6 +17,7 @@ class getProductsTableUseCase
         if ($data['search'] == '') {
             $products = Products::with('category')
                 ->with('brand')
+                ->with('localization')
                 ->limit($data['limit'])
                 ->offset($data['offset'])
                 ->get();
@@ -26,6 +27,7 @@ class getProductsTableUseCase
             $products = Products::with('category')
                 ->where('model','LIKE',"%{$data['search']}%")
                 ->with('brand')
+                ->with('localization')
                 ->limit($data['limit'])
                 ->offset($data['offset'])
                 ->get();

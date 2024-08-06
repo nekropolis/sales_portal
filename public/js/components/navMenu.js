@@ -1,6 +1,7 @@
 $(document).ready(function () {
     $('.collapse')
         .on('shown.bs.collapse', function () {
+            alert('1')
             let element;
             if (this.id === 'catalogMenu') {
                 element = document.getElementById("catalogCollapse");
@@ -13,6 +14,7 @@ $(document).ready(function () {
             }
         })
         .on('hidden.bs.collapse', function () {
+            alert('2')
             let element;
             if (this.id === 'catalogMenu') {
                 element = document.getElementById("catalogCollapse");
@@ -25,11 +27,10 @@ $(document).ready(function () {
             }
         })
 
-    const catalogCollapseMenu = ['/products', '/categories', '/brands', '/currency'];
+    const catalogCollapseMenu = ['/products', '/categories', '/brands', '/localizations', '/currency'];
 
     if (catalogCollapseMenu.includes(window.location.pathname)) {
         let icon = document.getElementById("catalogCollapse");
-        //$('#linkProductCanvas').collapse('show')
         icon.className = "bi bi-chevron-up icon-sidebar";
     }
 

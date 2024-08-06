@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Modules\Brands\Models\Brands;
 use Modules\Categories\Models\Categories;
+use Modules\Localizations\Models\Localizations;
 use Modules\Prices\Models\LinkPrices;
 use Modules\Prices\Models\PriceParse;
 use Modules\TradeZone\Models\PriceModelsInProduct;
@@ -29,6 +30,11 @@ class Products extends Model
     public function category(): belongsTo
     {
         return $this->belongsTo(Categories::class);
+    }
+
+    public function localization(): belongsTo
+    {
+        return $this->belongsTo(Localizations::class);
     }
 
     public function link(): hasOne

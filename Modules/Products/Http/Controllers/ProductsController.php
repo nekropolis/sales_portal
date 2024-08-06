@@ -8,6 +8,7 @@ use Elasticsearch;
 use Illuminate\Http\Request;
 use Modules\Brands\Models\Brands;
 use Modules\Categories\Models\Categories;
+use Modules\Localizations\Models\Localizations;
 use Modules\Products\Http\Requests\CreateProductRequest;
 use Modules\Products\Http\Requests\DeleteProductRequest;
 use Modules\Products\Http\Requests\UpdateProductRequest;
@@ -45,13 +46,15 @@ class ProductsController extends Controller
             $products = Products::paginate(20);
         }
 
-        $brands     = Brands::all();
-        $categories = Categories::all();
+        $brands        = Brands::all();
+        $categories    = Categories::all();
+        $localizations = Localizations::all();
 
         return view('products::products', [
             'products'       => $products,
             'brands'         => $brands,
             'categories'     => $categories,
+            'localizations'  => $localizations,
             'showPagination' => is_null($q),
         ]);
     }
