@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Modules\Prices\Http\Requests\UpdatePriceFileRequest;
 use Modules\Prices\Http\Requests\CreateUploadPriceRequest;
 use Modules\Prices\Http\Requests\UpdateUploadPriceRequest;
+use Modules\Prices\Models\Elastic;
 use Modules\Prices\UseCases\deleteUploadedPriceUseCase;
 use Modules\Prices\UseCases\getPriceParseUseCase;
 use Modules\Prices\UseCases\getTableLinkUseCase;
@@ -73,10 +74,10 @@ class PricesController extends Controller
         }
     }
 
-    public function parsePrice(Request $request, parsePriceUseCase $useCase)
+    public function parsePrice(Request $request, Elastic $elasticHelper, parsePriceUseCase $useCase)
     {
         try {
-            $useCase->execute($request);
+            $useCase->execute($request, $elasticHelper);
         } catch (\Exception $e) {
             return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
         }
@@ -91,10 +92,10 @@ class PricesController extends Controller
         }
     }
 
-    public function searchProductPrice(Request $request, searchProductForPriceUseCase $useCase)
+    public function searchProductPrice(Request $request, Elastic $elasticHelper, searchProductForPriceUseCase $useCase)
     {
         try {
-            return $useCase->execute($request);
+            return $useCase->execute($request, $elasticHelper);
         } catch (\Exception $e) {
             return $this->responseUnprocessable(['Can\'t get messages'.$e->getMessage()]);
         }

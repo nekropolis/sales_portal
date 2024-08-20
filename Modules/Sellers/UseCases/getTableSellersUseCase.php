@@ -20,7 +20,7 @@ class getTableSellersUseCase
                 ->offset($data['offset'])
                 ->get();
 
-            $count = Sellers::all()->count();
+            $count = Sellers::count();
         } else {
             $sellers = Sellers::query()
                 ->where('name', 'LIKE', "%{$data['search']}%")
@@ -28,7 +28,7 @@ class getTableSellersUseCase
                 ->offset($data['offset'])
                 ->get();
 
-            $count = Sellers::where('name', 'LIKE', "%{$data['search']}%")->get()->count();
+            $count = Sellers::where('name', 'LIKE', "%{$data['search']}%")->count();
         }
 
         return response()->json([

@@ -16,7 +16,7 @@ class deleteBrandUseCase
         $data = $request->all();
 
         $brand            = Brands::findOrFail($data['brand_id']);
-        $checkDeleteBrand = Products::where('brand_id', $data['brand_id'])->get()->count();
+        $checkDeleteBrand = Products::where('brand_id', $data['brand_id'])->count();
 
         if ($checkDeleteBrand) {
             return response()->json([

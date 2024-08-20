@@ -17,8 +17,8 @@ class deleteCurrencyUseCase
         $data = $request->all();
 
         $currency                = Currency::findOrFail($data['currency_id']);
-        $checkCurrencyInSettings = PriceTradeSettings::where('currency_id', $data['currency_id'])->get()->count();
-        $checkCurrencyInPrice    = PricesUploaded::where('currency_id', $data['currency_id'])->get()->count();
+        $checkCurrencyInSettings = PriceTradeSettings::where('currency_id', $data['currency_id'])->count();
+        $checkCurrencyInPrice    = PricesUploaded::where('currency_id', $data['currency_id'])->count();
 
         if ($checkCurrencyInSettings && $checkCurrencyInPrice) {
             return response()->json([

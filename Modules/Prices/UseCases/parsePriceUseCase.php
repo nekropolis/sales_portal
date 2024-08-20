@@ -3,8 +3,10 @@
 namespace Modules\Prices\UseCases;
 
 use Elasticsearch;
+use Elasticsearch\ClientBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Modules\Prices\Models\Elastic;
 use Modules\Prices\Models\LinkPrices;
 use Modules\Prices\Models\PriceParse;
 use Modules\Prices\Models\PricesUploaded;
@@ -13,7 +15,7 @@ use Shuchkin\SimpleXLSX;
 
 class parsePriceUseCase
 {
-    public function execute(Request $request)
+    public function execute(Request $request, Elastic $elasticHelper)
     {
         $data = $request->all();
 
@@ -28,7 +30,7 @@ class parsePriceUseCase
 
         $xlsx = SimpleXLSX::parseData($dataFile);
 
-        //dd($xlsx, $xlsx->rows());
+        //dd($xlsx);
 
         $header_values = $rows = [];
         if ($xlsx && $xlsx->rows() !== []) {
@@ -114,60 +116,46 @@ class parsePriceUseCase
         PriceParse::where(['price_uploaded_id' => $id])->whereNotIn('model',
             $existingNamesRows)->update(['quantity' => 0]);
 
-        $prices = PriceParse::with('link')->where(['price_uploaded_id' => $id])->whereNotIn('quantity', [0])->get();
-
         $existingNames = [];
-        foreach ($prices as $price) {
-            $response = Elasticsearch::search([
-                'index' => 'products',
-                'body'  => [
-                    'query' => [
-                        'function_score' => [
-                            'query'     => [
-                                'multi_match' => [
-                                    'query'  => $price->model,
-                                    'fields' => ['brand', 'model'],
-                                ],
-                            ],
-                            "min_score" => 0.7,
-                        ],
-                    ],
-                ],
-            ]);
+        PriceParse::with('link')
+            ->where(['price_uploaded_id' => $id])
+            ->whereNotIn('quantity', [0])
+            ->chunk(500, function ($prices) use ( $elasticHelper, &$existingNames) {
+                foreach ($prices as $price) {
+                    $existingNames[] = $price->model;
+                    $productIds      = $elasticHelper->getProductIds($price->model);
 
-            $productIds = array_column($response['hits']['hits'], '_id');
+                    if (!empty($productIds)) {
+                        $productId = Products::whereIn('id', $productIds)
+                            ->orderBy(\DB::raw('FIELD(id,'.implode(',', $productIds).')'))
+                            ->first()->id;
+                    } else {
+                        $productId = 0;
+                    }
 
-            if (!empty($productIds)) {
-                $productId = Products::whereIn('id', $productIds)
-                    ->orderBy(\DB::raw('FIELD(id,'.implode(',', $productIds).')'))
-                    ->first()->id;
-            } else {
-                $productId = 0;
-            }
+                    $dataToUpdate = [
+                        'is_link'    => 0,
+                        'product_id' => $productId,
+                        'is_exist'   => 1,
+                    ];
 
-            $dataToUpdate = [
-                'is_link'    => 0,
-                'product_id' => $productId,
-                'is_exist'   => 1,
-            ];
+                    if ($price->link !== null && $price->link->is_link === 0) {
+                        $dataToUpdate['is_link']    = $price->link->is_link;
+                        $dataToUpdate['product_id'] = $productId;
+                        $dataToUpdate['is_exist']   = 1;
+                    } elseif ($price->link !== null && $price->link->is_link === 1) {
+                        $dataToUpdate['is_link']    = $price->link->is_link;
+                        $dataToUpdate['product_id'] = $price->link->product_id;
+                        $dataToUpdate['is_exist']   = 1;
+                    }
 
-            if ($price->link !== null && $price->link->is_link === 0) {
-                $dataToUpdate['is_link']    = $price->link->is_link;
-                $dataToUpdate['product_id'] = $productId;
-                $dataToUpdate['is_exist']   = 1;
-            } elseif ($price->link !== null && $price->link->is_link === 1) {
-                $dataToUpdate['is_link']    = $price->link->is_link;
-                $dataToUpdate['product_id'] = $price->link->product_id;
-                $dataToUpdate['is_exist']   = 1;
-            }
-
-            $existingNames[] = $price->model;
-            LinkPrices::query()->updateOrCreate([
-                'price_model_id'       => $price->id,
-                'price_model_name_md5' => md5($price->model),
-                'price_model_name'     => $price->model,
-            ], $dataToUpdate);
-        }
+                    LinkPrices::query()->updateOrCreate([
+                        'price_model_id'       => $price->id,
+                        'price_model_name_md5' => md5($price->model),
+                        'price_model_name'     => $price->model,
+                    ], $dataToUpdate);
+                }
+            });
 
         LinkPrices::with('priceParse')
             ->whereHas('priceParse', function ($query) use ($id) {

@@ -22,7 +22,7 @@ class rulesTableTradePriceUseCase
             ->offset($data['offset'])
             ->get();
 
-        $count = Rules::all()->count();
+        $count = Rules::count();
 
         return response()->json([
             'total'            => $count,

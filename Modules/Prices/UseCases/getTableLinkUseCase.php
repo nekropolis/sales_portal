@@ -47,7 +47,7 @@ class getTableLinkUseCase
         }
 
         $priceParse = $priceParse->get();
-        $count      = $count->get()->count();
+        $count      = $count->count();
 
         return response()->json([
             'total'            => $count,

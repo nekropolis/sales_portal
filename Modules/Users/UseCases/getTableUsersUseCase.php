@@ -20,7 +20,7 @@ class getTableUsersUseCase
                 ->offset($data['offset'])
                 ->get();
 
-            $count = User::all()->count();
+            $count = User::count();
         } else {
             $users = User::query()
                 ->where('name', 'LIKE', "%{$data['search']}%")
@@ -29,7 +29,7 @@ class getTableUsersUseCase
                 ->offset($data['offset'])
                 ->get();
 
-            $count = User::where('name', 'LIKE', "%{$data['search']}%")->get()->count();
+            $count = User::where('name', 'LIKE', "%{$data['search']}%")->count();
         }
 
         return response()->json([

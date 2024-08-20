@@ -196,7 +196,7 @@ $(function () {
                 searchProduct.forEach((e) => {
                     linkProductName.innerHTML +=
                         `<td>${e.brand ? e.brand.name : ''}</td>
-                         <td>${e.model} ${e.condition !== null ? e.condition : ''} <input type="text" id="searchProductId" value="${e.id}" hidden></td>
+                         <td>${e.model}  <input type="text" id="searchProductId" value="${e.id}" hidden></td>
                          <td>${e.localization ? e.localization.name : ''}</td>
                          <td><button type="button" class="btn btn-outline-secondary btn-sm" onclick="return addProductToLink('${row.price_model_id}', '${e.id}')">Связать</button></td>`;
                 });

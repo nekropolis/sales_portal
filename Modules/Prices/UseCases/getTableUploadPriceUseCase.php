@@ -20,7 +20,7 @@ class getTableUploadPriceUseCase
             ->offset($data['offset'])
             ->get();
 
-        $count = PricesUploaded::all()->count();
+        $count = PricesUploaded::count();
 
         return response()->json([
             'total'            => $count,

@@ -2,6 +2,7 @@
 
 namespace Modules\Products\Models;
 
+use Elasticsearch\ClientBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,6 +22,28 @@ class Products extends Model
     protected $table   = 'products';
 
     protected $fillable = ['model', 'brand_id', 'category_id'];
+
+    public static function createIndex()
+    {
+        $client = ClientBuilder::create()->setHosts(config('database.connections.elasticsearch.hosts'))->build();
+        $params = [
+            'index' => 'products',
+            'body' => [
+                'mappings' => [
+                    'properties' => [
+                        'brand_id' => ['type' => 'integer'],
+                        'model'    => ['type' => 'text'],
+                    ],
+                ]
+            ],
+        ];
+
+        try {
+            $client->indices()->create($params);
+        } catch (\Exception $e) {
+            // Handle the exception (e.g., log the error or display a user-friendly message)
+        }
+    }
 
     public function brand(): belongsTo
     {

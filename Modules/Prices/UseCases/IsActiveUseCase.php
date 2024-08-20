@@ -15,10 +15,8 @@ class IsActiveUseCase
             'is_active' => $data['checkbox'],
         ]);
 
-        $isActive = PricesUploaded::where('id', $data['price_id'])
+        return PricesUploaded::where('id', $data['price_id'])
             ->with('seller')
             ->first();
-
-        return $isActive;
     }
 }

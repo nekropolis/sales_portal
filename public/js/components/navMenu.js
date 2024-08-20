@@ -1,7 +1,6 @@
 $(document).ready(function () {
     $('.collapse')
         .on('shown.bs.collapse', function () {
-            alert('1')
             let element;
             if (this.id === 'catalogMenu') {
                 element = document.getElementById("catalogCollapse");
@@ -14,7 +13,6 @@ $(document).ready(function () {
             }
         })
         .on('hidden.bs.collapse', function () {
-            alert('2')
             let element;
             if (this.id === 'catalogMenu') {
                 element = document.getElementById("catalogCollapse");

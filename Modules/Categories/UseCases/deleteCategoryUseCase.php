@@ -16,7 +16,7 @@ class deleteCategoryUseCase
         $data = $request->all();
 
         $category            = Categories::findOrFail($data['category_id']);
-        $checkDeleteCategory = Products::where('category_id', $data['category_id'])->get()->count();
+        $checkDeleteCategory = Products::where('category_id', $data['category_id'])->count();
 
         if ($checkDeleteCategory) {
             return response()->json([

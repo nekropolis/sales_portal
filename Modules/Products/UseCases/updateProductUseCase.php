@@ -31,10 +31,14 @@ class updateProductUseCase
             $product->condition       = $data['condition'];
             $product->update();
 
+            $product = Products::where('id', $data['product_id'])
+                ->with('brand')
+                ->with('category')
+                ->with('localization')
+                ->first();
+
             $message = 'Продукт обновлен!';
         }
-
-        $product->get()->toArray();
 
         return response()->json([
             'type'    => 'success',

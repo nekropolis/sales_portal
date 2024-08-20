@@ -22,7 +22,7 @@ class getProductsTableUseCase
                 ->offset($data['offset'])
                 ->get();
 
-            $count = Products::all()->count();
+            $count = Products::count();
         } else {
             $products = Products::with('category')
                 ->where('model','LIKE',"%{$data['search']}%")
@@ -32,9 +32,7 @@ class getProductsTableUseCase
                 ->offset($data['offset'])
                 ->get();
 
-            $count = Products::where('model','LIKE',"%{$data['search']}%")
-                ->get()
-                ->count();
+            $count = Products::where('model','LIKE',"%{$data['search']}%")->count();
         }
 
         return response()->json([

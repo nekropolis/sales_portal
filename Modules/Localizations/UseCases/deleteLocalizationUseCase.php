@@ -16,7 +16,7 @@ class deleteLocalizationUseCase
         $data = $request->all();
 
         $localization            = Localizations::findOrFail($data['localization_id']);
-        $checkDeleteLocalization = Products::where('localization_id', $data['localization_id'])->get()->count();
+        $checkDeleteLocalization = Products::where('localization_id', $data['localization_id'])->count();
 
         if ($checkDeleteLocalization) {
             return response()->json([

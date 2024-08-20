@@ -2,42 +2,21 @@
 
 namespace Modules\Prices\UseCases;
 
-
-use Elasticsearch;
 use Illuminate\Http\Request;
+use Modules\Prices\Models\Elastic;
 use Modules\Products\Models\Products;
 
 class searchProductForPriceUseCase
 {
-    public function execute(Request $request)
+    public function execute(Request $request, Elastic $elasticHelper)
     {
-        $q = $request->get('q');
-
-        $response = Elasticsearch::search([
-            'index' => 'products',
-            "size"  => 5,
-            'body'  => [
-                'query' => [
-                    'function_score' => [
-                        'query'     => [
-                            'multi_match' => [
-                                'query'  => $q,
-                                'fields' => ['brand', 'model'],
-                            ],
-                        ],
-                        "min_score" => 0.7,
-                    ],
-                ],
-            ],
-        ]);
-
-        $productIds = array_column($response['hits']['hits'], '_id');
+        $productIds = $elasticHelper->getProductIds($request->get('q'));
 
         if (!empty($productIds)) {
             return Products::with('brand')->whereIn('id', $productIds)
                 ->orderBy(\DB::raw('FIELD(id,'.implode(',', $productIds).')'))->get();
         } else {
-            return array(['model' => 'Совпадений не найдено!']);
+            return [['model' => 'Совпадений не найдено!']];
         }
     }
 }
