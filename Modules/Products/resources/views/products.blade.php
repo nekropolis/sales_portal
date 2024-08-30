@@ -203,6 +203,8 @@
                     class="table table-sm sp-table"
                     data-locale="ru-RU"
                     data-toggle="table"
+                    data-filter-control="true"
+                    data-click-to-select="true"
                     data-unique-id="id"
                     data-checkbox-header="false"
                     data-ajax="ajaxRequest"
@@ -218,11 +220,11 @@
                     data-row-style="rowStyle">
                 <thead>
                 <tr>
-                    <th data-field="id" data-halign="center" data-sortable="true">ID</th>
+                    <th data-field="id" data-halign="center">ID</th>
                     <th data-field="sku">SKU</th>
-                    <th data-field="category.name" data-sortable="true">Категория</th>
-                    <th data-field="brand.name" data-sortable="true">Бренд</th>
-                    <th data-field="model" data-sortable="true">Модель</th>
+                    <th data-field="category.name" data-filter-control="select">Категория</th>
+                    <th data-field="brand.name">Бренд</th>
+                    <th data-field="model">Модель</th>
                     <th data-field="localization.name">Локализация</th>
                     <th data-field="package">Комплектация</th>
                     <th data-field="condition">Состояние</th>

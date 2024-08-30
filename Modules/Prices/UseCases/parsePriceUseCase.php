@@ -120,7 +120,7 @@ class parsePriceUseCase
         PriceParse::with('link')
             ->where(['price_uploaded_id' => $id])
             ->whereNotIn('quantity', [0])
-            ->chunk(500, function ($prices) use ( $elasticHelper, &$existingNames) {
+            ->chunk(500, function ($prices) use ($elasticHelper, &$existingNames) {
                 foreach ($prices as $price) {
                     $existingNames[] = $price->model;
                     $productIds      = $elasticHelper->getProductIds($price->model);
