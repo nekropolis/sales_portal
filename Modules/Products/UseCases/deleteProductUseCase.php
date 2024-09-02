@@ -3,7 +3,7 @@
 namespace Modules\Products\UseCases;
 
 use App\Traits\Makeable;
-use Modules\Prices\Models\Elastic;
+use Modules\Prices\Models\Inventories;
 use Modules\Prices\Models\LinkPrices;
 use Modules\Products\Http\Requests\DeleteProductRequest;
 use Modules\Products\Models\Products;
@@ -17,7 +17,7 @@ class deleteProductUseCase
     {
         $data = $request->all();
 
-        $inventorProduct = Elastic::where('product_id', $data['product_id']);
+        $inventorProduct = Inventories::where('product_id', $data['product_id']);
         $inventorProduct->delete();
 
         $parseModelProduct = PriceModelsInProduct::where('product_id', $data['product_id']);

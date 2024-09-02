@@ -14,6 +14,7 @@
 <!-- Styles -->
 <link href="{{ asset('css/main.css') }}" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
 
 <!-- Scripts -->
 @vite(['resources/sass/app.scss', 'resources/js/app.js'])

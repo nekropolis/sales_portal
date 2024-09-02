@@ -5,7 +5,7 @@ namespace Modules\ImportExportExel\Exports;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Modules\Prices\Models\Elastic;
+use Modules\Prices\Models\Inventories;
 
 class PriceTradeExport implements FromCollection, WithHeadings
 {
@@ -14,10 +14,10 @@ class PriceTradeExport implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        $sameModel = Elastic::selectRaw('product_id, min(price) as price')
+        $sameModel = Inventories::selectRaw('product_id, min(price) as price')
             ->groupBy('product_id');
 
-        return Elastic::join(DB::raw('('.$sameModel->toSql().') as sub'), function ($join) {
+        return Inventories::join(DB::raw('('.$sameModel->toSql().') as sub'), function ($join) {
             $join->on('sub.price', '=', 'inventories.price');
             $join->on('sub.product_id', '=', 'inventories.product_id');
         })

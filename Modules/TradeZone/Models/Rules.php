@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Brands\Models\Brands;
 use Modules\Categories\Models\Categories;
-use Modules\Prices\Models\Elastic;
+use Modules\Prices\Models\Inventories;
 use Modules\Prices\Models\PricesUploaded;
 
 class Rules extends Model
@@ -21,7 +21,7 @@ class Rules extends Model
 
     public function inventories(): HasMany
     {
-        return $this->hasMany(Elastic::class);
+        return $this->hasMany(Inventories::class);
     }
 
     public function priceUploaded(): HasMany

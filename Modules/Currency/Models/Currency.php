@@ -5,7 +5,7 @@ namespace Modules\Currency\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Modules\Prices\Models\Elastic;
+use Modules\Prices\Models\Inventories;
 use Modules\Prices\Models\PriceParse;
 use Modules\Prices\Models\PricesUploaded;
 
@@ -19,7 +19,7 @@ class Currency extends Model
 
     public function inventories(): HasMany
     {
-        return $this->hasMany(Elastic::class);
+        return $this->hasMany(Inventories::class);
     }
 
     public function priceParse(): HasMany

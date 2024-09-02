@@ -5,7 +5,7 @@ namespace Modules\TradeZone\UseCases;
 use App\Traits\Makeable;
 use Illuminate\Http\Request;
 use Mgcodeur\CurrencyConverter\Facades\CurrencyConverter;
-use Modules\Prices\Models\Elastic;
+use Modules\Prices\Models\Inventories;
 use Modules\Prices\Models\LinkPrices;
 use Modules\TradeZone\Models\PriceModelsInProduct;
 use Modules\TradeZone\Models\PriceTradeSettings;
@@ -53,14 +53,14 @@ class formTradePriceUseCase
                 'product_id'  => $item->product_id,
             ];
             $existingModelIds[] = $item->price_model_id;
-            Elastic::query()->updateOrCreate([
+            Inventories::query()->updateOrCreate([
                 'price_model_id' => $item->price_model_id,
             ], $dataToUpdate);
         }
 
-        Elastic::whereNotIn('price_model_id', $existingModelIds)->delete();
+        Inventories::whereNotIn('price_model_id', $existingModelIds)->delete();
 
-        if (!Elastic::all()->count() > 0) {
+        if (!Inventories::count() > 0) {
             return response()->json([
                 'type'    => 'error',
                 'message' => 'Не звязан ни один товар или не активирован прайс-лист!',

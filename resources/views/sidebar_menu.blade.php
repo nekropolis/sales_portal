@@ -1,68 +1,86 @@
-<nav class="nav d-flex flex-column align-items-center align-items-sm-start px-1 min-vh-100 sticky-top sticky-offset side-menu">
-    <a class="nav-link px-2 align-middle {{(request()->path()=="home") ? "active" : null}}" aria-current="page"
-       href="/home">
-        <i class="fs-5 bi-house"></i><span class="ms-1 d-none d-sm-inline">Home</span>
-    </a>
-    <a href="#catalogMenu" data-target="#catalogMenu" data-bs-toggle="collapse" class="nav-link px-2 align-middle">
-        <i class="fs-5 bi-grid"></i><span class="ms-1 d-none d-sm-inline">Каталог <i id="catalogCollapse"
-                                                                                     class="bi bi-chevron-down icon-sidebar"></i></span>
-    </a>
-    <ul class="collapse nav flex-column ms-1
-    {{
-    (request()->path()=="products" || request()->path()=="categories" ||
-       request()->path()=="brands" || request()->path()=="currency")
-       ? "show" : null
-    }}" id="catalogMenu" data-bs-parent="#menu">
-        <div>
-            <li>
-                <a href="/products" class="nav-link px-4 {{(request()->path()=="products") ? "active" : null}}">
-                    <i class="bi bi-bag"></i><span class="d-none d-sm-inline"> Продукты</span></a>
-            </li>
-            <li>
-                <a href="/categories" class="nav-link px-4 {{(request()->path()=="categories") ? "active" : null}}">
-                    <i class="bi bi-collection"></i><span class="d-none d-sm-inline"> Категории</span></a>
-            </li>
-            <li>
-                <a href="/brands" class="nav-link px-4 {{(request()->path()=="brands") ? "active" : null}}">
-                    <i class="bi bi-journals"></i><span class="d-none d-sm-inline"> Бренды</span></a>
-            </li>
-            <li>
-                <a href="/localizations" class="nav-link px-4 {{(request()->path()=="localizations") ? "active" : null}}">
-                    <i class="bi bi-translate"></i><span class="d-none d-sm-inline"> Локализация</span></a>
-            </li>
-            <li>
-                <a href="/currency" class="nav-link px-4 {{(request()->path()=="currency") ? "active" : null}}">
-                    <i class="bi bi-cash-coin"></i><span class="d-none d-sm-inline"> Валюта</span></a>
-            </li>
+<aside id="sidebar" class="expand">
+    <div class="d-flex">
+        <button class="toggle-btn" type="button">
+            <i class="lni lni-grid-alt"></i>
+        </button>
+        <div class="sidebar-logo">
+            <a href="#">RuPrice</a>
         </div>
+    </div>
+    <ul class="sidebar-nav">
+        <li class="sidebar-item">
+            <a href="#catalogMenu" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+               data-bs-target="#catalogMenu" aria-expanded="false" aria-controls="catalogMenu">
+                <i class="lni lni-briefcase-alt"></i>
+                <span>Каталог</span>
+            </a>
+            <ul id="catalogMenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                <li class="sidebar-item">
+                    <a href="/products" class="sidebar-link {{(request()->path()=="products") ? "active" : null}}">
+                        Продукты
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/categories" class="sidebar-link {{(request()->path()=="categories") ? "active" : null}}">
+                        Категории
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/brands" class="sidebar-link {{(request()->path()=="brands") ? "active" : null}}">
+                        Бренды
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/localizations"
+                       class="sidebar-link {{(request()->path()=="localizations") ? "active" : null}}">
+                        Локализация
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/currency" class="sidebar-link {{(request()->path()=="currency") ? "active" : null}}">
+                        Валюта
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="sidebar-item">
+            <a href="/trade-price"
+               class="sidebar-link {{ str_starts_with(request()->path(), 'trade-price') ? "active" : null}}">
+                <i class="lni lni-customer"></i>
+                <span>Трейд Зона</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="#sellersMenu" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+               data-bs-target="#sellersMenu" aria-expanded="false" aria-controls="sellersMenu">
+                <i class="lni lni-clipboard"></i>
+                <span>Работа с Прайсами</span>
+            </a>
+            <ul id="sellersMenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                <li class="sidebar-item">
+                    <a href="/prices" class="sidebar-link {{( str_starts_with(request()->path(), 'price-parse') || str_starts_with(request()->path(), 'prices')) ? "active" : null}}">
+                        Прайс-листы
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/sellers" class="sidebar-link {{(request()->path()=="sellers") ? "active" : null}}">
+                        Поставщики
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="sidebar-item">
+            <a href="/users"
+               class="sidebar-link {{ str_starts_with(request()->path(), 'users') ? "active" : null}}">
+                <i class="lni lni-user"></i><span>Пользователи</span>
+            </a>
+        </li>
     </ul>
-    <a href="/trade-price"
-       class="nav-link px-2 align-middle {{ str_starts_with(request()->path(), 'trade-price') ? "active" : null}}">
-        <i class="fs-5 bi-clipboard-data"></i><span class="ms-1 d-none d-sm-inline">Трейд Зона</span></a>
-    <a href="#sellersMenu" data-bs-toggle="collapse" class="nav-link px-2 align-middle">
-        <i class="fs-5 bi-tags"></i><span class="ms-1 d-none d-sm-inline">Работа с Прайсами <i id="sellersCollapse"
-                                                                                               class="bi bi-chevron-down icon-sidebar"></i></span>
-    </a>
-    <ul class="collapse nav flex-column ms-1
-    {{
-    (request()->path()=="prices" || request()->path()=="sellers")
-       ? "show" : null
-    }}" id="sellersMenu" data-bs-parent="#menu">
-        <div>
-            <li>
-                <a href="/prices"
-                   class="nav-link px-4 {{( str_starts_with(request()->path(), 'price-parse') || str_starts_with(request()->path(), 'prices')) ? "active" : null}}">
-                    <i class="bi bi-file-earmark-spreadsheet"></i><span
-                            class="d-none d-sm-inline"> Прайс-листы</span></a>
-            </li>
-            <li>
-                <a href="/sellers" class="nav-link px-4 {{(request()->path()=="sellers") ? "active" : null}}">
-                    <i class="bi-5 bi-truck"></i><span class="d-none d-sm-inline"> Поставщики</span></a>
-            </li>
-        </div>
-    </ul>
-    <a href="/users"
-       class="nav-link px-2 align-middle {{ str_starts_with(request()->path(), 'users') ? "active" : null}}">
-        <i class="fs-5 bi-people"></i><span class="ms-1 d-none d-sm-inline">Пользователи</span></a>
-</nav>
+    <div class="sidebar-footer">
+        <a href="#" class="sidebar-link">
+            <i class="lni lni-exit"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+</aside>
 <script src="/js/components/navMenu.js"></script>

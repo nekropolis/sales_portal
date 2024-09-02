@@ -6,7 +6,7 @@ namespace Modules\TradeZone\UseCases;
 use App\Traits\Makeable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Modules\Prices\Models\Elastic;
+use Modules\Prices\Models\Inventories;
 use Modules\TradeZone\Models\RulesProcessor;
 
 class getTableTradePriceUseCase
@@ -17,10 +17,10 @@ class getTableTradePriceUseCase
     {
         $data = $request->all();
 
-        $sameModel = Elastic::selectRaw('product_id, min(price) as price')->groupBy('product_id');
+        $sameModel = Inventories::selectRaw('product_id, min(price) as price')->groupBy('product_id');
 
         if ($data['search'] == '') {
-            $table = Elastic::join(DB::raw('('.$sameModel->toSql().') as sub'), function ($join) {
+            $table = Inventories::join(DB::raw('('.$sameModel->toSql().') as sub'), function ($join) {
                 $join->on('sub.price', '=', 'inventories.price');
                 $join->on('sub.product_id', '=', 'inventories.product_id');
             })
@@ -30,7 +30,7 @@ class getTableTradePriceUseCase
                 ->with('product.brand')
                 ->with('product.category');
         } else {
-            $table = Elastic::join(DB::raw('('.$sameModel->toSql().') as sub'), function ($join) {
+            $table = Inventories::join(DB::raw('('.$sameModel->toSql().') as sub'), function ($join) {
                 $join->on('sub.price', '=', 'inventories.price');
                 $join->on('sub.product_id', '=', 'inventories.product_id');
             })
