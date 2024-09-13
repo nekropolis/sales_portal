@@ -1,17 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Прайс-листы</h1>
-
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <!-- Button trigger addPrice -->
-            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#addPrice">
-                Добавить новый прайс
-            </button>
-        </div>
-    </div>
-
     <!-- Modal addPrice-->
     <form action="{{route('createUploadPrice')}}" method="post" enctype="multipart/form-data">
         @csrf
@@ -56,6 +45,20 @@
         </div>
     </form>
 
+    <!-- Custom Search Categories -->
+    <div class="d-flex justify-content-between flex-wrap">
+        <button type="button" class="custom-file-upload" data-bs-toggle="modal" data-bs-target="#addPrice">
+            Добавить новый прайс
+        </button>
+        <div class="input-group w-auto p-2">
+            <input type="text" class="form-control" id="customSearchUploadPrices" style="width:220px;"
+                   placeholder="Поиск ..." aria-label="customSearchUploadPrices"
+                   aria-describedby="basic-addon1">
+            <span class="input-group-text reset-search" id="basic-addon1" onclick="checkIcon()"><i
+                        class="bi bi-x-lg"></i></span>
+        </div>
+    </div>
+
     <!-- Table -->
     <div class="tab-content" id="myTabContent">
 
@@ -69,7 +72,7 @@
                 data-ajax="ajaxRequest"
                 data-search="true"
                 data-row-style="rowStyle"
-                {{-- data-search-selector="#customSearchPriceParse"--}}
+                data-search-selector="#customSearchUploadPrices"
                 data-side-pagination="server"
                 data-pagination="true"
                 data-page-size="15"

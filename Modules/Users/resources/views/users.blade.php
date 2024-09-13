@@ -1,12 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-
-        <h1 class="h2">Пользователи</h1>
-    </div>
-
-
     <!-- Buttons -->
     <div class="d-flex justify-content-between mb-2 form-group">
         <button type="button" class="custom-file-upload" data-bs-toggle="modal" data-bs-target="#addUser">

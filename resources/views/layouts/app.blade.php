@@ -19,7 +19,9 @@
             </div>
         </main>
         <footer class="footer">
-            @include('includes.footer')
+            @auth
+                @include('includes.footer')
+            @endauth
         </footer>
     </div>
 </div>

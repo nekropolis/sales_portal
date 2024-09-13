@@ -10,7 +10,6 @@
                 <a class="nav-link active" href="/trade-price-settings">Настройки</a>
             </li>
         </ul>
-        <h1 class="h2">Трейд Зона Настройки</h1>
     </div>
 
     <!-- Create Rule Modal -->
@@ -148,6 +147,7 @@
         </div>
     </div>
 
+    <div class="d-flex justify-content-between mb-2 form-group">
     <table class="table table-responsive">
         <thead>
         <tr>
@@ -170,6 +170,30 @@
             </tbody>
         @endforeach
     </table>
+
+    <table class="table table-responsive">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Валюта</th>
+            <th scope="col"></th>
+            <th scope="col">Прайс</th>
+            <th scope="col">Валюта</th>
+        </tr>
+        </thead>
+        @foreach($sellers as $seller)
+            <tbody>
+            <tr>
+                <td>{{$seller->id}}</td>
+                <td>{{$seller->is_active == true ? 'Да': 'Отключен'}}</td>
+                <td>{{$seller->seller->name}}</td>
+                <td>{{$seller->name}}</td>
+                <td>{{$seller->currency->code}}</td>
+            </tr>
+            </tbody>
+        @endforeach
+    </table>
+    </div>
 
     <script type="text/javascript">
         window.sellers = {!! json_encode($sellers) !!};

@@ -58,7 +58,8 @@
             </a>
             <ul id="sellersMenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                 <li class="sidebar-item">
-                    <a href="/prices" class="sidebar-link {{( str_starts_with(request()->path(), 'price-parse') || str_starts_with(request()->path(), 'prices')) ? "active" : null}}">
+                    <a href="/prices"
+                       class="sidebar-link {{( str_starts_with(request()->path(), 'price-parse') || str_starts_with(request()->path(), 'prices')) ? "active" : null}}">
                         Прайс-листы
                     </a>
                 </li>
@@ -77,10 +78,15 @@
         </li>
     </ul>
     <div class="sidebar-footer">
-        <a href="#" class="sidebar-link">
+        <a href="{{ route('logout') }}" class="sidebar-link"
+           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
             <i class="lni lni-exit"></i>
-            <span>Logout</span>
+            <span>{{ __('Выйти') }}</span>
         </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+        </form>
     </div>
 </aside>
 <script src="/js/components/navMenu.js"></script>

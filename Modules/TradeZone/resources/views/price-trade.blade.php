@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <!-- Buttons -->
+    <div class="d-flex justify-content-between mb-2">
         <ul class="nav nav-tabs">
             <li class="nav-item">
                 <a class="nav-link active" href="/trade-price">Прайс-Лист</a>
@@ -10,25 +11,22 @@
                 <a class="nav-link" href="/trade-price-settings">Настройки</a>
             </li>
         </ul>
-        <h1 class="h2">Трейд Зона</h1>
-    </div>
-
-
-    <!-- Buttons -->
-    <div class="d-flex justify-content-between mb-2 form-group">
-        <div class="btn-group btn-group-sm p-2 bd-highlight" role="group">
-            <form action="{{ route('priceTrade.export') }}" method="GET" enctype="multipart/form-data">
-                @csrf
-                <button class="btn btn-outline-secondary" type="submit">Экспорт Прайс-Листа</button>
-            </form>
-        </div>
-        <!-- Search -->
-        <div class="d-flex flex-row-reverse justify-content">
-            <div class="input-group w-auto p-2">
+        <div class="btn-toolbar mb-2" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="input-group me-3">
+                <!-- Search -->
                 <input type="text" class="form-control" id="customSearchTradeZone" style="width:220px;"
-                       placeholder="Поиск по модели ..." aria-label="customSearchTradeZone"
+                       placeholder="Поиск ..." aria-label="customSearchTradeZone"
                        aria-describedby="basic-addon1">
-                <span class="input-group-text reset-search" id="basic-addon1" onclick="checkIcon()"><i class="bi bi-x-lg"></i></span>
+                <span class="input-group-text reset-search" id="basic-addon1" onclick="checkIcon()"><i
+                            class="bi bi-x-lg"></i></span>
+            </div>
+            <div class="btn-group" role="group" aria-label="First group">
+                <form action="{{ route('priceTrade.export') }}" method="GET" enctype="multipart/form-data">
+                    @csrf
+                    <button class="btn btn-outline-secondary" title="Скчать прайс-лист" type="submit">
+                        <i class="lni lni-upload"></i>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -58,7 +56,8 @@
                 data-response-handler="responseHandler">
             <thead>
             <tr>
-                <th data-field="icon" class="detail" data-formatter="detailIconFormatter" data-events="detailIconEvents"></th>
+                <th data-field="icon" class="detail" data-formatter="detailIconFormatter"
+                    data-events="detailIconEvents"></th>
                 <th data-field="id" data-halign="center" data-sortable="true">ID</th>
                 <th data-field="product.sku">SKU</th>
                 <th data-field="product.category.name" data-sortable="true">Категория</th>

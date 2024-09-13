@@ -1,18 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/prices"><i class="bi bi-arrow-left-short"></i> Назад</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="/price-parse/{{$price_uploaded['id']}}">Связать Позиции</a>
-            </li>
-        </ul>
-        <h1 class="h2">Прайс-лист {{$price_uploaded['price_name']}}</h1>
-    </div>
-
     <!-- Settings Modal -->
     <div class="modal fade" id="settingsPrice" tabindex="-1" aria-labelledby="settingsPrice"
          aria-hidden="true">
@@ -177,18 +165,28 @@
 
     <!-- Buttons -->
     <div class="d-flex justify-content-between mb-2 form-group">
-        <div class="btn-group btn-group-sm p-2 bd-highlight" role="group">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/prices"><i class="bi bi-arrow-left-short"></i> Назад</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/price-parse/{{$price_uploaded['id']}}">Связать Позиции</a>
+            </li>
+        </ul>
+
+        <div class="btn-group btn-group-sm mb-2 bd-highlight" role="group">
             <button type="button" id="update_file" class="btn btn-outline-secondary update_file"
                     onclick="return updateFile({{$price_uploaded['id']}})">Обновить файл
             </button>
             <button type="button" id="parse_price" class="btn btn-outline-info parse_price"
                     onclick="return parsePrice({{$price_uploaded['id']}})">Распарсить
             </button>
-            <button type="button" id="settings_price" class="btn btn-outline-secondary settings_price"
+            <button type="button" id="settings_price" class="btn btn-outline-secondary settings_price" title="Настройки"
                     onclick="return settingsPrice({{$price_uploaded['id']}})"><i class="bi bi-gear"></i>
             </button>
         </div>
 
+        <!-- Search -->
         <div class="d-flex flex-row-reverse justify-content">
             <div class="input-group p-2">
                 <input type="text" class="form-control" id="customSearchPriceParse" style="width:220px;"

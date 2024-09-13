@@ -1,6 +1,62 @@
 <nav class="navbar navbar-expand px-4 py-3">
     @include('layouts.flash-messages')
-    123
+    @php
+    $prices    = \Modules\Prices\Models\PricesUploaded::query()->pluck('id', 'name')->toArray();
+    $idPrice   = strstr(request()->path(), '/');
+    $priceId   = str_replace('/', '', $idPrice);
+    $priceName = array_search($priceId, $prices);
+
+    //var_dump(array_search($ttes, $prices), )
+    @endphp
+    @switch(request()->path())
+        @case('trade-price')
+            <h4>Трейд Зона</h4>
+        @break
+
+        @case('trade-price-settings')
+            <h4>Трейд Зона - Настройки</h4>
+            @break
+
+        @case('sellers')
+            <h4>Поставщики</h4>
+            @break
+
+        @case('products')
+            <h4>Продукты</h4>
+            @break
+
+        @case('categories')
+            <h4>Категории</h4>
+            @break
+
+        @case('brands')
+            <h4>Бренды</h4>
+            @break
+
+        @case('localizations')
+            <h4>Локализация</h4>
+            @break
+
+        @case('currency')
+            <h4>Валюта</h4>
+            @break
+
+        @case('prices')
+            <h4>Прайс-листы</h4>
+            @break
+
+        @case('price-parse'.$idPrice)
+            <h4>Прйс-Лист {{$priceName}}</h4>
+            @break
+
+        @case('users')
+            <h4>Пользователи</h4>
+            @break
+
+        @default
+            <h5>RuPrice</h5>
+    @endswitch
+
     <form action="#" class="d-none d-sm-inline-block">
 
     </form>
@@ -22,20 +78,14 @@
                 @endif
             @else
                 <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }}
                     </a>
-
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                        <a class="dropdown-item" href="#">
+                            Профиль
                         </a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
                     </div>
                 </li>
             @endguest

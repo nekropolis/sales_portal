@@ -1,75 +1,68 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Категории</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <button type="button" class="custom-file-upload" data-bs-toggle="modal" data-bs-target="#createCategory">
-                Создать
-            </button>
-
-            <!-- Create Category -->
-            <form action="{{route('createCategory')}}" method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="modal fade" id="createCategory" tabindex="-1" aria-labelledby="createCategory"
-                     aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="createCategory">Создать</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div>
-                                    <label for="name" class="col-form-label"><h5>Название категории</h5></label>
-                                    <input type="text" class="form-control name" id="name"
-                                           name="name" aria-label=".form-control-sm example" required>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                <button type="submit" class="btn btn-primary">Добавить</button>
-                            </div>
+    <!-- Create Category -->
+    <form action="{{route('createCategory')}}" method="post" enctype="multipart/form-data">
+        @csrf
+        <div class="modal fade" id="createCategory" tabindex="-1" aria-labelledby="createCategory"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="createCategory">Создать</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <label for="name" class="col-form-label"><h5>Название категории</h5></label>
+                            <input type="text" class="form-control name" id="name"
+                                   name="name" aria-label=".form-control-sm example" required>
                         </div>
                     </div>
-                </div>
-            </form>
-
-            <!-- Update Category -->
-            <div class="modal fade" id="updateCategory" tabindex="-1" aria-labelledby="updateCategory"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="updateCategory">Обновить</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <input type="text" class="form-control category_id" id="category_id"
-                                   name="category_id" value="category_id" hidden>
-                            <div>
-                                <label for="name" class="col-form-label">Название Категории</label>
-                                <input type="text" class="form-control name" id="name" name="name" required>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                            <button type="button" class="btn btn-primary buttonUpdateCategory">Обновить</button>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-primary">Добавить</button>
                     </div>
                 </div>
             </div>
+        </div>
+    </form>
 
+    <!-- Update Category -->
+    <div class="modal fade" id="updateCategory" tabindex="-1" aria-labelledby="updateCategory"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="updateCategory">Обновить</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control category_id" id="category_id"
+                           name="category_id" value="category_id" hidden>
+                    <div>
+                        <label for="name" class="col-form-label">Название Категории</label>
+                        <input type="text" class="form-control name" id="name" name="name" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary buttonUpdateCategory">Обновить</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Custom Search Categories -->
-    <div class="d-flex flex-row-reverse justify-content">
+    <div class="d-flex justify-content-between flex-wrap">
+        <button type="button" class="custom-file-upload" data-bs-toggle="modal" data-bs-target="#createCategory">
+            Создать
+        </button>
         <div class="input-group w-auto p-2">
             <input type="text" class="form-control" id="customSearchCategories" style="width:220px;"
-                   placeholder="Поиск по категории ..." aria-label="customSearchCategories"
+                   placeholder="Поиск ..." aria-label="customSearchCategories"
                    aria-describedby="basic-addon1">
             <span class="input-group-text reset-search" id="basic-addon1" onclick="checkIcon()"><i
                         class="bi bi-x-lg"></i></span>
